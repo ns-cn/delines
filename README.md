@@ -57,6 +57,7 @@ public class IsManParser implements IDelinesDecoder {
 - [ ] 指定范围（行或则正则形式）
 - [ ] 实体对应文本内容校验
 - [ ] 匹配事件拦截（匹配成功回调执行）
+- [ ] 多种类型匹配执行，一个文本中有多种类型的行类型
 
 
 

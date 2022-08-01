@@ -36,7 +36,7 @@ public final class Delines {
 				IDelinesDecoder decoder = field.getDecoder();
 				IDelinesDecoder.ExceptionHandler exceptionHandler = field.getDecodeExceptionHandler();
 				try {
-					Object fieldValue = decoder.decode(matcher, field.getResultType());
+					Object fieldValue = decoder.decode(matcher, field);
 					field.getField().set(t, fieldValue);
 				} catch (Exception e) {
 					exceptionHandler.handle(matcher, t, field.getField(), e);

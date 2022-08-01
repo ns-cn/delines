@@ -15,6 +15,7 @@ public class DelinesBusField {
 	private IDelinesDecoder.ExceptionHandler decodeExceptionHandler;
 	private String regExp;
 	private Pattern pattern;
+	private String dateFormat;
 
 	public DelinesBusField(Field field) {
 		this.field = field;
@@ -74,5 +75,13 @@ public class DelinesBusField {
 
 	public Pattern getPattern() {
 		return pattern;
+	}
+
+	public String getDateFormat() {
+		return dateFormat;
+	}
+
+	public void setDateFormat(String dateFormat) {
+		this.dateFormat = dateFormat;
 	}
 }

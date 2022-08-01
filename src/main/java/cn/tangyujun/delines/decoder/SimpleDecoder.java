@@ -1,5 +1,7 @@
 package cn.tangyujun.delines.decoder;
 
+import cn.tangyujun.delines.DelinesBusField;
+
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,10 +25,11 @@ public class SimpleDecoder implements IDelinesDecoder, IDelinesDecoder.Exception
 	}
 
 	@Override
-	public <T> T decode(Matcher result, Class<T> targetClazz) {
+	public <T> T decode(Matcher result, DelinesBusField field) {
 		if (!result.find()) {
 			return null;
 		}
+		Class<?> targetClazz = field.getResultType();
 		String data = result.group();
 		if(String.class.equals(targetClazz)){
 			return (T) data;
@@ -34,6 +37,8 @@ public class SimpleDecoder implements IDelinesDecoder, IDelinesDecoder.Exception
 			return (T) Integer.valueOf(data);
 		} else if (Long.class.equals(targetClazz)) {
 			return (T) Long.valueOf(data);
+		} else if (Boolean.class.equals(targetClazz)) {
+			return (T) Boolean.valueOf(data);
 		} else if (Float.class.equals(targetClazz)) {
 			return (T) Float.valueOf(data);
 		} else if (Double.class.equals(targetClazz)) {
@@ -42,7 +47,7 @@ public class SimpleDecoder implements IDelinesDecoder, IDelinesDecoder.Exception
 			return (T) Byte.valueOf(data);
 		} else if (LocalDateTime.class.equals(targetClazz) || LocalDate.class.equals(targetClazz)
 				|| LocalTime.class.equals(targetClazz) || Date.class.equals(targetClazz)) {
-			return SimpleDateDecoder.getInstance().decode(result, targetClazz);
+			return SimpleDateDecoder.getInstance().decode(result, field);
 		}
 		throw new UnsupportedOperationException("unsupported " + targetClazz + " using " + SimpleDecoder.class);
 	}

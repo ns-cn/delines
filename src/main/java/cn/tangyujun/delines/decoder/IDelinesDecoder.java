@@ -1,5 +1,7 @@
 package cn.tangyujun.delines.decoder;
 
+import cn.tangyujun.delines.DelinesBusField;
+
 import java.lang.reflect.Field;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
@@ -13,10 +15,11 @@ public interface IDelinesDecoder{
 	/**
 	 * 反序列化执行内容
 	 *
-	 * @param data 文本内容
+	 * @param result 文本内容匹配结果
+	 * @param field 字段信息
 	 * @return 解析的结果
 	 */
-	<T> T decode(Matcher result, Class<T> targetClazz);
+	<T> T decode(Matcher result, DelinesBusField field);
 
 	@FunctionalInterface
 	interface ExceptionHandler {

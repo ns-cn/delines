@@ -1,5 +1,7 @@
 package cn.tangyujun.delines.decoder;
 
+import cn.tangyujun.delines.DelinesBusField;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -21,10 +23,11 @@ public class SimpleDateDecoder implements IDelinesDecoder {
 	}
 
 	@Override
-	public <T> T decode(Matcher result, Class<T> targetClazz) {
+	public <T> T decode(Matcher result, DelinesBusField field) {
 		if (!result.find()) {
 			return null;
 		}
+		Class<?> targetClazz = field.getResultType();
 		String data = result.group();
 		if (LocalDateTime.class.equals(targetClazz)) {
 			return (T) LocalDateTime.parse(data);

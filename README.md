@@ -1,9 +1,10 @@
 # delines
-解析各种文本文件转Java实体
+解析各种文本（单行或多行）文件转Java实体
 
 ### 示例
 
 ```java
+// 单行文本转换样例
 public static void main(String[] args) {
     String[] lines = new String[]{"P01 小明 14 M", "P02 小霞 15 F"};
     Person person = null;
@@ -12,6 +13,8 @@ public static void main(String[] args) {
         System.out.println(person);
     }
 }
+// Person{id=1, name='小明', sex='M', isMan=true}
+// Person{id=2, name='小霞', sex='F', isMan=false}
 ```
 
 ### 单行文本转实体

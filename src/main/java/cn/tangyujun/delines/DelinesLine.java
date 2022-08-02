@@ -2,7 +2,7 @@ package cn.tangyujun.delines;
 
 public class DelinesLine {
 
-	private int lineIndex = 0;
+	private long lineIndex = 0;
 	private String data;
 
 	public DelinesLine() {
@@ -26,11 +26,11 @@ public class DelinesLine {
 		return new DelinesLine(lineIndex, data);
 	}
 
-	public int getLineIndex() {
+	public long getLineIndex() {
 		return lineIndex;
 	}
 
-	public void setLineIndex(int lineIndex) {
+	public void setLineIndex(long lineIndex) {
 		this.lineIndex = lineIndex;
 	}
 

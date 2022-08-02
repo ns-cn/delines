@@ -7,10 +7,10 @@ import java.util.regex.Matcher;
 
 public class IsManParser implements IDelinesDecoder {
 	@Override
-	public <T> T decode(Matcher result, DelinesBusField field) {
+	public Object decode(Matcher result, DelinesBusField field) {
 		if(Boolean.class.equals(field.getResultType())){
 			if (result.find()){
-				return (T) Boolean.valueOf("M".equals(result.group()));
+				return Boolean.valueOf("M".equals(result.group()));
 			}
 		}
 		return null;

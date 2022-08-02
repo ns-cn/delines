@@ -54,11 +54,69 @@ public class IsManParser implements IDelinesDecoder {
 ```
 
 ### 多行文本转实体集合
-- [ ] 指定范围（行或则正则形式）
-- [ ] 实体对应文本内容校验
-- [ ] 匹配事件拦截（匹配成功回调执行）
-- [ ] 多种类型匹配执行，一个文本中有多种类型的行类型
+- [x] 指定范围（行或则正则形式）
+- [x] 实体对应文本内容校验
+- [x] 匹配事件拦截（匹配成功回调执行）
+- [x] 多种类型匹配执行，一个文本中有多种类型的行类型
+- [ ] 实体内容通用校验
 
+```java
+// 从至少第1行开始读取，并且严格满足设定正则才匹配
+@DelinesEntity(rangeStartType = DelinesEntity.RangeType.NUMBER, rangeStart = "1", required = "[\\u4e00-\\u9fa5]+.*")
+public class Score extends AbstractDelinesEntity {
+	@DelinesField(regExp = "[\\u4e00-\\u9fa5]+")
+	private String course;
+	@DelinesField(regExp = "\\b\\d{1,3}\\b")
+	private String score;
 
+@DelinesEntity(required = "P\\d+.*")
+public class Person extends AbstractDelinesEntity {
+	@DelinesField(regExp = "(?<=P)\\d+")
+	private Integer id;
+	@DelinesField(regExp = "[\\u4e00-\\u9fa5]+")
+	private String name;
+	@DelinesField(regExp = "\\b\\d{1,3}\\b")
+	private Integer age;
+	@DelinesField(regExp = "\\b[FM]\\b")
+	private String sex;
+	@DelinesField(regExp = "\\b[FM]\\b", decoder = IsManParser.class)
+	private Boolean isMan;
+	@DelinesField(regExp = "\\b[0-9]{8}", dateFormat = "yyyyMMdd", decodeExceptionHandler = ParseExceptionHandler.class)
+	private LocalDate birthday;
+    //...
+}
+```
+
+```java
+public class TestDelinesDocument {
+	public static void main(String[] args) {
+		String text = "成绩单\n" +
+				"P01 小明 14 M 19990903\n" +
+				"语文：73\n数学：92\n" +
+				"P02 小霞 15 F 19980706\n" +
+				"语文：64\n数学：94\n" +
+				"P03 小文 15 M 19981212\n" +
+				"语文：90\n数学：73\n";
+		DelinesDocument document = DelinesDocument.of(text)
+				.registerDelinesEntity(Person.class)
+				.registerDelinesEntity(Score.class);
+		Consumer<DelinesDocument> print = (doc) -> {
+			List<Person> people = document.getFoundEntities(Person.class);
+			if (people != null) {
+				Person person = people.get(people.size() - 1);
+				List<Score> scores = document.getFoundEntities(Score.class);
+				System.out.printf("%s%s\n", person.toString(), scores);
+				document.getBusEntity(Score.class).cleanEntities();
+			}
+		};
+		document.notifyFounder(Person.class, ((bus, entity) -> {
+			print.accept(document);
+			return true;
+		}));
+		document.consume();
+		print.accept(document);
+	}
+}
+```
 
 

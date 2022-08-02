@@ -31,12 +31,20 @@ public final class DelinesEntityParser {
 			bus.setRangeEndType(Optional.ofNullable(delinesEntity.rangeEndType()).orElse(DelinesEntity.RangeType.NONE));
 			bus.setRangeEndBorder(delinesEntity.rangeEndBorder());
 			if (DelinesEntity.RangeType.NUMBER.equals(rangeStartType)) {
-				bus.setRangeStartLine(Long.valueOf(delinesEntity.rangeStart()));
+				if (DelinesEntity.RangeBorder.EXCLUDE.equals(delinesEntity.rangeStartBorder())) {
+					bus.setRangeStartLine(Long.parseLong(delinesEntity.rangeStart()) + 1);
+				} else {
+					bus.setRangeStartLine(Long.valueOf(delinesEntity.rangeStart()));
+				}
 			} else if (DelinesEntity.RangeType.REGULAR.equals(rangeStartType)) {
 				bus.setRangeStartPattern(Pattern.compile(delinesEntity.rangeStart()));
 			}
 			if (DelinesEntity.RangeType.NUMBER.equals(rangeEndType)) {
-				bus.setRangeEndLine(Long.valueOf(delinesEntity.rangeEnd()));
+				if (DelinesEntity.RangeBorder.EXCLUDE.equals(delinesEntity.rangeEndBorder())) {
+					bus.setRangeEndLine(Long.parseLong(delinesEntity.rangeEnd()) - 1);
+				} else {
+					bus.setRangeEndLine(Long.valueOf(delinesEntity.rangeEnd()));
+				}
 			} else if (DelinesEntity.RangeType.REGULAR.equals(rangeEndType)) {
 				bus.setRangeEndPattern(Pattern.compile(delinesEntity.rangeEnd()));
 			}

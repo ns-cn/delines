@@ -9,7 +9,6 @@ public final class DecoderFactory {
 
 	static {
 		decoders.put(SimpleDecoder.class, SimpleDecoder.getInstance());
-		decoders.put(SimpleDateDecoder.class, SimpleDateDecoder.getInstance());
 	}
 
 	public static <T extends IDelinesDecoder> void register(Class<T> clazz, T t) {

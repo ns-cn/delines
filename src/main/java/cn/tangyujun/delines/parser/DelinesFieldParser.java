@@ -30,7 +30,7 @@ public final class DelinesFieldParser {
 		delinesBusField.setDecoder(decoder);
 		delinesBusField.setDecodeExceptionHandler(exceptionHandler);
 		delinesBusField.setRegExp(regExp);
-		delinesBusField.setDateFormat(delinesBusField.getDateFormat());
+		delinesBusField.setDateFormat(delinesField.dateFormat());
 		return delinesBusField;
 	}
 }

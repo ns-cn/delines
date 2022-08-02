@@ -37,5 +37,5 @@ public @interface DelinesField {
 	/**
 	 * 时间数据的默认格式化样式，用于默认的decoder处理时间类型
 	 */
-	String dateFormat() default "yyyy-MM-dd HH:mm:ss";
+	String dateFormat() default "";
 }

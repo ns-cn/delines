@@ -2,6 +2,7 @@ package cn.tangyujun.delines;
 
 import cn.tangyujun.delines.annotation.DelinesEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -33,6 +34,8 @@ public class DelinesBusEntity<T extends IDelinesEntity> {
 
 	private List<DelinesBusField> fields;
 
+	private List<T> entities;
+
 	public static <T extends IDelinesEntity> DelinesBusEntity<T> of(Class<T> clazz, List<DelinesBusField> fields) {
 		DelinesBusEntity<T> entity = new DelinesBusEntity<>();
 		entity.setClazz(clazz);
@@ -45,6 +48,25 @@ public class DelinesBusEntity<T extends IDelinesEntity> {
 			return clazz.newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+	public void add(IDelinesEntity t) {
+		if (t == null) {
+			return;
+		}
+		if (entities == null) {
+			entities = new ArrayList<>();
+		}
+		if (!getClazz().equals(t.getClass())) {
+			throw new RuntimeException("fail to add entity with unmatched type:" + t.getClass());
+		}
+		entities.add((T) t);
+	}
+
+	public void cleanEntities() {
+		if (entities != null) {
+			entities.clear();
 		}
 	}
 
@@ -134,5 +156,9 @@ public class DelinesBusEntity<T extends IDelinesEntity> {
 
 	public void setRangeEndPattern(Pattern rangeEndPattern) {
 		this.rangeEndPattern = rangeEndPattern;
+	}
+
+	public List<T> getEntities() {
+		return entities;
 	}
 }

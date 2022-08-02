@@ -4,20 +4,20 @@ public abstract class AbstractDelinesEntity implements IDelinesEntity {
 	/**
 	 * 行索引
 	 */
-	private int lineIndex;
+	private long lineIndex;
 
 	/**
 	 * {@link IDelinesEntity#getLineIndex()}
 	 */
-	public int getLineIndex() {
+	public long getLineIndex() {
 		return lineIndex;
 	}
 
 	/**
-	 * {@link IDelinesEntity#setLineIndex(int)}
+	 * {@link IDelinesEntity#setLineIndex(long)}
 	 * @param lineIndex 行索引
 	 */
-	public void setLineIndex(int lineIndex) {
+	public void setLineIndex(long lineIndex) {
 		this.lineIndex = lineIndex;
 	}
 }

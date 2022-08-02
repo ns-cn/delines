@@ -1,29 +1,54 @@
 package cn.tangyujun.delines.demo;
 
-import cn.tangyujun.delines.IDelinesEntity;
+import cn.tangyujun.delines.AbstractDelinesEntity;
+import cn.tangyujun.delines.annotation.DelinesEntity;
 import cn.tangyujun.delines.annotation.DelinesField;
 
-public class Person implements IDelinesEntity {
-	
+import java.time.LocalDate;
+
+@DelinesEntity(required = "P\\d+.*")
+public class Person extends AbstractDelinesEntity {
+
 	@DelinesField(regExp = "(?<=P)\\d+")
 	private Integer id;
 
 	@DelinesField(regExp = "[\\u4e00-\\u9fa5]+")
 	private String name;
 
-	@DelinesField(regExp = "(?<=\\s)[FM]$")
+	@DelinesField(regExp = "\\b\\d{1,3}\\b")
+	private Integer age;
+
+	@DelinesField(regExp = "\\b[FM]\\b")
 	private String sex;
 
-	@DelinesField(regExp = "(?<=\\s)[FM]$", decoder = IsManParser.class)
+	@DelinesField(regExp = "\\b[FM]\\b", decoder = IsManParser.class)
 	private Boolean isMan;
-	
-	@Override
-	public int getLineIndex() {
-		return 0;
+
+	@DelinesField(regExp = "\\b[0-9]{8}", dateFormat = "yyyyMMdd", decodeExceptionHandler = ParseExceptionHandler.class)
+	private LocalDate birthday;
+
+	public Integer getId() {
+		return id;
 	}
 
-	@Override
-	public void setLineIndex(int lineIndex) {
+	public String getName() {
+		return name;
+	}
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public Boolean getMan() {
+		return isMan;
+	}
+
+	public LocalDate getBirthday() {
+		return birthday;
 	}
 
 	@Override
@@ -31,8 +56,10 @@ public class Person implements IDelinesEntity {
 		return "Person{" +
 				"id=" + id +
 				", name='" + name + '\'' +
+				", age=" + age +
 				", sex='" + sex + '\'' +
 				", isMan=" + isMan +
+				", birthday=" + birthday +
 				'}';
 	}
 }

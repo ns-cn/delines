@@ -60,7 +60,11 @@ public class IsManParser implements IDelinesDecoder {
 - [x] 多种类型匹配执行，一个文本中有多种类型的行类型
 - [ ] 实体内容通用校验
 
+
+#### 多行文本转实体实例
+本示例将多行文本读取学成成绩并打印
 ```java
+// 实体定义
 // 从至少第1行开始读取，并且严格满足设定正则才匹配
 @DelinesEntity(rangeStartType = DelinesEntity.RangeType.NUMBER, rangeStart = "1", required = "[\\u4e00-\\u9fa5]+.*")
 public class Score extends AbstractDelinesEntity {
@@ -88,35 +92,36 @@ public class Person extends AbstractDelinesEntity {
 ```
 
 ```java
-public class TestDelinesDocument {
-	public static void main(String[] args) {
-		String text = "成绩单\n" +
-				"P01 小明 14 M 19990903\n" +
-				"语文：73\n数学：92\n" +
-				"P02 小霞 15 F 19980706\n" +
-				"语文：64\n数学：94\n" +
-				"P03 小文 15 M 19981212\n" +
-				"语文：90\n数学：73\n";
-		DelinesDocument document = DelinesDocument.of(text)
-				.registerDelinesEntity(Person.class)
-				.registerDelinesEntity(Score.class);
-		Consumer<DelinesDocument> print = (doc) -> {
-			List<Person> people = document.getFoundEntities(Person.class);
-			if (people != null) {
-				Person person = people.get(people.size() - 1);
-				List<Score> scores = document.getFoundEntities(Score.class);
-				System.out.printf("%s%s\n", person.toString(), scores);
-				document.getBusEntity(Score.class).cleanEntities();
-			}
-		};
-		document.notifyFounder(Person.class, ((bus, entity) -> {
-			print.accept(document);
-			return true;
-		}));
-		document.consume();
-		print.accept(document);
-	}
-}
+String text = "成绩单\n" +
+        "P01 小明 14 M 19990903\n" +
+        "语文：73\n数学：92\n" +
+        "P02 小霞 15 F 19980706\n" +
+        "语文：64\n数学：94\n" +
+        "P03 小文 15 M 19981212\n" +
+        "语文：90\n数学：73\n";
+DelinesDocument document = DelinesDocument.of(text)
+        .registerDelinesEntity(Person.class)
+        .registerDelinesEntity(Score.class);
+Consumer<DelinesDocument> print = (doc) -> {
+    List<Person> people = document.getFoundEntities(Person.class);
+    if (people != null) {
+        Person person = people.get(people.size() - 1);
+        List<Score> scores = document.getFoundEntities(Score.class);
+        System.out.printf("%s%s\n", person.toString(), scores);
+        document.getBusEntity(Score.class).cleanEntities();
+    }
+};
+document.notifyFounder(Person.class, ((bus, entity) -> {
+    print.accept(document);
+    return true;
+}));
+document.consume();
+print.accept(document);
 ```
-
+输出结果样例：
+```json
+Person{id=1, name='小明', age=14, sex='M', isMan=true, birthday=1999-09-03}[Score{course='语文', score='73'}, Score{course='数学', score='92'}]
+Person{id=2, name='小霞', age=15, sex='F', isMan=false, birthday=1998-07-06}[Score{course='语文', score='64'}, Score{course='数学', score='94'}]
+Person{id=3, name='小文', age=15, sex='M', isMan=true, birthday=1998-12-12}[Score{course='语文', score='90'}, Score{course='数学', score='73'}]
+```
 

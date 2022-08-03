@@ -4,7 +4,7 @@ import cn.tangyujun.delines.DelinesBusEntity;
 import cn.tangyujun.delines.IDelinesEntity;
 
 @FunctionalInterface
-public interface Notifier {
+public interface Notifier<T extends IDelinesEntity> {
 
-	boolean live(DelinesBusEntity<? extends IDelinesEntity> bus, IDelinesEntity entity);
+	boolean notify(DelinesBusEntity<T> bus, T entity);
 }

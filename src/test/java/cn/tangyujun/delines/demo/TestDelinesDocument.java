@@ -26,11 +26,10 @@ public class TestDelinesDocument {
 				document.getBusEntity(Score.class).cleanEntities();
 			}
 		};
-		document.notifyFounder(Person.class, ((bus, entity) -> {
+		document.addNotifier(Person.class, ((bus, entity) -> {
 			print.accept(document);
 			return true;
-		}));
-		document.consume();
+		})).consume();
 		print.accept(document);
 	}
 

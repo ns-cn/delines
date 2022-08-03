@@ -1,11 +1,17 @@
 package cn.tangyujun.delines;
 
 import cn.tangyujun.delines.annotation.DelinesEntity;
+import cn.tangyujun.delines.handler.Notifier;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/**
+ * 目标行类型bus装载类，包含类型的基础数据
+ * @param <T>
+ */
 public class DelinesBusEntity<T extends IDelinesEntity> {
 
 	private Class<T> clazz;
@@ -33,6 +39,8 @@ public class DelinesBusEntity<T extends IDelinesEntity> {
 	private Pattern rangeEndPattern;
 
 	private List<DelinesBusField> fields;
+
+	private List<Notifier<T>> notifiers;
 
 	private List<T> entities;
 
@@ -62,6 +70,16 @@ public class DelinesBusEntity<T extends IDelinesEntity> {
 			throw new RuntimeException("fail to add entity with unmatched type:" + t.getClass());
 		}
 		entities.add((T) t);
+	}
+
+	public void addNotifier(Notifier<T> notifier){
+		if (notifier == null) {
+			return;
+		}
+		if (notifiers == null) {
+			notifiers = new ArrayList<>();
+		}
+		notifiers.add(notifier);
 	}
 
 	public void cleanEntities() {
@@ -160,5 +178,9 @@ public class DelinesBusEntity<T extends IDelinesEntity> {
 
 	public List<T> getEntities() {
 		return entities;
+	}
+
+	public List<Notifier<T>> getNotifiers() {
+		return notifiers;
 	}
 }

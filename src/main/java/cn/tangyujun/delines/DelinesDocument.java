@@ -7,7 +7,6 @@ import cn.tangyujun.delines.parser.DelinesEntityParser;
 import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,8 +15,6 @@ public class DelinesDocument {
 	 * 数据源,可包装各种字符流（网络IO，文件IO，或则内存的字符串）
 	 */
 	private BufferedReader reader;
-
-	private Map<Class<?>, List<Notifier>> notifiers;
 
 	private List<DelinesBusEntity<? extends IDelinesEntity>> busEntities;
 
@@ -66,19 +63,15 @@ public class DelinesDocument {
 		return this;
 	}
 
-	public <T extends IDelinesEntity> DelinesDocument notifyFounder(Class<T> clazz, Notifier notifier) {
-		if (notifier == null) {
+	public <T extends IDelinesEntity> DelinesDocument addNotifier(Class<T> clazz, Notifier<T> notifier) {
+		if (clazz == null || notifier == null) {
 			return this;
 		}
-		if (notifiers == null) {
-			notifiers = new HashMap<>();
+		DelinesBusEntity<T> bus = getBusEntity(clazz);
+		if (bus == null) {
+			throw new RuntimeException("could not add notifier to unregistered Class " + clazz + "!");
 		}
-		List<Notifier> clazzNotifiers = notifiers.get(clazz);
-		if (clazzNotifiers == null) {
-			clazzNotifiers = new ArrayList<>();
-		}
-		clazzNotifiers.add(notifier);
-		notifiers.put(clazz, clazzNotifiers);
+		bus.addNotifier(notifier);
 		return this;
 	}
 
@@ -113,10 +106,10 @@ public class DelinesDocument {
 				IDelinesEntity value = Delines.with(DelinesLine.of(index, data), bus);
 				if (value != null) {
 					boolean addToBus = true;
-					List<Notifier> clazzNotifiers = notifiers.get(bus.getClazz());
+					List<? extends Notifier<? extends IDelinesEntity>> clazzNotifiers = bus.getNotifiers();
 					if (clazzNotifiers != null) {
 						for (Notifier clazzNotifier : clazzNotifiers) {
-							addToBus = addToBus && clazzNotifier.live(bus, value);
+							addToBus = addToBus && clazzNotifier.notify(bus, value);
 						}
 					}
 					if (addToBus) {
@@ -129,7 +122,7 @@ public class DelinesDocument {
 		return this;
 	}
 
-	public <T extends IDelinesEntity> DelinesBusEntity<T> getBusEntity(Class<T> clazz){
+	public <T extends IDelinesEntity> DelinesBusEntity<T> getBusEntity(Class<T> clazz) {
 		for (DelinesBusEntity<? extends IDelinesEntity> busEntity : busEntities) {
 			if (busEntity.getClazz().equals(clazz)) {
 				return (DelinesBusEntity<T>) busEntity;

@@ -9,7 +9,7 @@ public class Score extends AbstractDelinesEntity {
 	@DelinesField(regExp = "[\\u4e00-\\u9fa5]+")
 	private String course;
 	@DelinesField(regExp = "\\b\\d{1,3}\\b")
-	private String score;
+	private Integer score;
 
 	public String getCourse() {
 		return course;
@@ -19,11 +19,11 @@ public class Score extends AbstractDelinesEntity {
 		this.course = course;
 	}
 
-	public String getScore() {
+	public Integer getScore() {
 		return score;
 	}
 
-	public void setScore(String score) {
+	public void setScore(Integer score) {
 		this.score = score;
 	}
 
@@ -31,7 +31,7 @@ public class Score extends AbstractDelinesEntity {
 	public String toString() {
 		return "Score{" +
 				"course='" + course + '\'' +
-				", score='" + score + '\'' +
+				", score=" + score +
 				'}';
 	}
 }

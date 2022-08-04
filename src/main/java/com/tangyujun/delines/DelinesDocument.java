@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class DelinesDocument {
 	/**
@@ -103,18 +104,18 @@ public class DelinesDocument {
 			String data = next.getValue();
 			for (DelinesBusEntity<? extends IDelinesEntity> bus : busEntities) {
 				IDelinesEntity value = Delines.with(DelinesLine.of(index, data), bus);
-				if (value != null) {
+				Optional.ofNullable(value).ifPresent(t ->{
 					boolean addToBus = true;
 					List<? extends Notifier<? extends IDelinesEntity>> clazzNotifiers = bus.getNotifiers();
 					if (clazzNotifiers != null) {
 						for (Notifier clazzNotifier : clazzNotifiers) {
-							addToBus = addToBus && clazzNotifier.notify(bus, value);
+							addToBus = addToBus && clazzNotifier.notify(bus, t);
 						}
 					}
 					if (addToBus) {
-						bus.add(value);
+						bus.add(t);
 					}
-				}
+				});
 			}
 			index++;
 		}

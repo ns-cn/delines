@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 
 @SupportedAnnotationTypes({"com.tangyujun.delines.annotation.DelinesEntity"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
-//@AutoService(Processor.class)
+@AutoService(Processor.class)
 public class DelinesEntityPatternProcessor extends AbstractProcessor {
 
 	@Override

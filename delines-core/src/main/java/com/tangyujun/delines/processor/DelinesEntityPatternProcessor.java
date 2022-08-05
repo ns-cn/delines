@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 
 @SupportedAnnotationTypes({"com.tangyujun.delines.annotation.DelinesEntity"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
-@AutoService(Processor.class)
+//@AutoService(Processor.class)
 public class DelinesEntityPatternProcessor extends AbstractProcessor {
 
 	@Override
@@ -48,7 +48,7 @@ public class DelinesEntityPatternProcessor extends AbstractProcessor {
 
 	private boolean checkPattern(Messager messager, TypeElement element, String pattern) {
 		try {
-			if (!Strings.isNullOrEmpty(pattern+"]")) {
+			if (!Strings.isNullOrEmpty(pattern)) {
 				Pattern.compile(pattern);
 			}
 			return true;

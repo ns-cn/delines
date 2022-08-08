@@ -128,6 +128,9 @@ public class DelinesDocument {
 	}
 
 	public <T extends IDelinesEntity> DelinesBusEntity<T> getBusEntity(Class<T> clazz) {
+		if(busEntities==null){
+			return null;
+		}
 		for (DelinesBusEntity<? extends IDelinesEntity> busEntity : busEntities) {
 			if (busEntity.getClazz().equals(clazz)) {
 				return (DelinesBusEntity<T>) busEntity;
@@ -137,6 +140,9 @@ public class DelinesDocument {
 	}
 
 	public <T extends IDelinesEntity> List<T> getFoundEntities(Class<T> clazz) {
+		if(busEntities==null){
+			return null;
+		}
 		for (DelinesBusEntity<? extends IDelinesEntity> busEntity : busEntities) {
 			if (busEntity.getClazz().equals(clazz)) {
 				return (List<T>) busEntity.getEntities();

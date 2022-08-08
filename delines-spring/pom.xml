@@ -6,9 +6,10 @@
         <artifactId>delines-parent</artifactId>
         <groupId>com.tangyujun</groupId>
         <version>1.0.1-preview</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>delines-boot</artifactId>
+    <artifactId>delines-spring</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -21,6 +22,11 @@
             <groupId>com.tangyujun</groupId>
             <artifactId>delines</artifactId>
             <version>1.0.1-preview</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.1</version>
         </dependency>
     </dependencies>
 </project>

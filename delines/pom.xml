@@ -6,15 +6,17 @@
         <artifactId>delines-parent</artifactId>
         <groupId>com.tangyujun</groupId>
         <version>1.0.1-preview</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>delines</artifactId>
+    <version>1.0.1-preview</version>
 
     <dependencies>
         <dependency>
             <groupId>com.tangyujun</groupId>
             <artifactId>delines-core</artifactId>
-            <version>${project.version}</version>
+            <version>1.0.1-preview</version>
         </dependency>
     </dependencies>
 

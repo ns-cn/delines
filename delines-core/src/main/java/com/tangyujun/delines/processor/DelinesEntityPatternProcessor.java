@@ -18,6 +18,9 @@ import java.util.regex.Pattern;
 @AutoService(Processor.class)
 public class DelinesEntityPatternProcessor extends AbstractProcessor {
 
+	public DelinesEntityPatternProcessor() {
+	}
+
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
 		Messager messager = processingEnv.getMessager();

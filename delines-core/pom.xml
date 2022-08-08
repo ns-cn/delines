@@ -13,6 +13,7 @@
 <!--    <packaging>pom</packaging>-->
     <version>1.0.1-preview</version>
 
+
     <dependencies>
         <dependency>
             <groupId>com.google.auto.service</groupId>
@@ -24,6 +25,11 @@
             <artifactId>auto-service-annotations</artifactId>
             <version>1.0.1</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
         </dependency>
     </dependencies>
 </project>

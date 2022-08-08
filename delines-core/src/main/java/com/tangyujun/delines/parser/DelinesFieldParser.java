@@ -60,7 +60,7 @@ public final class DelinesFieldParser {
 		return delinesBusField;
 	}
 
-	public DelinesFieldParser custom() {
+	public static DelinesFieldParser custom() {
 		return new DelinesFieldParser();
 	}
 

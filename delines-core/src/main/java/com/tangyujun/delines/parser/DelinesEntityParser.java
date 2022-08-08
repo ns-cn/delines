@@ -26,13 +26,22 @@ public final class DelinesEntityParser {
 		this.setFieldParser(fieldParser);
 	}
 
+	public static <T extends IDelinesEntity> DelinesBusEntity<T> parseUsingDefault(Class<T> clazz) {
+		return DEFAULT.parse(clazz);
+	}
+
+	public static DelinesEntityParser custom() {
+		return new DelinesEntityParser();
+	}
+
 	public void setFieldParser(DelinesFieldParser fieldParser) {
 		Objects.requireNonNull(fieldParser, "could not build a DelinesEntityParser without DelinesFieldParser");
 		this.fieldParser = fieldParser;
 	}
 
-	public static <T extends IDelinesEntity> DelinesBusEntity<T> parseUsingDefault(Class<T> clazz) {
-		return DEFAULT.parse(clazz);
+	public DelinesEntityParser withFieldParser(DelinesFieldParser fieldParser) {
+		setFieldParser(fieldParser);
+		return this;
 	}
 
 	public <T extends IDelinesEntity> DelinesBusEntity<T> parse(Class<T> clazz) {

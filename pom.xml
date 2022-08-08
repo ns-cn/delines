@@ -29,7 +29,6 @@
         <module>delines-spring</module>
     </modules>
 
-
     <build>
         <plugins>
             <plugin>

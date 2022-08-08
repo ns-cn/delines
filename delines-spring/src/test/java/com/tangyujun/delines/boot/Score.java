@@ -40,6 +40,7 @@ public class Score extends AbstractDelinesEntity {
 		String[] lines = new String[]{"P01 小明 14 M 19990909", "P02 小霞 15 F 19990912"};
 		Person person = null;
 		for (String line : lines) {
+			// 必须在Spring项目中使用，能拿到SpringBeanFactory，否则会报NullPointerException
 			person = SpringDelines.with(line, Person.class);
 			System.out.println(person);
 		}

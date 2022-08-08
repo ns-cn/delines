@@ -1,5 +1,6 @@
 package com.tangyujun.delines.parser;
 
+import cn.hutool.core.text.CharSequenceUtil;
 import com.tangyujun.delines.DelinesBusEntity;
 import com.tangyujun.delines.DelinesBusField;
 import com.tangyujun.delines.IDelinesEntity;
@@ -55,7 +56,7 @@ public final class DelinesEntityParser {
 			String required = delinesEntity.required();
 			DelinesEntity.RangeType rangeStartType = delinesEntity.rangeStartType();
 			DelinesEntity.RangeType rangeEndType = delinesEntity.rangeEndType();
-			if (required != null && !required.equals("")) {
+			if(!CharSequenceUtil.isBlank(required)){
 				bus.setRequired(Pattern.compile(required));
 			}
 			bus.setRangeStartType(Optional.ofNullable(delinesEntity.rangeStartType()).orElse(DelinesEntity.RangeType.NONE));

@@ -1,5 +1,6 @@
 package com.tangyujun.delines.boot;
 
+import cn.hutool.core.convert.impl.StringConverter;
 import com.tangyujun.delines.AbstractDelinesEntity;
 import com.tangyujun.delines.Delines;
 import com.tangyujun.delines.annotation.DelinesEntity;

@@ -18,6 +18,8 @@ public class DelinesDocument {
 
 	private List<DelinesBusEntity<? extends IDelinesEntity>> busEntities;
 
+	private DelinesEntityParser entityParser;
+
 	/**
 	 * 根据{@link BufferedReader}构建待处理的
 	 *
@@ -47,6 +49,11 @@ public class DelinesDocument {
 		return new DelinesDocument(reader);
 	}
 
+	public DelinesDocument withCustomEntityParser(DelinesEntityParser customEntityParser) {
+		this.entityParser = customEntityParser;
+		return this;
+	}
+
 	public DelinesDocument registerDelinesEntity(Class<? extends IDelinesEntity> clazz) {
 		if (clazz == null) {
 			throw new RuntimeException("could not register deliens entity with NULL");
@@ -54,12 +61,11 @@ public class DelinesDocument {
 		if (busEntities == null) {
 			busEntities = new ArrayList<>();
 		}
-		for (DelinesBusEntity<?> entity : busEntities) {
-			if (entity.getClazz().equals(clazz)) {
-				throw new RuntimeException("Repeated registration");
-			}
+		if (busEntities.stream().anyMatch(t -> t.getClazz().equals(clazz))) {
+			throw new RuntimeException("Repeated registration");
 		}
-		busEntities.add(DelinesEntityParser.parse(clazz));
+		DelinesEntityParser entityParser = Optional.ofNullable(this.entityParser).orElse(DelinesEntityParser.DEFAULT);
+		busEntities.add(entityParser.parse(clazz));
 		return this;
 	}
 
@@ -68,9 +74,8 @@ public class DelinesDocument {
 			return this;
 		}
 		DelinesBusEntity<T> bus = getBusEntity(clazz);
-		if (bus == null) {
-			throw new RuntimeException("could not add notifier to unregistered Class " + clazz + "!");
-		}
+		Optional.ofNullable(bus)
+				.orElseThrow(() -> new RuntimeException("could not add notifier to unregistered Class" + clazz + "!"));
 		bus.addNotifier(notifier);
 		return this;
 	}
@@ -104,7 +109,7 @@ public class DelinesDocument {
 			String data = next.getValue();
 			for (DelinesBusEntity<? extends IDelinesEntity> bus : busEntities) {
 				IDelinesEntity value = Delines.with(DelinesLine.of(index, data), bus);
-				Optional.ofNullable(value).ifPresent(t ->{
+				Optional.ofNullable(value).ifPresent(t -> {
 					boolean addToBus = true;
 					List<? extends Notifier<? extends IDelinesEntity>> clazzNotifiers = bus.getNotifiers();
 					if (clazzNotifiers != null) {

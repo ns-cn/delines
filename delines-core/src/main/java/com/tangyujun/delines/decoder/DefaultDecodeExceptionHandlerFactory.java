@@ -5,11 +5,14 @@ import com.tangyujun.delines.exceptionhandler.NoneHandler;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public final class DecodeExceptionHandlerFactory {
+public final class DefaultDecodeExceptionHandlerFactory implements IDecoderExceptionHandlerFactory {
 	private static final Map<Class<?>, IDelinesDecoder.ExceptionHandler> handlers = new ConcurrentHashMap<>();
 
 	static {
 		handlers.put(NoneHandler.class, new NoneHandler());
+	}
+
+	public DefaultDecodeExceptionHandlerFactory() {
 	}
 
 	public static <T extends IDelinesDecoder.ExceptionHandler> void register(Class<T> clazz, T t) {
@@ -20,15 +23,15 @@ public final class DecodeExceptionHandlerFactory {
 		handlers.remove(clazz);
 	}
 
-	public static <T extends IDelinesDecoder.ExceptionHandler> T get(Class<T> clazz) {
+	public IDelinesDecoder.ExceptionHandler get(Class<? extends IDelinesDecoder.ExceptionHandler> clazz) {
 		IDelinesDecoder.ExceptionHandler handler = handlers.get(clazz);
 		if (handler != null) {
-			return (T) handler;
+			return handler;
 		}
 		try {
-			T t = EntityFactory.get(clazz);
-			handlers.put(clazz, t);
-			return t;
+			handler = IEntityFactory.build(clazz);
+			handlers.put(clazz, handler);
+			return handler;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

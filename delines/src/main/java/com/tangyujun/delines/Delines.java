@@ -5,12 +5,18 @@ import com.tangyujun.delines.decoder.IDelinesDecoder;
 import com.tangyujun.delines.parser.DelinesEntityParser;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 
 public final class Delines {
 
 	public static <T extends IDelinesEntity> T with(String data, Class<T> clazz) {
-		return with(data, DelinesEntityParser.parse(clazz));
+		return with(data, clazz, null);
+	}
+
+	public static <T extends IDelinesEntity> T with(String data, Class<T> clazz, DelinesEntityParser customParser) {
+		DelinesEntityParser entityParser = Optional.ofNullable(customParser).orElse(DelinesEntityParser.DEFAULT);
+		return with(data, entityParser.parse(clazz));
 	}
 
 	public static <T extends IDelinesEntity> T with(String data, DelinesBusEntity<T> entity) {

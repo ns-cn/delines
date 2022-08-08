@@ -7,8 +7,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-public class EntityFactory {
-	public static <T> T get(Class<T> clazz) {
+public interface IEntityFactory<T> {
+	static <T> T build(Class<T> clazz) {
 		if (clazz == null) {
 			return null;
 		}
@@ -58,4 +58,12 @@ public class EntityFactory {
 		}
 		throw new RuntimeException("now constructor or @EntityCreator zero-args public static method declared");
 	}
+
+	/**
+	 * 根据类类型获取类类型实例
+	 *
+	 * @param clazz 类类型
+	 * @return 获取类类型实例
+	 */
+	T get(Class<? extends T> clazz);
 }

@@ -3,12 +3,15 @@ package com.tangyujun.delines.decoder;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public final class DecoderFactory {
+public final class DefaultDecoderFactory implements IDecoderFactory {
 
 	private static final Map<Class<?>, IDelinesDecoder> decoders = new ConcurrentHashMap<>();
 
 	static {
 		decoders.put(SimpleDecoder.class, SimpleDecoder.getInstance());
+	}
+
+	public DefaultDecoderFactory() {
 	}
 
 	public static <T extends IDelinesDecoder> void register(Class<T> clazz, T t) {
@@ -23,18 +26,18 @@ public final class DecoderFactory {
 	 * 获取目标类型的解析器实例
 	 *
 	 * @param clazz 解析器的类型
-	 * @param <T>   解析器类型
 	 * @return 解析器实例
 	 */
-	public static <T extends IDelinesDecoder> T get(Class<T> clazz) {
+	@Override
+	public IDelinesDecoder get(Class<? extends IDelinesDecoder> clazz) {
 		IDelinesDecoder decoder = decoders.get(clazz);
 		if (decoder != null) {
-			return (T) decoder;
+			return decoder;
 		}
 		try {
-			T t = EntityFactory.get(clazz);
-			decoders.put(clazz, t);
-			return t;
+			decoder = IEntityFactory.build(clazz);
+			decoders.put(clazz, decoder);
+			return decoder;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

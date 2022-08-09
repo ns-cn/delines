@@ -37,6 +37,11 @@ public final class DelinesFieldParser {
 		this.decodeExceptionHandlerFactory = decodeExceptionHandlerFactory;
 	}
 
+	/**
+	 * 解析实体映射类型字段
+	 * @param field 子弹
+	 * @return
+	 */
 	public DelinesBusField parse(Field field) {
 		if (field == null) {
 			return null;

@@ -1,8 +1,28 @@
 # delines
 解析各种文本（单行或多行）文件转Java实体
 
-### 示例
+## 特性介绍
+#### 特性1、多种类型支持（可自定义类型，支持自定义decoder）
+#### 特性2、支持单行文本与多种映射实体匹配执行
+#### 特性3、支持模型应用范围指定（行或则正则形式）
+#### 特性4、支持单行和文本的流和字符串文本的映射解析
+#### 特性5、支持匹配事件拦截（匹配成功回调执行）
+#### 特性6、支持编译过程的校验
+```shell
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ delines-spring ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 4 source files to /Users/tangyujun/workspace/java/delines/delines-spring/target/test-classes
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/tangyujun/workspace/java/delines/delines-spring/src/test/java/Score.java:[10,25] @DelinesField with wrong pattern: \b\d{1,3}\b[]
+[ERROR] /Users/tangyujun/workspace/java/delines/delines-spring/src/test/java/Person.java:[8,8] @DelinesEntity with wrong pattern: P\d+.*[]
+[INFO] 2 errors 
+[INFO] -------------------------------------------------------------
+```
 
+### 单行文本转换示例
 ```java
 // 单行文本转换样例
 public static void main(String[] args) {
@@ -17,9 +37,6 @@ public static void main(String[] args) {
 // Person{id=2, name='小霞', sex='F', isMan=false}
 ```
 
-### 单行文本转实体
-- [x] 多种基础数据类型支持
-- [x] 支持自定义decoder
 ```java
 public class Person implements IDelinesEntity {
 
@@ -53,15 +70,7 @@ public class IsManParser implements IDelinesDecoder {
 }
 ```
 
-### 多行文本转实体集合
-- [x] 指定范围（行或则正则形式）
-- [x] 实体对应文本内容校验
-- [x] 匹配事件拦截（匹配成功回调执行）
-- [x] 多种类型匹配执行，一个文本中有多种类型的行类型
-- [ ] 实体内容通用校验
-
-
-#### 多行文本转实体实例
+## 多行文本转实体实例
 本示例将多行文本读取学成成绩并打印
 ```java
 // 实体定义
@@ -124,4 +133,5 @@ Person{id=1, name='小明', age=14, sex='M', isMan=true, birthday=1999-09-03}[Sc
 Person{id=2, name='小霞', age=15, sex='F', isMan=false, birthday=1998-07-06}[Score{course='语文', score='64'}, Score{course='数学', score='94'}]
 Person{id=3, name='小文', age=15, sex='M', isMan=true, birthday=1998-12-12}[Score{course='语文', score='90'}, Score{course='数学', score='73'}]
 ```
-
+## 计划支持
+- [ ] 原生级解析结果校验

@@ -16,14 +16,13 @@
         <dependency>
             <groupId>com.tangyujun</groupId>
             <artifactId>delines-core</artifactId>
-            <version>1.0.1-preview</version>
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>${hutool.version}</version>
         </dependency>
     </dependencies>
+
 
     <build>
         <plugins>
@@ -36,6 +35,8 @@
                     <target>1.8</target>
                     <annotationProcessors>
                         <annotationProcessor>com.tangyujun.delines.processor.DelinesEntityPatternProcessor
+                        </annotationProcessor>
+                        <annotationProcessor>com.tangyujun.delines.processor.DelinesFieldPatternProcessor
                         </annotationProcessor>
                     </annotationProcessors>
                 </configuration>

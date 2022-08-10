@@ -1,7 +1,7 @@
 package com.tangyujun.delines.processor;
 
+import cn.hutool.core.text.CharSequenceUtil;
 import com.google.auto.service.AutoService;
-import com.google.common.base.Strings;
 import com.tangyujun.delines.annotation.DelinesEntity;
 
 import javax.annotation.processing.*;
@@ -24,41 +24,60 @@ public class DelinesEntityPatternProcessor extends AbstractProcessor {
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
 		Messager messager = processingEnv.getMessager();
-		messager.printMessage(Diagnostic.Kind.NOTE, "delines entity pattern checking");
+		messager.printMessage(Diagnostic.Kind.WARNING, "delines entity pattern checking");
 		Set<? extends Element> elements = env.getElementsAnnotatedWith(DelinesEntity.class);
+		messager.printMessage(Diagnostic.Kind.NOTE, "total found: " + elements.size());
 		boolean success = true;
-		try {
-			for (Element element : elements) {
-				if (element.getKind().equals(ElementKind.CLASS)) {
-					TypeElement typeElement = (TypeElement) element;
-					DelinesEntity entity = typeElement.getAnnotation(DelinesEntity.class);
-					if (entity.required() != null && !"".equals(entity.required())) {
-						success = success && checkPattern(messager, typeElement, entity.required());
-						if (DelinesEntity.RangeType.REGULAR.equals(entity.rangeStartType())) {
-							success = success && checkPattern(messager, typeElement, entity.rangeStart());
+		for (Element element : elements) {
+			if (element.getKind().equals(ElementKind.CLASS)) {
+				TypeElement typeElement = (TypeElement) element;
+
+				messager.printMessage(Diagnostic.Kind.NOTE,
+						"delines entity class: " + typeElement.getQualifiedName());
+				DelinesEntity entity = typeElement.getAnnotation(DelinesEntity.class);
+				if (entity != null) {
+					if (CharSequenceUtil.isNotEmpty(entity.required())) {
+						try {
+							Pattern.compile(entity.required());
+						} catch (Exception e) {
+							messager.printMessage(Diagnostic.Kind.ERROR,
+									"@DelinesEntity with wrong pattern: " + entity.required(),
+									element);
+							success = false;
 						}
-						if (DelinesEntity.RangeType.REGULAR.equals(entity.rangeEndType())) {
-							success = success && checkPattern(messager, typeElement, entity.rangeEnd());
+					}
+					if (DelinesEntity.RangeType.REGULAR.equals(entity.rangeStartType())) {
+						try {
+							if (CharSequenceUtil.isEmpty(entity.rangeStart())) {
+								messager.printMessage(Diagnostic.Kind.ERROR,
+										"@DelinesEntity assigned rangeStartType without rangeStart", element);
+							} else {
+								Pattern.compile(entity.rangeStart());
+							}
+						} catch (Exception e) {
+							messager.printMessage(Diagnostic.Kind.ERROR,
+									"@DelinesEntity with wrong pattern: " + entity.rangeStart(),
+									element);
+							success = false;
+						}
+					}
+					if (DelinesEntity.RangeType.REGULAR.equals(entity.rangeEndType())) {
+						try {
+							if (CharSequenceUtil.isEmpty(entity.rangeEnd())) {
+								messager.printMessage(Diagnostic.Kind.ERROR,
+										"@DelinesEntity assigned rangeEndType without rangeEnd", element);
+							} else {
+								Pattern.compile(entity.rangeEnd());
+							}
+						} catch (Exception e) {
+							messager.printMessage(Diagnostic.Kind.ERROR,
+									"@DelinesEntity with wrong pattern: " + entity.rangeEnd(), element);
+							success = false;
 						}
 					}
 				}
 			}
-		} catch (Exception e) {
-			messager.printMessage(Diagnostic.Kind.ERROR, e.getMessage());
 		}
-		return false;
-	}
-
-	private boolean checkPattern(Messager messager, TypeElement element, String pattern) {
-		try {
-			if (!Strings.isNullOrEmpty(pattern)) {
-				Pattern.compile(pattern);
-			}
-			return true;
-		} catch (Exception e) {
-			messager.printMessage(Diagnostic.Kind.ERROR, String.format("wrong pattern in %s: %s",
-					element.getQualifiedName(), e.getMessage()));
-			return false;
-		}
+		return success;
 	}
 }

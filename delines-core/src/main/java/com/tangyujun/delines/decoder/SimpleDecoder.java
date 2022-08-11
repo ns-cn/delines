@@ -41,17 +41,19 @@ public class SimpleDecoder implements IDelinesDecoder, IDelinesDecoder.Exception
 		if (String.class.equals(targetClazz)) {
 			return data;
 		} else if (Integer.class.equals(targetClazz)) {
-			return Integer.valueOf(data);
+			return Integer.parseInt(data);
 		} else if (Long.class.equals(targetClazz)) {
-			return Long.valueOf(data);
+			return Long.parseLong(data);
 		} else if (Boolean.class.equals(targetClazz)) {
-			return Boolean.valueOf(data);
+			return Boolean.parseBoolean(data);
+		} else if (Short.class.equals(targetClazz)) {
+			return Short.parseShort(data);
 		} else if (Float.class.equals(targetClazz)) {
-			return Float.valueOf(data);
+			return Float.parseFloat(data);
 		} else if (Double.class.equals(targetClazz)) {
-			return Double.valueOf(data);
+			return Double.parseDouble(data);
 		} else if (Byte.class.equals(targetClazz)) {
-			return Byte.valueOf(data);
+			return Byte.parseByte(data);
 		} else if (LocalDateTime.class.equals(targetClazz)) {
 			return specificFormat ? LocalDateTime.parse(data) : LocalDateTime.parse(data, DateTimeFormatter.ofPattern(format));
 		} else if (LocalTime.class.equals(targetClazz)) {

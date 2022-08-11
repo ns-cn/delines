@@ -1,13 +1,14 @@
 # delines
-解析各种文本（单行或多行）文件转Java实体
+基于正则匹配和反射实现解析各种文本（单行或多行）文件转Java实体
 
 ## 特性介绍
-- [x] 特性1、多种类型支持（可自定义类型，支持自定义decoder）
-- [x] 特性2、支持单行文本与多种映射实体匹配执行
-- [x] 特性3、支持模型应用范围指定（行或则正则形式）
-- [x] 特性4、支持单行和文本的流和字符串文本的映射解析
-- [x] 特性5、支持匹配事件拦截（匹配成功回调执行）
-- [x] 特性6、支持编译过程的校验
+- [x] 特性1、多种基础数据类型支持
+- [x] 特性2、可自定义类型，支持自定义decoder，支持@EntityCreator方式生成实例，可使用Spring Bean方式
+- [x] 特性3、支持单行文本与多种映射实体匹配执行
+- [x] 特性4、支持模型应用范围指定（指定行行或则指定正则形式）
+- [x] 特性5、支持单行和文本的流和字符串文本的映射解析
+- [x] 特性6、支持匹配事件拦截（匹配成功回调执行）
+- [x] 特性7、支持编译过程的校验（正则格式校验，必填项校验）
 ```shell
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ delines-spring ---
@@ -128,10 +129,11 @@ document.consume();
 print.accept(document);
 ```
 输出结果样例：
-```json
+```text
 Person{id=1, name='小明', age=14, sex='M', isMan=true, birthday=1999-09-03}[Score{course='语文', score='73'}, Score{course='数学', score='92'}]
 Person{id=2, name='小霞', age=15, sex='F', isMan=false, birthday=1998-07-06}[Score{course='语文', score='64'}, Score{course='数学', score='94'}]
 Person{id=3, name='小文', age=15, sex='M', isMan=true, birthday=1998-12-12}[Score{course='语文', score='90'}, Score{course='数学', score='73'}]
 ```
 ## 计划支持
 - [ ] 原生级解析结果校验
+- [ ] 逐行文本的匹配前处理和匹配后处理

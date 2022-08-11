@@ -7,7 +7,7 @@
     <groupId>com.tangyujun</groupId>
     <artifactId>delines-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.1-preview</version>
+    <version>1.0.1-release</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

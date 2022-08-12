@@ -134,6 +134,5 @@ Person{id=1, name='小明', age=14, sex='M', isMan=true, birthday=1999-09-03}[Sc
 Person{id=2, name='小霞', age=15, sex='F', isMan=false, birthday=1998-07-06}[Score{course='语文', score='64'}, Score{course='数学', score='94'}]
 Person{id=3, name='小文', age=15, sex='M', isMan=true, birthday=1998-12-12}[Score{course='语文', score='90'}, Score{course='数学', score='73'}]
 ```
-## 计划支持
-- [ ] 原生级解析结果校验
-- [ ] 逐行文本的匹配前处理和匹配后处理
+## [计划支持](./PLAN_VERSION.md)
+详情参见[版本历史](./PLAN_VERSION.md)

@@ -8,7 +8,7 @@ import com.tangyujun.delines.annotation.DelinesField;
 public class Score extends AbstractDelinesEntity {
 	@DelinesField(regExp = "[\\u4e00-\\u9fa5]+")
 	private String course;
-	@DelinesField(regExp = "\\b\\d{1,3}\\b")
+	@DelinesField(regExp = "\\b\\d{1,3}\\b]")
 	private Integer score;
 
 	public String getCourse() {

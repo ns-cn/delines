@@ -24,14 +24,13 @@ public class DelinesEntityPatternProcessor extends AbstractProcessor {
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
 		Messager messager = processingEnv.getMessager();
-		messager.printMessage(Diagnostic.Kind.WARNING, "delines entity pattern checking");
+		messager.printMessage(Diagnostic.Kind.NOTE, "@DelinesEntity Checking");
 		Set<? extends Element> elements = env.getElementsAnnotatedWith(DelinesEntity.class);
-		messager.printMessage(Diagnostic.Kind.NOTE, "total found: " + elements.size());
+//		messager.printMessage(Diagnostic.Kind.NOTE, "total found: " + elements.size());
 		boolean success = true;
 		for (Element element : elements) {
 			if (element.getKind().equals(ElementKind.CLASS)) {
 				TypeElement typeElement = (TypeElement) element;
-
 				messager.printMessage(Diagnostic.Kind.NOTE,
 						"delines entity class: " + typeElement.getQualifiedName());
 				DelinesEntity entity = typeElement.getAnnotation(DelinesEntity.class);

@@ -5,7 +5,7 @@
     <parent>
         <artifactId>delines-parent</artifactId>
         <groupId>com.tangyujun</groupId>
-        <version>1.0.1-release</version>
+        <version>1.0.2-preview</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -36,6 +36,8 @@
                         <annotationProcessor>com.tangyujun.delines.processor.DelinesEntityPatternProcessor
                         </annotationProcessor>
                         <annotationProcessor>com.tangyujun.delines.processor.DelinesFieldPatternProcessor
+                        </annotationProcessor>
+                        <annotationProcessor>com.tangyujun.delines.processor.DelinesEntityCreatorProcessor
                         </annotationProcessor>
                     </annotationProcessors>
                 </configuration>

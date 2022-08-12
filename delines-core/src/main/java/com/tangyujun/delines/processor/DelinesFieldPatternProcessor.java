@@ -25,9 +25,9 @@ public class DelinesFieldPatternProcessor extends AbstractProcessor {
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
 		Messager messager = processingEnv.getMessager();
-		messager.printMessage(Diagnostic.Kind.WARNING, "delines field pattern checking");
+		messager.printMessage(Diagnostic.Kind.NOTE, "@DelinesField Checking");
 		Set<? extends Element> elements = env.getElementsAnnotatedWith(DelinesField.class);
-		messager.printMessage(Diagnostic.Kind.NOTE, "total found: " + elements.size());
+//		messager.printMessage(Diagnostic.Kind.NOTE, "total found: " + elements.size());
 		boolean success = true;
 		try {
 			for (Element element : elements) {

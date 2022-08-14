@@ -8,8 +8,8 @@
 - [x] 特性4、支持模型应用范围指定（指定行行或则指定正则形式）
 - [x] 特性5、支持单行和文本的流和字符串文本的映射解析
 - [x] 特性6、支持匹配事件拦截（匹配成功回调执行）
-- [x] 特性7、原生级嵌套支持
-- [x] 特性8、支持编译过程的校验（正则格式校验，必填项校验，@EntityCreator校验(since V1.0.2)）
+- [x] 特性7、原生级嵌套支持(since V1.0.2-release)
+- [x] 特性8、支持编译过程的校验（正则格式校验，必填项校验，@EntityCreator校验(since V1.0.2-release)）
 ```shell
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ delines-spring ---

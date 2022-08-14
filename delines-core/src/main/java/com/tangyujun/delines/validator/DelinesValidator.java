@@ -25,8 +25,7 @@ public interface DelinesValidator {
 	class NoneNull implements DelinesValidator {
 		@Override
 		public ValidatorResult check(DelinesBusEntity<?> entity, DelinesBusField field, Object value) {
-			String name = Objects.isNull(field.getName()) || Objects.equals(field.getName(), "") ?
-					field.getField().getName() : field.getName();
+			String name = field.getField().getName();
 			return Optional.ofNullable(value).map(t -> ValidatorResult.ok())
 					.orElse(ValidatorResult.fail(name + "could not be null"));
 		}

@@ -9,11 +9,11 @@ public class TestDelinesDocument {
 	public static void main(String[] args) {
 		String text = "成绩单\n" +
 				"P01 小明 14 M 19990903\n" +
-				"语文：73\n数学：92\n" +
+				"语文 73\n数学 92\n" +
 				"P02 小霞 15 F 19980706\n" +
-				"语文：64\n数学：94\n" +
+				"语文 64\n数学 94\n" +
 				"P03 小文 15 M 19981212\n" +
-				"语文：90\n数学：73\n";
+				"语文 90\n数学 73\n";
 		DelinesDocument document = DelinesDocument.of(text)
 				.registerDelinesEntity(Person.class)
 				.registerDelinesEntity(Score.class);

@@ -8,17 +8,12 @@ import com.tangyujun.delines.validator.DelinesValidator;
 import java.lang.annotation.*;
 
 /**
- * DelinesItem: 行的子项
+ * DelinesField: 解析的具体字段内容
  */
 @Documented
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DelinesField {
-
-	/**
-	 * 显示名称，用于用户交互
-	 */
-	String name() default "";
 
 	/**
 	 * 解析器
@@ -40,5 +35,8 @@ public @interface DelinesField {
 	 */
 	String dateFormat() default "";
 
+	/**
+	 * 字段级别的校验
+	 */
 	Class<? extends DelinesValidator> validator() default DelinesValidator.None.class;
 }

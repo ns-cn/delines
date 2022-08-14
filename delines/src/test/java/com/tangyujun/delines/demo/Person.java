@@ -3,6 +3,7 @@ package com.tangyujun.delines.demo;
 import com.tangyujun.delines.AbstractDelinesEntity;
 import com.tangyujun.delines.annotation.DelinesEntity;
 import com.tangyujun.delines.annotation.DelinesField;
+import com.tangyujun.delines.annotation.DelinesNestedField;
 
 import java.time.LocalDate;
 
@@ -26,6 +27,9 @@ public class Person extends AbstractDelinesEntity {
 
 	@DelinesField(regExp = "\\b[0-9]{8}", dateFormat = "yyyyMMdd", decodeExceptionHandler = ParseExceptionHandler.class)
 	private LocalDate birthday;
+
+	@DelinesNestedField
+	private MyDate birth;
 
 	public Integer getId() {
 		return id;
@@ -60,6 +64,7 @@ public class Person extends AbstractDelinesEntity {
 				", sex='" + sex + '\'' +
 				", isMan=" + isMan +
 				", birthday=" + birthday +
+				", birth=" + birth +
 				'}';
 	}
 }

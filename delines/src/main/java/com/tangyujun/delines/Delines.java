@@ -1,12 +1,10 @@
 package com.tangyujun.delines;
 
 import com.tangyujun.delines.annotation.DelinesEntity;
-import com.tangyujun.delines.decoder.IDelinesDecoder;
 import com.tangyujun.delines.parser.DelinesEntityParser;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Matcher;
 
 public final class Delines {
 
@@ -60,19 +58,7 @@ public final class Delines {
 		}
 		T t = entity.create();
 		List<DelinesBusField> fields = entity.getFields();
-		if (fields != null) {
-			for (DelinesBusField field : fields) {
-				Matcher matcher = field.getPattern().matcher(data);
-				IDelinesDecoder decoder = field.getDecoder();
-				IDelinesDecoder.ExceptionHandler exceptionHandler = field.getDecodeExceptionHandler();
-				try {
-					Object fieldValue = decoder.decode(matcher, field);
-					field.getField().set(t, fieldValue);
-				} catch (Exception e) {
-					exceptionHandler.handle(matcher, t, field.getField(), e);
-				}
-			}
-		}
+		Optional.ofNullable(fields).ifPresent(fs -> fs.forEach(f -> f.build(t, data)));
 		t.setLineIndex(line.getLineIndex());
 		return t;
 	}

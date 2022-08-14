@@ -3,7 +3,12 @@
 ## 其他
 - [ ] 原生级校验支持
 
-## V1.0.2（preview）
+## V1.1.0（preview）
+发布一个带完整校验过程的功能可用的版本
+- [ ] @DelinesNestedField编译过程校验
+- [ ] @Delines*Parser部分逻辑重排到编译过程校验
+
+## V1.0.2
 - [x] @EntityCreator编译过程校验
 - [x] 原生级嵌套支持
 

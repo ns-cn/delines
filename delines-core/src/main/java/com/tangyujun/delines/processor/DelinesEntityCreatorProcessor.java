@@ -27,41 +27,37 @@ public class DelinesEntityCreatorProcessor extends AbstractProcessor {
 //		messager.printMessage(Diagnostic.Kind.NOTE, "total found: " + elements.size());
 		boolean success = true;
 		final int value = 1 << Modifier.PUBLIC.ordinal() | 1 << Modifier.STATIC.ordinal();
-		try {
-			for (Element element : elements) {
-				if (element.getKind().equals(ElementKind.METHOD)) {
-					ExecutableElement executableElement = (ExecutableElement) element;
-					// 修饰符校验
-					Set<Modifier> modifiers = executableElement.getModifiers();
-					boolean wrongMethodDeclared = false;
-					if (modifiers != null) {
-						int elementModifierValue = 0;
-						for (Modifier modifier : modifiers) {
-							elementModifierValue = elementModifierValue | 1 << modifier.ordinal();
-						}
-						if (value != elementModifierValue) {
-							wrongMethodDeclared = true;
-						}
+		for (Element element : elements) {
+			if (element.getKind().equals(ElementKind.METHOD)) {
+				ExecutableElement executableElement = (ExecutableElement) element;
+				// 修饰符校验
+				Set<Modifier> modifiers = executableElement.getModifiers();
+				boolean wrongMethodDeclared = false;
+				if (modifiers != null) {
+					int elementModifierValue = 0;
+					for (Modifier modifier : modifiers) {
+						elementModifierValue = elementModifierValue | 1 << modifier.ordinal();
 					}
-					// 返回值类型校验
-					TypeElement typeElement = (TypeElement) executableElement.getEnclosingElement();
-					if (!typeElement.getQualifiedName().contentEquals(executableElement.getReturnType().toString())) {
+					if (value != elementModifierValue) {
 						wrongMethodDeclared = true;
-					}
-					// 参数校验
-					List<? extends VariableElement> parameters = executableElement.getParameters();
-					if (CollectionUtil.isNotEmpty(parameters)) {
-						wrongMethodDeclared = true;
-					}
-					if (wrongMethodDeclared) {
-						messager.printMessage(Diagnostic.Kind.ERROR,
-								"@EntityCreator required: public static " + typeElement.getSimpleName() + " "
-										+ executableElement.getSimpleName() + "() {", element);
 					}
 				}
+				// 返回值类型校验
+				TypeElement typeElement = (TypeElement) executableElement.getEnclosingElement();
+				if (!typeElement.getQualifiedName().contentEquals(executableElement.getReturnType().toString())) {
+					wrongMethodDeclared = true;
+				}
+				// 参数校验
+				List<? extends VariableElement> parameters = executableElement.getParameters();
+				if (CollectionUtil.isNotEmpty(parameters)) {
+					wrongMethodDeclared = true;
+				}
+				if (wrongMethodDeclared) {
+					messager.printMessage(Diagnostic.Kind.ERROR,
+							"@EntityCreator required: public static " + typeElement.getSimpleName() + " "
+									+ executableElement.getSimpleName() + "() {", element);
+				}
 			}
-		} catch (Exception e) {
-			messager.printMessage(Diagnostic.Kind.ERROR, e.getMessage());
 		}
 		return success;
 	}

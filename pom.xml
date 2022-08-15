@@ -27,9 +27,9 @@
         </repository>
     </distributionManagement>
     <modules>
-        <module>./delines-core</module>
-        <module>./delines</module>
-        <module>./delines-spring</module>
+        <module>delines-core</module>
+        <module>delines</module>
+        <module>delines-spring</module>
     </modules>
 
     <dependencyManagement>

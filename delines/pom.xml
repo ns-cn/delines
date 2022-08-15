@@ -39,6 +39,8 @@
                         </annotationProcessor>
                         <annotationProcessor>com.tangyujun.delines.processor.DelinesEntityCreatorProcessor
                         </annotationProcessor>
+                        <annotationProcessor>com.tangyujun.delines.processor.DelinesNestedFieldProcessor
+                        </annotationProcessor>
                     </annotationProcessors>
                 </configuration>
             </plugin>

@@ -14,9 +14,7 @@ public class TestDelinesDocument {
 				"语文 64\n数学 94\n" +
 				"P03 小文 15 M 19981212\n" +
 				"语文 90\n数学 73\n";
-		DelinesDocument document = DelinesDocument.of(text)
-				.registerDelinesEntity(Person.class)
-				.registerDelinesEntity(Score.class);
+		DelinesDocument document = DelinesDocument.of(text);
 		Consumer<DelinesDocument> print = (doc) -> {
 			List<Person> people = document.getFoundEntities(Person.class);
 			if (people != null) {
@@ -26,10 +24,12 @@ public class TestDelinesDocument {
 				document.getBusEntity(Score.class).cleanEntities();
 			}
 		};
-		document.addNotifier(Person.class, ((bus, entity) -> {
-			print.accept(document);
-			return true;
-		})).consume();
+		document.registerDelinesEntity(Person.class, ((bus, entity) -> {
+					print.accept(document);
+					return true;
+				}))
+				.registerDelinesEntity(Score.class)
+				.consume();
 		print.accept(document);
 	}
 

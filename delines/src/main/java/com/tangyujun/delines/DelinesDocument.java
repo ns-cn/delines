@@ -1,5 +1,6 @@
 package com.tangyujun.delines;
 
+import com.tangyujun.delines.decoder.IEntityFactory;
 import com.tangyujun.delines.handler.NextStringGetter;
 import com.tangyujun.delines.handler.Notifier;
 import com.tangyujun.delines.parser.DelinesEntityParser;
@@ -54,29 +55,34 @@ public class DelinesDocument {
 		return this;
 	}
 
-	public DelinesDocument registerDelinesEntity(Class<? extends IDelinesEntity> clazz) {
+	public <T extends IDelinesEntity> DelinesDocument registerDelinesEntity(Class<T> clazz) {
+		return registerDelinesEntity(clazz, new Notifier[]{});
+	}
+
+	/**
+	 * 注册映射类并添加时间回调
+	 *
+	 * @param clazz     映射类
+	 * @param notifiers 匹配后的回调
+	 * @param <T>       映射类
+	 * @return {@link DelinesDocument}
+	 */
+	@SafeVarargs
+	public final <T extends IDelinesEntity> DelinesDocument registerDelinesEntity(Class<T> clazz, Notifier<T>... notifiers) {
 		if (clazz == null) {
-			throw new RuntimeException("could not register deliens entity with NULL");
+			return this;
 		}
 		if (busEntities == null) {
 			busEntities = new ArrayList<>();
 		}
-		if (busEntities.stream().anyMatch(t -> t.getClazz().equals(clazz))) {
-			throw new RuntimeException("Repeated registration");
-		}
-		DelinesEntityParser entityParser = Optional.ofNullable(this.entityParser).orElse(DelinesEntityParser.DEFAULT);
-		busEntities.add(entityParser.parse(clazz));
-		return this;
-	}
-
-	public <T extends IDelinesEntity> DelinesDocument addNotifier(Class<T> clazz, Notifier<T> notifier) {
-		if (clazz == null || notifier == null) {
-			return this;
-		}
 		DelinesBusEntity<T> bus = getBusEntity(clazz);
-		Optional.ofNullable(bus)
-				.orElseThrow(() -> new RuntimeException("could not add notifier to unregistered Class" + clazz + "!"));
-		bus.addNotifier(notifier);
+		if (bus == null) {
+			bus = Optional.ofNullable(entityParser).orElse(DelinesEntityParser.DEFAULT).parse(clazz);
+			busEntities.add(bus);
+		}
+		for (Notifier<T> notifier : notifiers) {
+			Optional.ofNullable(notifier).ifPresent(bus::addNotifier);
+		}
 		return this;
 	}
 

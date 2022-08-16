@@ -38,16 +38,7 @@ public class DelinesFieldPatternProcessor extends AbstractProcessor {
 						messager.printMessage(Diagnostic.Kind.ERROR, "@DelinesField without regExp assigned!"
 								, element);
 					} else {
-						try {
-							if (CharSequenceUtil.isNotBlank(field.regExp())) {
-								Pattern.compile(field.regExp());
-							}
-						} catch (Exception e) {
-							messager.printMessage(Diagnostic.Kind.ERROR,
-									"@DelinesField with wrong pattern: " + field.regExp(),
-									element);
-							success = false;
-						}
+						success = PatternChecker.check(field.regExp(), messager, element) && success;
 					}
 				}
 			}

@@ -22,7 +22,7 @@ public interface DelinesValidator {
 	/**
 	 * 非空校验
 	 */
-	class NoneNull implements DelinesValidator {
+	class NotNull implements DelinesValidator {
 		@Override
 		public ValidatorResult check(DelinesBusEntity<?> entity, DelinesBusField field, Object value) {
 			String name = field.getField().getName();

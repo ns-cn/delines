@@ -5,6 +5,7 @@ import com.tangyujun.delines.handler.Notifier;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 /**
@@ -82,9 +83,7 @@ public class DelinesBusEntity<T extends IDelinesEntity> {
 	}
 
 	public void cleanEntities() {
-		if (entities != null) {
-			entities.clear();
-		}
+		Optional.ofNullable(entities).ifPresent(List::clear);
 	}
 
 	public Class<T> getClazz() {

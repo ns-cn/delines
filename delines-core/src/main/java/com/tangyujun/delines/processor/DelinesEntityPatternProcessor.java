@@ -36,42 +36,22 @@ public class DelinesEntityPatternProcessor extends AbstractProcessor {
 				DelinesEntity entity = typeElement.getAnnotation(DelinesEntity.class);
 				if (entity != null) {
 					if (CharSequenceUtil.isNotEmpty(entity.required())) {
-						try {
-							Pattern.compile(entity.required());
-						} catch (Exception e) {
-							messager.printMessage(Diagnostic.Kind.ERROR,
-									"@DelinesEntity with wrong pattern: " + entity.required(),
-									element);
-							success = false;
-						}
+						success = PatternChecker.check(entity.required(), messager, element) && success;
 					}
 					if (DelinesEntity.RangeType.REGULAR.equals(entity.rangeStartType())) {
-						try {
-							if (CharSequenceUtil.isEmpty(entity.rangeStart())) {
-								messager.printMessage(Diagnostic.Kind.ERROR,
-										"@DelinesEntity assigned rangeStartType without rangeStart", element);
-							} else {
-								Pattern.compile(entity.rangeStart());
-							}
-						} catch (Exception e) {
+						if (CharSequenceUtil.isEmpty(entity.rangeStart())) {
 							messager.printMessage(Diagnostic.Kind.ERROR,
-									"@DelinesEntity with wrong pattern: " + entity.rangeStart(),
-									element);
-							success = false;
+									"@DelinesEntity assigned rangeStartType without rangeStart", element);
+						} else {
+							success = PatternChecker.check(entity.rangeStart(), messager, element) && success;
 						}
 					}
 					if (DelinesEntity.RangeType.REGULAR.equals(entity.rangeEndType())) {
-						try {
-							if (CharSequenceUtil.isEmpty(entity.rangeEnd())) {
-								messager.printMessage(Diagnostic.Kind.ERROR,
-										"@DelinesEntity assigned rangeEndType without rangeEnd", element);
-							} else {
-								Pattern.compile(entity.rangeEnd());
-							}
-						} catch (Exception e) {
+						if (CharSequenceUtil.isEmpty(entity.rangeEnd())) {
 							messager.printMessage(Diagnostic.Kind.ERROR,
-									"@DelinesEntity with wrong pattern: " + entity.rangeEnd(), element);
-							success = false;
+									"@DelinesEntity assigned rangeEndType without rangeEnd", element);
+						} else {
+							success = PatternChecker.check(entity.rangeEnd(), messager, element) && success;
 						}
 					}
 				}

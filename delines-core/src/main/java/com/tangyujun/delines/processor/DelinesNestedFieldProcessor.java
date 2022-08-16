@@ -35,12 +35,7 @@ public class DelinesNestedFieldProcessor extends AbstractProcessor {
 				}
 				DelinesNestedField nestedField = variableElement.getAnnotation(DelinesNestedField.class);
 				if (nestedField != null && CharSequenceUtil.isNotBlank(nestedField.regExp())) {
-					try {
-						Pattern.compile(nestedField.regExp());
-					} catch (Exception e) {
-						messager.printMessage(Diagnostic.Kind.ERROR, "@DelinesNestedField with wrong pattern: " + nestedField.regExp(), element);
-						success = false;
-					}
+					success = PatternChecker.check(nestedField.regExp(), messager, element) && success;
 				}
 			}
 		}

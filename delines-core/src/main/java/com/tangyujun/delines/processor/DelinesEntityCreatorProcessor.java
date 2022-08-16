@@ -10,6 +10,7 @@ import javax.lang.model.element.*;
 import javax.tools.Diagnostic;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @SupportedAnnotationTypes({"com.tangyujun.delines.annotation.EntityCreator"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
@@ -34,24 +35,16 @@ public class DelinesEntityCreatorProcessor extends AbstractProcessor {
 				Set<Modifier> modifiers = executableElement.getModifiers();
 				boolean wrongMethodDeclared = false;
 				if (modifiers != null) {
-					int elementModifierValue = 0;
-					for (Modifier modifier : modifiers) {
-						elementModifierValue = elementModifierValue | 1 << modifier.ordinal();
-					}
-					if (value != elementModifierValue) {
-						wrongMethodDeclared = true;
-					}
+					final AtomicInteger elementModifierValue = new AtomicInteger();
+					modifiers.forEach(modifier -> elementModifierValue.set(elementModifierValue.get() | 1 << modifier.ordinal()));
+					wrongMethodDeclared = elementModifierValue.get() != value;
 				}
 				// 返回值类型校验
 				TypeElement typeElement = (TypeElement) executableElement.getEnclosingElement();
-				if (!typeElement.getQualifiedName().contentEquals(executableElement.getReturnType().toString())) {
-					wrongMethodDeclared = true;
-				}
+				wrongMethodDeclared = wrongMethodDeclared
+						|| !typeElement.getQualifiedName().contentEquals(executableElement.getReturnType().toString());
 				// 参数校验
-				List<? extends VariableElement> parameters = executableElement.getParameters();
-				if (CollectionUtil.isNotEmpty(parameters)) {
-					wrongMethodDeclared = true;
-				}
+				wrongMethodDeclared = wrongMethodDeclared || CollectionUtil.isNotEmpty(executableElement.getParameters());
 				if (wrongMethodDeclared) {
 					messager.printMessage(Diagnostic.Kind.ERROR,
 							"@EntityCreator required: public static " + typeElement.getSimpleName() + " "

@@ -151,11 +151,8 @@ public class DelinesBusField {
 					.map(t -> t.matcher(data))
 					.map(Matcher::group)
 					.orElse(data);
-			if (subFields != null) {
-				for (DelinesBusField subField : subFields) {
-					subField.build(fieldValue, subMatchData);
-				}
-			}
+			Optional.ofNullable(subFields)
+					.ifPresent(t -> t.forEach(subField -> subField.build(fieldValue, subMatchData)));
 			try {
 				field.set(object, fieldValue);
 			} catch (IllegalAccessException e) {

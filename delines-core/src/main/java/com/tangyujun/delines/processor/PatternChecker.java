@@ -22,4 +22,14 @@ public interface PatternChecker {
 			return false;
 		}
 	}
+
+	static boolean checkInteger(String number, Messager messager, Element element) {
+		try {
+			Integer.parseInt(number);
+			return true;
+		} catch (Exception e) {
+			messager.printMessage(Diagnostic.Kind.ERROR, "wrong Integer: " + number, element);
+			return false;
+		}
+	}
 }

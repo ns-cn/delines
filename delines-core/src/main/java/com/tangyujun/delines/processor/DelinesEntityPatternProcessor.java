@@ -45,6 +45,8 @@ public class DelinesEntityPatternProcessor extends AbstractProcessor {
 						} else {
 							success = PatternChecker.check(entity.rangeStart(), messager, element) && success;
 						}
+					} else if (DelinesEntity.RangeType.NUMBER.equals(entity.rangeStartType())) {
+						success = PatternChecker.checkInteger(entity.rangeStart(), messager, element);
 					}
 					if (DelinesEntity.RangeType.REGULAR.equals(entity.rangeEndType())) {
 						if (CharSequenceUtil.isEmpty(entity.rangeEnd())) {
@@ -53,6 +55,8 @@ public class DelinesEntityPatternProcessor extends AbstractProcessor {
 						} else {
 							success = PatternChecker.check(entity.rangeEnd(), messager, element) && success;
 						}
+					} else if (DelinesEntity.RangeType.NUMBER.equals(entity.rangeEndType())) {
+						success = PatternChecker.checkInteger(entity.rangeEnd(), messager, element);
 					}
 				}
 			}

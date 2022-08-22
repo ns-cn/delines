@@ -10,7 +10,9 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 @SupportedAnnotationTypes({"com.tangyujun.delines.annotation.DelinesEntity"})
@@ -36,43 +38,31 @@ public class DelinesEntityPatternProcessor extends AbstractProcessor {
 				DelinesEntity entity = typeElement.getAnnotation(DelinesEntity.class);
 				if (entity != null) {
 					if (CharSequenceUtil.isNotEmpty(entity.required())) {
-						try {
-							Pattern.compile(entity.required());
-						} catch (Exception e) {
-							messager.printMessage(Diagnostic.Kind.ERROR,
-									"@DelinesEntity with wrong pattern: " + entity.required(),
-									element);
-							success = false;
-						}
+						success = PatternChecker.check(entity.required(), messager, element) && success;
 					}
 					if (DelinesEntity.RangeType.REGULAR.equals(entity.rangeStartType())) {
-						try {
-							if (CharSequenceUtil.isEmpty(entity.rangeStart())) {
-								messager.printMessage(Diagnostic.Kind.ERROR,
-										"@DelinesEntity assigned rangeStartType without rangeStart", element);
-							} else {
-								Pattern.compile(entity.rangeStart());
-							}
-						} catch (Exception e) {
+						// 使用正则情况下校验正则
+						if (CharSequenceUtil.isEmpty(entity.rangeStart())) {
 							messager.printMessage(Diagnostic.Kind.ERROR,
-									"@DelinesEntity with wrong pattern: " + entity.rangeStart(),
-									element);
-							success = false;
+									"@DelinesEntity assigned rangeStartType without rangeStart", element);
+						} else {
+							success = PatternChecker.check(entity.rangeStart(), messager, element) && success;
 						}
+					} else if (DelinesEntity.RangeType.NUMBER.equals(entity.rangeStartType())) {
+						// 使用数字情况下校验数字
+						success = PatternChecker.checkInteger(entity.rangeStart(), messager, element);
 					}
 					if (DelinesEntity.RangeType.REGULAR.equals(entity.rangeEndType())) {
-						try {
-							if (CharSequenceUtil.isEmpty(entity.rangeEnd())) {
-								messager.printMessage(Diagnostic.Kind.ERROR,
-										"@DelinesEntity assigned rangeEndType without rangeEnd", element);
-							} else {
-								Pattern.compile(entity.rangeEnd());
-							}
-						} catch (Exception e) {
+						// 使用正则情况下校验正则
+						if (CharSequenceUtil.isEmpty(entity.rangeEnd())) {
 							messager.printMessage(Diagnostic.Kind.ERROR,
-									"@DelinesEntity with wrong pattern: " + entity.rangeEnd(), element);
-							success = false;
+									"@DelinesEntity assigned rangeEndType without rangeEnd", element);
+						} else {
+							success = PatternChecker.check(entity.rangeEnd(), messager, element) && success;
 						}
+					} else if (DelinesEntity.RangeType.NUMBER.equals(entity.rangeEndType())) {
+						// 使用数字情况下校验数字
+						success = PatternChecker.checkInteger(entity.rangeEnd(), messager, element);
 					}
 				}
 			}

@@ -3,6 +3,7 @@ package com.tangyujun.delines.demo;
 import com.tangyujun.delines.AbstractDelinesEntity;
 import com.tangyujun.delines.annotation.DelinesEntity;
 import com.tangyujun.delines.annotation.DelinesField;
+import com.tangyujun.delines.annotation.EntityCreator;
 
 @DelinesEntity(rangeStartType = DelinesEntity.RangeType.NUMBER, rangeStart = "1", required = "[\\u4e00-\\u9fa5]+.*")
 public class Score extends AbstractDelinesEntity {

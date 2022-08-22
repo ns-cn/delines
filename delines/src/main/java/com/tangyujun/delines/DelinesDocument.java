@@ -133,8 +133,15 @@ public class DelinesDocument {
 		return this;
 	}
 
+	/**
+	 * 获取具体类型的注册类型解析类
+	 *
+	 * @param clazz 指定类型
+	 * @param <T>   具体解析类型
+	 * @return 具体类型的注册类型解析类
+	 */
 	public <T extends IDelinesEntity> DelinesBusEntity<T> getBusEntity(Class<T> clazz) {
-		if(busEntities==null){
+		if (busEntities == null) {
 			return null;
 		}
 		for (DelinesBusEntity<? extends IDelinesEntity> busEntity : busEntities) {
@@ -145,8 +152,15 @@ public class DelinesDocument {
 		return null;
 	}
 
+	/**
+	 * 查询指定类型所有已匹配的实体
+	 *
+	 * @param clazz 指定类型
+	 * @param <T>   具体解析类型
+	 * @return 所有已匹配的实体
+	 */
 	public <T extends IDelinesEntity> List<T> getFoundEntities(Class<T> clazz) {
-		if(busEntities==null){
+		if (busEntities == null) {
 			return null;
 		}
 		for (DelinesBusEntity<? extends IDelinesEntity> busEntity : busEntities) {
@@ -157,6 +171,11 @@ public class DelinesDocument {
 		return null;
 	}
 
+	/**
+	 * 获取所有的注册类型解析类
+	 *
+	 * @return 所有注册类型解析类
+	 */
 	public List<DelinesBusEntity<? extends IDelinesEntity>> getBusEntities() {
 		return busEntities;
 	}

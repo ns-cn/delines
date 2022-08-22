@@ -34,9 +34,4 @@ public @interface DelinesField {
 	 * 时间数据的默认格式化样式，用于默认的decoder处理时间类型
 	 */
 	String dateFormat() default "";
-
-	/**
-	 * 字段级别的校验
-	 */
-	Class<? extends DelinesValidator> validator() default DelinesValidator.None.class;
 }

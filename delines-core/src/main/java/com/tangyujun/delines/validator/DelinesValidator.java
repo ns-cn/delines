@@ -2,32 +2,22 @@ package com.tangyujun.delines.validator;
 
 import com.tangyujun.delines.DelinesBusEntity;
 import com.tangyujun.delines.DelinesBusField;
+import com.tangyujun.delines.IDelinesEntity;
 
 import java.util.Objects;
 import java.util.Optional;
 
 @FunctionalInterface
-public interface DelinesValidator {
-	ValidatorResult check(DelinesBusEntity<?> entity, DelinesBusField field, Object value);
+public interface DelinesValidator<T extends IDelinesEntity> {
+	ValidatorResult  check(DelinesBusEntity<T> entity, T value);
 
 	/**
 	 * 不做校验
 	 */
-	class None implements DelinesValidator{
+	class None implements DelinesValidator<IDelinesEntity>{
 		@Override
-		public ValidatorResult check(DelinesBusEntity<?> entity, DelinesBusField field, Object value) {
+		public ValidatorResult check(DelinesBusEntity<IDelinesEntity> entity, IDelinesEntity value) {
 			return null;
-		}
-	}
-	/**
-	 * 非空校验
-	 */
-	class NotNull implements DelinesValidator {
-		@Override
-		public ValidatorResult check(DelinesBusEntity<?> entity, DelinesBusField field, Object value) {
-			String name = field.getField().getName();
-			return Optional.ofNullable(value).map(t -> ValidatorResult.ok())
-					.orElse(ValidatorResult.fail(name + "could not be null"));
 		}
 	}
 }

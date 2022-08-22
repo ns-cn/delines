@@ -1,5 +1,7 @@
 package com.tangyujun.delines.annotation;
 
+import com.tangyujun.delines.validator.DelinesValidator;
+
 import java.lang.annotation.*;
 
 @Documented
@@ -46,6 +48,12 @@ public @interface DelinesEntity {
 	 * {@link #rangeEndType()}
 	 */
 	String rangeEnd() default "";
+
+	/**
+	 * entity校验, 默认不校验
+	 * {@link DelinesValidator}
+	 */
+	Class<? extends DelinesValidator<?>> validator() default DelinesValidator.None.class;
 
 	/**
 	 * 范围的指定方式<br/>

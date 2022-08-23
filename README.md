@@ -1,4 +1,8 @@
 # delines
+
+[![LICENSE](https://img.shields.io/github/license/ns-cn/delines.svg?style=flat-square)](https://github.com/ns-cn/delines/blob/main/LICENSE)
+[![Releases](https://img.shields.io/github/release/ns-cn/delines/all.svg?style=flat-square)](https://github.com/ns-cn/delines/releases)
+
 基于正则匹配和反射实现解析各种文本（单行或多行）文件转Java实体
 
 ## 特性介绍

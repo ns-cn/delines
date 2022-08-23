@@ -17,6 +17,8 @@
         <hutool.version>5.8.1</hutool.version>
         <autoservice.version>1.0.1</autoservice.version>
         <spring.context.version>5.3.21</spring.context.version>
+        <sonar.organization>ns-cn</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <distributionManagement>

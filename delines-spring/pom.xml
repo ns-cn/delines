@@ -42,11 +42,13 @@
                     <source>1.8</source>
                     <target>1.8</target>
                     <annotationProcessors>
+                        <annotationProcessor>com.tangyujun.delines.processor.DelinesEntityCreatorProcessor
+                        </annotationProcessor>
                         <annotationProcessor>com.tangyujun.delines.processor.DelinesEntityPatternProcessor
                         </annotationProcessor>
                         <annotationProcessor>com.tangyujun.delines.processor.DelinesFieldPatternProcessor
                         </annotationProcessor>
-                        <annotationProcessor>com.tangyujun.delines.processor.DelinesEntityCreatorProcessor
+                        <annotationProcessor>com.tangyujun.delines.processor.DelinesNestedFieldProcessor
                         </annotationProcessor>
                     </annotationProcessors>
                 </configuration>

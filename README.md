@@ -1,5 +1,5 @@
 # delines
-
+[![CodeQL](https://github.com/ns-cn/delines/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/ns-cn/delines/actions/workflows/codeql-analysis.yml)
 [![LICENSE](https://img.shields.io/github/license/ns-cn/delines.svg?style=flat-square)](https://github.com/ns-cn/delines/blob/main/LICENSE)
 [![Releases](https://img.shields.io/github/release/ns-cn/delines/all.svg?style=flat-square)](https://github.com/ns-cn/delines/releases)
 

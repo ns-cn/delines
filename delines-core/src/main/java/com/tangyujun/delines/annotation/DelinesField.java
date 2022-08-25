@@ -3,7 +3,6 @@ package com.tangyujun.delines.annotation;
 import com.tangyujun.delines.decoder.IDelinesDecoder;
 import com.tangyujun.delines.decoder.SimpleDecoder;
 import com.tangyujun.delines.exceptionhandler.NoneHandler;
-import com.tangyujun.delines.validator.DelinesValidator;
 
 import java.lang.annotation.*;
 

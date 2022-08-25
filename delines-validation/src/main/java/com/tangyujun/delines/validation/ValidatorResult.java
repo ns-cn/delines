@@ -1,4 +1,4 @@
-package com.tangyujun.delines.validator;
+package com.tangyujun.delines.validation;
 
 public class ValidatorResult {
 

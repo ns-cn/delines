@@ -71,15 +71,15 @@ public class DateValidationProcessor extends AbstractProcessor {
 					success.set(false);
 					messager.printMessage(Diagnostic.Kind.ERROR, "@DateFuture only for TIME type", element);
 				}
-				if (dateFuture.value() != null) {
-					if (Objects.equals(dateFuture.format(), "")) {
+				if (CharSequenceUtil.isNotEmpty(dateFuture.value())) {
+					if (CharSequenceUtil.isEmpty(dateFuture.format())) {
 						success.set(false);
 						messager.printMessage(Diagnostic.Kind.ERROR, "@DateFuture without format", element);
 					} else {
 						try {
 							Optional.ofNullable(dateParser.get(type))
 									.map(parser -> parser.apply(dateFuture.value()))
-									.map(f -> f.apply(dateFuture.format()))
+									.map(function -> function.apply(dateFuture.format()))
 									.orElseThrow(() -> new ParseException(dateFuture.value(), 0));
 						} catch (Exception e) {
 							success.set(false);
@@ -105,14 +105,14 @@ public class DateValidationProcessor extends AbstractProcessor {
 					messager.printMessage(Diagnostic.Kind.ERROR, "@DatePast only for TIME type", element);
 				}
 				if (CharSequenceUtil.isNotEmpty(datePast.value())) {
-					if (Objects.equals(datePast.format(), "")) {
+					if (CharSequenceUtil.isEmpty(datePast.format())) {
 						success.set(false);
 						messager.printMessage(Diagnostic.Kind.ERROR, "@DatePast without format", element);
 					} else {
 						try {
 							Optional.ofNullable(dateParser.get(type))
 									.map(parser -> parser.apply(datePast.value()))
-									.map(f -> f.apply(datePast.format()))
+									.map(function -> function.apply(datePast.format()))
 									.orElseThrow(() -> new ParseException(datePast.value(), 0));
 						} catch (Exception e) {
 							success.set(false);

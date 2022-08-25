@@ -34,7 +34,7 @@
         <module>delines-checker</module>
         <module>delines</module>
         <module>delines-spring</module>
-        <module>delines-test</module>
+        <module>delines-demo</module>
     </modules>
 
     <dependencyManagement>

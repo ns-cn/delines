@@ -1,5 +1,6 @@
 package com.tangyujun.delines.decoder;
 
+import cn.hutool.core.text.CharSequenceUtil;
 import com.tangyujun.delines.DelinesBusField;
 
 import java.lang.reflect.Field;
@@ -37,7 +38,7 @@ public class SimpleDecoder implements IDelinesDecoder, IDelinesDecoder.Exception
 		Class<?> targetClazz = field.getResultType();
 		String data = result.group();
 		String format = field.getDateFormat();
-		boolean specificFormat = format == null || format.equals("");
+		boolean specificFormat = CharSequenceUtil.isEmpty(format);
 		if (String.class.equals(targetClazz)) {
 			return data;
 		} else if (Integer.class.equals(targetClazz)) {

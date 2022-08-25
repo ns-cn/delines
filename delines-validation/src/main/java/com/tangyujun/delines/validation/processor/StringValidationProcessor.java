@@ -32,7 +32,7 @@ public class StringValidationProcessor extends AbstractProcessor {
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
 		Messager messager = processingEnv.getMessager();
-		messager.printMessage(Diagnostic.Kind.NOTE, "Validation annotation Checking");
+		messager.printMessage(Diagnostic.Kind.NOTE, "String validation annotation Checking");
 		Set<? extends Element> stringLengthElements = env.getElementsAnnotatedWith(StringLength.class);
 		Set<? extends Element> stringNotEmptyElements = env.getElementsAnnotatedWith(StringNotEmpty.class);
 		Set<? extends Element> stringPatternElements = env.getElementsAnnotatedWith(StringPattern.class);

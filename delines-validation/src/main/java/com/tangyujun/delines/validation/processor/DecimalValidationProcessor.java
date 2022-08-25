@@ -25,7 +25,7 @@ public class DecimalValidationProcessor extends AbstractProcessor {
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
 		Messager messager = processingEnv.getMessager();
-		messager.printMessage(Diagnostic.Kind.NOTE, "Validation annotation Checking");
+		messager.printMessage(Diagnostic.Kind.NOTE, "Decimal validation annotation Checking");
 		Set<? extends Element> assertFalseElements = env.getElementsAnnotatedWith(AssertFalse.class);
 
 		return false;

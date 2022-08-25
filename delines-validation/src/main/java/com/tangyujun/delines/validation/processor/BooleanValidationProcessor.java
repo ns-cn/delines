@@ -30,7 +30,7 @@ public class BooleanValidationProcessor extends AbstractProcessor {
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
 		Messager messager = processingEnv.getMessager();
-		messager.printMessage(Diagnostic.Kind.NOTE, "Validation annotation Checking");
+		messager.printMessage(Diagnostic.Kind.NOTE, "Boolean validation annotation Checking");
 		Set<? extends Element> assertFalseElements = env.getElementsAnnotatedWith(AssertFalse.class);
 		Set<? extends Element> assertTrueElements = env.getElementsAnnotatedWith(AssertTrue.class);
 		AtomicBoolean success = new AtomicBoolean(true);

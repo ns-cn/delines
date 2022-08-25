@@ -31,7 +31,7 @@ public class ObjectValidationProcessor extends AbstractProcessor {
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
 		Messager messager = processingEnv.getMessager();
-		messager.printMessage(Diagnostic.Kind.NOTE, "Validation annotation Checking");
+		messager.printMessage(Diagnostic.Kind.NOTE, "Object validation annotation Checking");
 		Set<? extends Element> notNullElements = env.getElementsAnnotatedWith(AssertNotNull.class);
 		Set<? extends Element> nullElements = env.getElementsAnnotatedWith(AssertNull.class);
 		Consumer<Element> elementConsumer = element -> {

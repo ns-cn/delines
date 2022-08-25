@@ -16,9 +16,4 @@ public class Test {
 
 	@DatePast("20220302")
 	private Date time2;
-
-	@StringLength(min = -2, max = -3)
-	@StringNotEmpty
-	@StringPattern("[]")
-	private String sgsd;
 }

@@ -19,6 +19,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -40,21 +41,20 @@ public class DateValidationProcessor extends AbstractProcessor {
 		Set<? extends Element> dateFutureElements = env.getElementsAnnotatedWith(DateFuture.class);
 		Set<? extends Element> datePastElements = env.getElementsAnnotatedWith(DatePast.class);
 
-		Map<Class<?>, Function<String, Function<String, Object>>> dateParser = new HashMap<>();
-		dateParser.put(Date.class, value -> format -> {
+		Map<Class<?>, BiFunction<String, String, Object>> dateParser = new HashMap<>();
+		dateParser.put(Date.class, (value, format) -> {
 			try {
 				return new SimpleDateFormat(format).parse(value);
 			} catch (ParseException e) {
 				throw new RuntimeException(e);
 			}
 		});
-		dateParser.put(LocalDateTime.class, value ->
-				format -> LocalDateTime.parse(value, DateTimeFormatter.ofPattern(format)));
-		dateParser.put(LocalDate.class, value ->
-				format -> LocalDate.parse(value, DateTimeFormatter.ofPattern(format)));
-		dateParser.put(LocalTime.class, value ->
-				format -> LocalTime.parse(value, DateTimeFormatter.ofPattern(format)));
-
+		dateParser.put(LocalDateTime.class,
+				(value, format) -> LocalDateTime.parse(value, DateTimeFormatter.ofPattern(format)));
+		dateParser.put(LocalDate.class,
+				(value, format) -> LocalDate.parse(value, DateTimeFormatter.ofPattern(format)));
+		dateParser.put(LocalTime.class,
+				(value, format) -> LocalTime.parse(value, DateTimeFormatter.ofPattern(format)));
 
 		AtomicBoolean success = new AtomicBoolean(true);
 		Consumer<Element> futureConsumer = element -> {
@@ -78,8 +78,7 @@ public class DateValidationProcessor extends AbstractProcessor {
 					} else {
 						try {
 							Optional.ofNullable(dateParser.get(type))
-									.map(parser -> parser.apply(dateFuture.value()))
-									.map(function -> function.apply(dateFuture.format()))
+									.map(parser -> parser.apply(dateFuture.value(), dateFuture.format()))
 									.orElseThrow(() -> new ParseException(dateFuture.value(), 0));
 						} catch (Exception e) {
 							success.set(false);
@@ -111,8 +110,7 @@ public class DateValidationProcessor extends AbstractProcessor {
 					} else {
 						try {
 							Optional.ofNullable(dateParser.get(type))
-									.map(parser -> parser.apply(datePast.value()))
-									.map(function -> function.apply(datePast.format()))
+									.map(parser -> parser.apply(datePast.value(), datePast.format()))
 									.orElseThrow(() -> new ParseException(datePast.value(), 0));
 						} catch (Exception e) {
 							success.set(false);

@@ -31,6 +31,7 @@
     <modules>
         <module>delines-core</module>
         <module>delines-validation</module>
+        <module>delines-checker</module>
         <module>delines</module>
         <module>delines-spring</module>
         <module>delines-test</module>
@@ -51,6 +52,11 @@
             <dependency>
                 <groupId>com.tangyujun</groupId>
                 <artifactId>delines-validation</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tangyujun</groupId>
+                <artifactId>delines-checker</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

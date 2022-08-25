@@ -1,11 +1,11 @@
-package com.tangyujun.validation.annotation;
+package com.tangyujun.delines.validation.annotation;
 
 import java.lang.annotation.*;
 
 @Documented
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DecimalMax {
+public @interface DecimalMin {
 	/**
 	 * 值
 	 */
@@ -14,5 +14,5 @@ public @interface DecimalMax {
 	/**
 	 * 提示信息
 	 */
-	String message() default "required max value!";
+	String message() default "required min value!";
 }

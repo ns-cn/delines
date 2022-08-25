@@ -1,4 +1,4 @@
-package com.tangyujun.validation.annotation;
+package com.tangyujun.delines.validation.annotation;
 
 import java.lang.annotation.*;
 

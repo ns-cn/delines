@@ -1,4 +1,4 @@
-package com.tangyujun.validation.annotation;
+package com.tangyujun.delines.validation.annotation;
 
 
 import java.lang.annotation.*;
@@ -6,10 +6,9 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DateFuture {
+public @interface DatePast {
 	/**
-	 * 值, 如果不指定则为当前时间，否则为指定的时间
-	 * {@link #format()}
+	 * 值, 如果不指定则为当前时间，否则为指定的时间，时间格式yyyyMMdd或则yyyyMMddHHmmss
 	 */
 	String value() default "";
 
@@ -21,5 +20,5 @@ public @interface DateFuture {
 	/**
 	 * 提示信息
 	 */
-	String message() default "required future time";
+	String message() default "required past time";
 }

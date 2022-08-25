@@ -1,15 +1,20 @@
-package com.tangyujun.validation.annotation;
+package com.tangyujun.delines.validation.annotation;
 
 import java.lang.annotation.*;
 
 @Documented
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DecimalMin {
+public @interface DecimalRange {
 	/**
-	 * 值
+	 * 最小值
 	 */
-	String value();
+	String min();
+
+	/**
+	 * 最小值
+	 */
+	String max();
 
 	/**
 	 * 提示信息

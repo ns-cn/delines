@@ -1,4 +1,4 @@
-package com.tangyujun.delines.boot;
+package com.tangyujun.delines.spring;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.tangyujun.delines.decoder.IDecoderFactory;

@@ -28,8 +28,10 @@
     </distributionManagement>
     <modules>
         <module>delines-core</module>
+        <module>delines-validation</module>
         <module>delines</module>
         <module>delines-spring</module>
+        <module>delines-test</module>
     </modules>
 
     <dependencyManagement>
@@ -42,6 +44,11 @@
             <dependency>
                 <groupId>com.tangyujun</groupId>
                 <artifactId>delines-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tangyujun</groupId>
+                <artifactId>delines-validation</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -73,12 +80,6 @@
         </dependencies>
     </dependencyManagement>
 
-
-
-
-
-
-
     <build>
         <plugins>
             <plugin>
@@ -105,11 +106,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <configuration>
-                        <nonFilteredFileExtensions>
-                            <!-- 密钥文件不能被编译 -->
-                            <nonFilteredFileExtension>cert</nonFilteredFileExtension>
-                            <nonFilteredFileExtension>jks</nonFilteredFileExtension>
-                        </nonFilteredFileExtensions>
                         <delimiters>
                             <delimiter>${resource.delimiter}</delimiter>
                         </delimiters>
@@ -135,21 +131,12 @@
                     </configuration>
                 </plugin>
                 <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <configuration>
-                        <includeSystemScope>true</includeSystemScope>
-                    </configuration>
-                </plugin>
-
-                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
                     <configuration>
                         <archive>
                             <manifestEntries>
                                 <Build-Time>${timestamp}</Build-Time>
-                                <!-- maven原生的时间戳时区不对,不能使用 <Build-Time>${maven.build.timestamp}</Build-Time> -->
                             </manifestEntries>
                         </archive>
                     </configuration>

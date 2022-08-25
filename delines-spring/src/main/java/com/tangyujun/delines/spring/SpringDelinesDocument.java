@@ -1,4 +1,4 @@
-package com.tangyujun.delines.boot;
+package com.tangyujun.delines.spring;
 
 import com.tangyujun.delines.DelinesDocument;
 

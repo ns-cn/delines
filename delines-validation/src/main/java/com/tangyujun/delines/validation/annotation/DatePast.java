@@ -16,7 +16,10 @@ public @interface DatePast {
 	 * 日期格式，可以使用其他的日期格式，例如指定时刻
 	 */
 	String format() default "yyyyMMdd";
-
+	/**
+	 * 是否包含声明时间点
+	 */
+	boolean contain() default true;
 	/**
 	 * 提示信息
 	 */

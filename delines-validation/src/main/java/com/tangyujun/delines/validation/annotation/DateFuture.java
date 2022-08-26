@@ -19,6 +19,11 @@ public @interface DateFuture {
 	String format() default "yyyyMMdd";
 
 	/**
+	 * 是否包含声明时间点
+	 */
+	boolean contain() default true;
+
+	/**
 	 * 提示信息
 	 */
 	String message() default "required future time";

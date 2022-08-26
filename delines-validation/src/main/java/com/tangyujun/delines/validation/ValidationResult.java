@@ -1,12 +1,10 @@
 package com.tangyujun.delines.validation;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.sun.xml.internal.bind.ValidationEventLocatorEx;
 
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class ValidationResult {
 

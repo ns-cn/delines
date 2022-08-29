@@ -56,6 +56,14 @@
                         </annotationProcessor>
                         <annotationProcessor>com.tangyujun.delines.validator.processor.BooleanValidationProcessor
                         </annotationProcessor>
+                        <annotationProcessor>com.tangyujun.delines.validator.processor.DateValidationProcessor
+                        </annotationProcessor>
+                        <annotationProcessor>com.tangyujun.delines.validator.processor.DecimalValidationProcessor
+                        </annotationProcessor>
+                        <annotationProcessor>com.tangyujun.delines.validator.processor.ObjectValidationProcessor
+                        </annotationProcessor>
+                        <annotationProcessor>com.tangyujun.delines.validator.processor.StringValidationProcessor
+                        </annotationProcessor>
                     </annotationProcessors>
                 </configuration>
             </plugin>

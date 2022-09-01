@@ -10,22 +10,22 @@ import java.time.LocalDate;
 @DelinesEntity(required = "P\\d+.*")
 public class Person extends AbstractDelinesEntity {
 
-	@DelinesField(regExp = "(?<=P)\\d+")
+	@DelinesField(value = "(?<=P)\\d+")
 	private Integer id;
 
-	@DelinesField(regExp = "[\\u4e00-\\u9fa5]+")
+	@DelinesField(value = "[\\u4e00-\\u9fa5]+")
 	private String name;
 
-	@DelinesField(regExp = "\\b\\d{1,3}\\b")
+	@DelinesField(value = "\\b\\d{1,3}\\b")
 	private Integer age;
 
-	@DelinesField(regExp = "\\b[FM]\\b")
+	@DelinesField(value = "\\b[FM]\\b")
 	private String sex;
 
-	@DelinesField(regExp = "\\b[FM]\\b", decoder = IsManParser.class)
+	@DelinesField(value = "\\b[FM]\\b", decoder = IsManParser.class)
 	private Boolean isMan;
 
-	@DelinesField(regExp = "\\b[0-9]{8}", dateFormat = "yyyyMMdd", decodeExceptionHandler = ParseExceptionHandler.class)
+	@DelinesField(value = "\\b[0-9]{8}", dateFormat = "yyyyMMdd", decodeExceptionHandler = ParseExceptionHandler.class)
 	private LocalDate birthday;
 
 	@DelinesNestedField

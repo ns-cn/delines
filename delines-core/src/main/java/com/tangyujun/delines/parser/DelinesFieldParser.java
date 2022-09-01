@@ -66,7 +66,7 @@ public final class DelinesFieldParser {
 		Optional.ofNullable(delinesField).ifPresent(t -> {
 			Class<? extends IDelinesDecoder> clazzDecoder = t.decoder();
 			Class<? extends IDelinesDecoder.ExceptionHandler> clazzDecodeExceptionHandler = t.decodeExceptionHandler();
-			String regExp = t.regExp();
+			String regExp = t.value();
 			IDelinesDecoder decoder = decoderFactory.get(clazzDecoder);
 			IDelinesDecoder.ExceptionHandler exceptionHandler = decodeExceptionHandlerFactory.get(clazzDecodeExceptionHandler);
 			delinesBusField.setDecoder(decoder);
@@ -76,8 +76,8 @@ public final class DelinesFieldParser {
 		});
 		Optional.ofNullable(delinesNestedField).ifPresent(t -> {
 			delinesBusField.setNestedField(true);
-			if(CharSequenceUtil.isNotBlank(t.regExp())){
-				delinesBusField.setRegExp(t.regExp());
+			if(CharSequenceUtil.isNotBlank(t.value())){
+				delinesBusField.setRegExp(t.value());
 			}
 			Class<?> subType = field.getType();
 			Field[] subTypeDeclaredFields = subType.getDeclaredFields();

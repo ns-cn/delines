@@ -12,7 +12,6 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.tools.Diagnostic;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 @SupportedAnnotationTypes({"com.tangyujun.delines.annotation.DelinesField"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
@@ -34,11 +33,11 @@ public class DelinesFieldPatternProcessor extends AbstractProcessor {
 				VariableElement variableElement = (VariableElement) element;
 				DelinesField field = variableElement.getAnnotation(DelinesField.class);
 				if (field != null) {
-					if (CharSequenceUtil.isEmpty(field.regExp())) {
+					if (CharSequenceUtil.isEmpty(field.value())) {
 						messager.printMessage(Diagnostic.Kind.ERROR, "@DelinesField without regExp assigned!"
 								, element);
 					} else {
-						success = PatternChecker.check(field.regExp(), messager, element) && success;
+						success = PatternChecker.check(field.value(), messager, element) && success;
 					}
 				}
 			}

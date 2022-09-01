@@ -13,7 +13,6 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.tools.Diagnostic;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 @SupportedAnnotationTypes({"com.tangyujun.delines.annotation.DelinesNestedField"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
@@ -34,8 +33,8 @@ public class DelinesNestedFieldProcessor extends AbstractProcessor {
 					success = false;
 				}
 				DelinesNestedField nestedField = variableElement.getAnnotation(DelinesNestedField.class);
-				if (nestedField != null && CharSequenceUtil.isNotBlank(nestedField.regExp())) {
-					success = PatternChecker.check(nestedField.regExp(), messager, element) && success;
+				if (nestedField != null && CharSequenceUtil.isNotBlank(nestedField.value())) {
+					success = PatternChecker.check(nestedField.value(), messager, element) && success;
 				}
 			}
 		}

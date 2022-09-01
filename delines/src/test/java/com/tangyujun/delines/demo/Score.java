@@ -3,13 +3,12 @@ package com.tangyujun.delines.demo;
 import com.tangyujun.delines.AbstractDelinesEntity;
 import com.tangyujun.delines.annotation.DelinesEntity;
 import com.tangyujun.delines.annotation.DelinesField;
-import com.tangyujun.delines.annotation.EntityCreator;
 
 @DelinesEntity(rangeStartType = DelinesEntity.RangeType.NUMBER, rangeStart = "1", required = "[\\u4e00-\\u9fa5]+.*")
 public class Score extends AbstractDelinesEntity {
-	@DelinesField(regExp = "[\\u4e00-\\u9fa5]+")
+	@DelinesField(value = "[\\u4e00-\\u9fa5]+")
 	private String course;
-	@DelinesField(regExp = "\\d{1,3}\\b")
+	@DelinesField(value = "\\d{1,3}\\b")
 	private Integer score;
 
 	public String getCourse() {

@@ -4,11 +4,11 @@ import com.tangyujun.delines.annotation.DelinesField;
 
 public class MyDate {
 
-	@DelinesField(regExp = "\\b[0-9]{4}(?=年)")
+	@DelinesField(value = "\\b[0-9]{4}(?=年)")
 	private Integer year;
-	@DelinesField(regExp = "(?<=年)[0-9]{1,2}(?=月)")
+	@DelinesField(value = "(?<=年)[0-9]{1,2}(?=月)")
 	private Integer month;
-	@DelinesField(regExp = "(?<=月)[0-9]{1,2}(?=日)")
+	@DelinesField(value = "(?<=月)[0-9]{1,2}(?=日)")
 	private Integer day;
 
 	public Integer getYear() {

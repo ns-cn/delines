@@ -91,66 +91,81 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.8</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
                 <executions>
                     <execution>
-                        <id>timestamp-property</id>
+                        <phase>package</phase>
                         <goals>
-                            <goal>timestamp-property</goal>
+                            <goal>shade</goal>
                         </goals>
-                        <configuration>
-                            <name>timestamp</name>
-                            <pattern>${maven.build.timestamp.format}</pattern>
-                            <timeZone>GMT+8</timeZone>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <configuration>
-                        <delimiters>
-                            <delimiter>${resource.delimiter}</delimiter>
-                        </delimiters>
-                        <useDefaultDelimiters>false</useDefaultDelimiters>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <!-- <phase>package</phase> clean dependency:copy-dependencies package -->
-                            <phase>prepare-package</phase>
-                            <goals>
-                                <goal>copy-dependencies</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <includeScope>system</includeScope>
-                        <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/lib
-                        </outputDirectory>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <configuration>
-                        <archive>
-                            <manifestEntries>
-                                <Build-Time>${timestamp}</Build-Time>
-                            </manifestEntries>
-                        </archive>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+        <!--        <plugins>-->
+        <!--            <plugin>-->
+        <!--                <groupId>org.codehaus.mojo</groupId>-->
+        <!--                <artifactId>build-helper-maven-plugin</artifactId>-->
+        <!--                <version>1.8</version>-->
+        <!--                <executions>-->
+        <!--                    <execution>-->
+        <!--                        <id>timestamp-property</id>-->
+        <!--                        <goals>-->
+        <!--                            <goal>timestamp-property</goal>-->
+        <!--                        </goals>-->
+        <!--                        <configuration>-->
+        <!--                            <name>timestamp</name>-->
+        <!--                            <pattern>${maven.build.timestamp.format}</pattern>-->
+        <!--                            <timeZone>GMT+8</timeZone>-->
+        <!--                        </configuration>-->
+        <!--                    </execution>-->
+        <!--                </executions>-->
+        <!--            </plugin>-->
+        <!--        </plugins>-->
+        <!--        <pluginManagement>-->
+        <!--            <plugins>-->
+        <!--                <plugin>-->
+        <!--                    <groupId>org.apache.maven.plugins</groupId>-->
+        <!--                    <artifactId>maven-resources-plugin</artifactId>-->
+        <!--                    <configuration>-->
+        <!--                        <delimiters>-->
+        <!--                            <delimiter>${resource.delimiter}</delimiter>-->
+        <!--                        </delimiters>-->
+        <!--                        <useDefaultDelimiters>false</useDefaultDelimiters>-->
+        <!--                    </configuration>-->
+        <!--                </plugin>-->
+        <!--                <plugin>-->
+        <!--                    <groupId>org.apache.maven.plugins</groupId>-->
+        <!--                    <artifactId>maven-dependency-plugin</artifactId>-->
+        <!--                    <executions>-->
+        <!--                        <execution>-->
+        <!--                            &lt;!&ndash; <phase>package</phase> clean dependency:copy-dependencies package &ndash;&gt;-->
+        <!--                            <phase>prepare-package</phase>-->
+        <!--                            <goals>-->
+        <!--                                <goal>copy-dependencies</goal>-->
+        <!--                            </goals>-->
+        <!--                        </execution>-->
+        <!--                    </executions>-->
+        <!--                    <configuration>-->
+        <!--                        <includeScope>system</includeScope>-->
+        <!--                        <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/lib-->
+        <!--                        </outputDirectory>-->
+        <!--                    </configuration>-->
+        <!--                </plugin>-->
+        <!--                <plugin>-->
+        <!--                    <groupId>org.apache.maven.plugins</groupId>-->
+        <!--                    <artifactId>maven-jar-plugin</artifactId>-->
+        <!--                    <configuration>-->
+        <!--                        <archive>-->
+        <!--                            <manifestEntries>-->
+        <!--                                <Build-Time>${timestamp}</Build-Time>-->
+        <!--                            </manifestEntries>-->
+        <!--                        </archive>-->
+        <!--                    </configuration>-->
+        <!--                </plugin>-->
+        <!--            </plugins>-->
+        <!--        </pluginManagement>-->
     </build>
 </project>

@@ -3,6 +3,7 @@ package com.tangyujun.delines.validation;
 import com.tangyujun.delines.decoder.IEntityFactory;
 import com.tangyujun.delines.validation.annotation.*;
 import com.tangyujun.delines.validation.factories.DefaultValidatorFactory;
+import com.tangyujun.delines.validation.factories.SpringValidatorFactory;
 import com.tangyujun.delines.validation.validator.*;
 
 import java.lang.annotation.Annotation;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
  */
 public final class Validation {
 
-	private IEntityFactory<? extends IValidator> entityFactories = new DefaultValidatorFactory();
+	private IEntityFactory<IValidator> entityFactories = new DefaultValidatorFactory();
 
 	public static final Validation DEFAULT = new Validation();
 
@@ -40,7 +41,7 @@ public final class Validation {
 	private Validation() {
 	}
 
-	private Validation(IEntityFactory<? extends IValidator> entityFactories) {
+	private Validation(IEntityFactory<IValidator> entityFactories) {
 		Objects.requireNonNull(entityFactories);
 		this.entityFactories = entityFactories;
 	}
@@ -49,7 +50,11 @@ public final class Validation {
 		return DEFAULT;
 	}
 
-	public static Validation with(IEntityFactory<? extends IValidator> factory) {
+	public static Validation spring(){
+		return with(new SpringValidatorFactory());
+	}
+
+	public static Validation with(IEntityFactory<IValidator> factory) {
 		return new Validation(factory);
 	}
 
@@ -86,6 +91,13 @@ public final class Validation {
 						result = check(field, fieldValue, StringNotEmpty.class, new StringNotEmptyValidator()::validate);
 					} else if (annotation.equals(StringPattern.class)) {
 						result = check(field, fieldValue, StringPattern.class, new StringPatternValidator()::validate);
+					} else if (annotation.equals(CustomValidation.class)) {
+						CustomValidation customValidation = field.getAnnotation(CustomValidation.class);
+						IValidator validator = Optional.ofNullable(customValidation)
+								.map(CustomValidation::validator)
+								.map(entityFactories::get)
+								.orElseThrow(() -> new RuntimeException("no available validator"));
+						result = validator.validate(obj);
 					}
 					if (result != null && result.isFail()) {
 						return result;

@@ -90,8 +90,18 @@ public class ValidationResult {
 	 * @param results 校验结果集合
 	 * @return 合并之后的校验结果
 	 */
-	public static ValidationResult merge(ValidationResult... results) {
+	public static ValidationResult merge(Collection<ValidationResult> results) {
 		return merge(ValidationType.OPTIONS_ALL, results);
+	}
+
+	/**
+	 * 合并所有校验结果
+	 *
+	 * @param results 校验结果集合
+	 * @return 合并之后的校验结果
+	 */
+	public static ValidationResult merge(ValidationResult... results) {
+		return merge(ValidationType.OPTIONS_ALL, Arrays.asList(results));
 	}
 
 	/**
@@ -101,8 +111,8 @@ public class ValidationResult {
 	 * @param results 校验结果集合
 	 * @return 合并之后的校验结果
 	 */
-	public static ValidationResult merge(int options, ValidationResult... results) {
-		if (results.length == 0) {
+	public static ValidationResult merge(int options, Collection<ValidationResult> results) {
+		if (CollectionUtil.isEmpty(results)) {
 			return ValidationResult.ok();
 		}
 		List<String> okMessage = new LinkedList<>();
@@ -138,5 +148,11 @@ public class ValidationResult {
 			}
 		}
 		return resultBuilder.get(finalType).apply(resultMessage.toString());
+	}
+
+	@Override
+	public String toString() {
+		return String.format("[%s] - %s", status.name(),
+				Optional.ofNullable(message).orElse(""));
 	}
 }

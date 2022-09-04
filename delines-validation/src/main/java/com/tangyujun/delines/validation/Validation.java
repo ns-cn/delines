@@ -7,7 +7,6 @@ import com.tangyujun.delines.validation.factories.SpringValidatorFactory;
 import com.tangyujun.delines.validation.validator.*;
 
 import java.lang.annotation.Annotation;
-import java.lang.annotation.Repeatable;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.BiFunction;

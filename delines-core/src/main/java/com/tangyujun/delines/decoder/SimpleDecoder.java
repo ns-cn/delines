@@ -4,13 +4,17 @@ import cn.hutool.core.text.CharSequenceUtil;
 import com.tangyujun.delines.DelinesBusField;
 
 import java.lang.reflect.Field;
-import java.text.ParseException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 
 /**
@@ -22,12 +26,42 @@ public class SimpleDecoder implements IDelinesDecoder, IDelinesDecoder.Exception
 	private static final SimpleDecoder INSTANCE = new SimpleDecoder();
 
 	private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 	public static SimpleDecoder getInstance() {
 		return INSTANCE;
 	}
 
+	private static final Map<Class<?>, Function<String, Object>> functionMap = new HashMap<>();
+	private static final Map<Class<?>, BiFunction<Object, String, Object>> biFunctionMap = new HashMap<>();
+
+	static {
+		functionMap.put(String.class, data -> data);
+		functionMap.put(Integer.class, Integer::parseInt);
+		functionMap.put(Long.class, Long::parseLong);
+		functionMap.put(Boolean.class, Boolean::parseBoolean);
+		functionMap.put(Short.class, Short::parseShort);
+		functionMap.put(Float.class, Float::parseFloat);
+		functionMap.put(Double.class, Double::parseDouble);
+		functionMap.put(Byte.class, Byte::parseByte);
+		biFunctionMap.put(LocalDateTime.class, SimpleParser::LocalDateTime);
+		biFunctionMap.put(LocalDate.class, SimpleParser::LocalDate);
+		biFunctionMap.put(LocalTime.class, SimpleParser::LocalTime);
+		biFunctionMap.put(Date.class, SimpleParser::Date);
+	}
+
 	@Override
 	public void handle(Matcher matcher, Object entity, Field field, Throwable exception) {
+	}
+
+	private Object formatter(Class<?> clazz, String format) {
+		if (LocalDateTime.class.equals(clazz)
+				|| LocalTime.class.equals(clazz)
+				|| LocalDate.class.equals(clazz)) {
+			return CharSequenceUtil.isEmpty(format) ? DateTimeFormatter.ofPattern(format) : null;
+		} else if (Date.class.equals(clazz)) {
+			return CharSequenceUtil.isEmpty(format) ? new SimpleDateFormat(format) : FORMAT;
+		}
+		return null;
 	}
 
 	@Override
@@ -38,33 +72,43 @@ public class SimpleDecoder implements IDelinesDecoder, IDelinesDecoder.Exception
 		Class<?> targetClazz = field.getResultType();
 		String data = result.group();
 		String format = field.getDateFormat();
-		boolean specificFormat = CharSequenceUtil.isEmpty(format);
-		if (String.class.equals(targetClazz)) {
-			return data;
-		} else if (Integer.class.equals(targetClazz)) {
-			return Integer.parseInt(data);
-		} else if (Long.class.equals(targetClazz)) {
-			return Long.parseLong(data);
-		} else if (Boolean.class.equals(targetClazz)) {
-			return Boolean.parseBoolean(data);
-		} else if (Short.class.equals(targetClazz)) {
-			return Short.parseShort(data);
-		} else if (Float.class.equals(targetClazz)) {
-			return Float.parseFloat(data);
-		} else if (Double.class.equals(targetClazz)) {
-			return Double.parseDouble(data);
-		} else if (Byte.class.equals(targetClazz)) {
-			return Byte.parseByte(data);
-		} else if (LocalDateTime.class.equals(targetClazz)) {
-			return specificFormat ? LocalDateTime.parse(data) : LocalDateTime.parse(data, DateTimeFormatter.ofPattern(format));
-		} else if (LocalTime.class.equals(targetClazz)) {
-			return specificFormat ? LocalTime.parse(data) : LocalTime.parse(data, DateTimeFormatter.ofPattern(format));
-		} else if (LocalDate.class.equals(targetClazz)) {
-			return specificFormat ? LocalDate.parse(data) : LocalDate.parse(data, DateTimeFormatter.ofPattern(format));
-		} else if (Date.class.equals(targetClazz)) {
+		Object formatter = formatter(targetClazz, format);
+
+		Function<String, Object> function = functionMap.get(targetClazz);
+		if (function != null) {
+			return function.apply(data);
+		}
+		BiFunction<Object, String, Object> biFunction = biFunctionMap.get(targetClazz);
+		if (biFunction != null) {
+			return biFunction.apply(formatter, data);
+		}
+		if (List.class.equals(targetClazz) || Set.class.equals(targetClazz)) {
+			Type[] actualTypeArguments = ((ParameterizedType) field.getField().getGenericType()).getActualTypeArguments();
+			if (actualTypeArguments.length != 1) {
+				throw new RuntimeException("type assignment required!");
+			}
 			try {
-				return specificFormat ? FORMAT.parse(data) : new SimpleDateFormat(format).parse(data);
-			} catch (ParseException e) {
+				Class<?> innerType = Class.forName(actualTypeArguments[0].getTypeName());
+				Object innerFormatter = formatter(innerType, format);
+				Collection<Object> results = new ArrayList<>();
+				if(Set.class.equals(targetClazz)){
+					results = new HashSet<>();
+				}
+				do {
+					data = result.group();
+					Function<String, Object> innerFunction = functionMap.get(innerType);
+					if (innerFunction != null) {
+						results.add(innerFunction.apply(data));
+						continue;
+					}
+					BiFunction<Object, String, Object> innerBiFunction = biFunctionMap.get(targetClazz);
+					if (innerBiFunction != null) {
+						results.add(innerBiFunction.apply(innerFormatter, data));
+					}
+					throw new RuntimeException("not supported inner type:" + innerType);
+				} while (result.find());
+				return results;
+			} catch (ClassNotFoundException e) {
 				throw new RuntimeException(e);
 			}
 		}

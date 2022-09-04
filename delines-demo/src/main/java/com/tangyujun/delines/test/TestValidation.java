@@ -1,10 +1,11 @@
 package com.tangyujun.delines.test;
 
+import com.tangyujun.delines.Delines;
 import com.tangyujun.delines.validation.Validation;
 import com.tangyujun.delines.validation.ValidationException;
 import com.tangyujun.delines.validation.ValidationResult;
 
-public class Test {
+public class TestValidation {
 	public static void main(String[] args) throws ValidationException {
 		Validation validation = Validation.with();
 		Demo d = new Demo();

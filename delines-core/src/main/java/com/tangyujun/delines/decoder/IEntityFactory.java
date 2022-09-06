@@ -1,13 +1,11 @@
 package com.tangyujun.delines.decoder;
 
-import cn.hutool.extra.spring.SpringUtil;
 import com.tangyujun.delines.annotation.EntityCreator;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.Optional;
 
 public interface IEntityFactory<T> {
 
@@ -53,7 +51,7 @@ public interface IEntityFactory<T> {
 				if (constructor.getParameterCount() == 0) {
 					constructor.setAccessible(true);
 					try {
-						Object o = constructor.newInstance(new Object[]{});
+						return (T) constructor.newInstance();
 					} catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
 						throw new RuntimeException(e);
 					}

@@ -1,9 +1,6 @@
 package com.tangyujun.delines.spring;
 
-import com.tangyujun.delines.Delines;
-import com.tangyujun.delines.DelinesBusEntity;
-import com.tangyujun.delines.DelinesLine;
-import com.tangyujun.delines.IDelinesEntity;
+import com.tangyujun.delines.*;
 import com.tangyujun.delines.parser.DelinesEntityParser;
 import com.tangyujun.delines.parser.DelinesFieldParser;
 
@@ -21,10 +18,10 @@ public class SpringDelines {
 	}
 
 	public static <T extends IDelinesEntity> T with(String data, DelinesBusEntity<T> entity) {
-		return Delines.with(DelinesLine.of(data), entity);
+		return Delines.with(data, entity);
 	}
 
-	public static <T extends IDelinesEntity> T with(DelinesLine line, DelinesBusEntity<T> entity) {
+	public static <T extends IDelinesEntityWithIndex> T with(DelinesLine line, DelinesBusEntity<T> entity) {
 		return Delines.with(line, entity);
 	}
 }

@@ -8,7 +8,6 @@ import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.*;
 import javax.tools.Diagnostic;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -25,7 +24,6 @@ public class DelinesEntityCreatorProcessor extends AbstractProcessor {
 		Messager messager = processingEnv.getMessager();
 		messager.printMessage(Diagnostic.Kind.NOTE, "@EntityCreator Checking");
 		Set<? extends Element> elements = env.getElementsAnnotatedWith(EntityCreator.class);
-//		messager.printMessage(Diagnostic.Kind.NOTE, "total found: " + elements.size());
 		boolean success = true;
 		final int value = 1 << Modifier.PUBLIC.ordinal() | 1 << Modifier.STATIC.ordinal();
 		for (Element element : elements) {

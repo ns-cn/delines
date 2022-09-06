@@ -47,8 +47,8 @@ public final class DelinesFieldParser {
 	/**
 	 * 解析实体映射类型字段
 	 *
-	 * @param field 子弹
-	 * @return
+	 * @param field 字段
+	 * @return 解析之后实体映射类型
 	 */
 	public DelinesBusField parse(Field field) {
 		if (field == null) {

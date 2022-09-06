@@ -10,10 +10,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
-import java.util.Optional;
 import java.util.Set;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
 
 @SupportedAnnotationTypes({"com.tangyujun.delines.annotation.DelinesEntity"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
@@ -28,7 +25,6 @@ public class DelinesEntityPatternProcessor extends AbstractProcessor {
 		Messager messager = processingEnv.getMessager();
 		messager.printMessage(Diagnostic.Kind.NOTE, "@DelinesEntity Checking");
 		Set<? extends Element> elements = env.getElementsAnnotatedWith(DelinesEntity.class);
-//		messager.printMessage(Diagnostic.Kind.NOTE, "total found: " + elements.size());
 		boolean success = true;
 		for (Element element : elements) {
 			if (element.getKind().equals(ElementKind.CLASS)) {

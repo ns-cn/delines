@@ -26,7 +26,6 @@ public class DelinesFieldPatternProcessor extends AbstractProcessor {
 		Messager messager = processingEnv.getMessager();
 		messager.printMessage(Diagnostic.Kind.NOTE, "@DelinesField Checking");
 		Set<? extends Element> elements = env.getElementsAnnotatedWith(DelinesField.class);
-//		messager.printMessage(Diagnostic.Kind.NOTE, "total found: " + elements.size());
 		boolean success = true;
 		for (Element element : elements) {
 			if (element.getKind().equals(ElementKind.FIELD)) {

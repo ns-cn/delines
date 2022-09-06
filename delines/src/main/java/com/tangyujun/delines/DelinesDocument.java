@@ -17,7 +17,7 @@ public class DelinesDocument {
 	 */
 	private BufferedReader reader;
 
-	private List<DelinesBusEntity<? extends IDelinesEntity>> busEntities;
+	private List<DelinesBusEntity<? extends IDelinesEntityWithIndex>> busEntities;
 
 	private DelinesEntityParser entityParser;
 
@@ -55,10 +55,6 @@ public class DelinesDocument {
 		return this;
 	}
 
-	public <T extends IDelinesEntity> DelinesDocument registerDelinesEntity(Class<T> clazz) {
-		return registerDelinesEntity(clazz, new Notifier[]{});
-	}
-
 	/**
 	 * 注册映射类并添加时间回调
 	 *
@@ -68,7 +64,7 @@ public class DelinesDocument {
 	 * @return {@link DelinesDocument}
 	 */
 	@SafeVarargs
-	public final <T extends IDelinesEntity> DelinesDocument registerDelinesEntity(Class<T> clazz, Notifier<T>... notifiers) {
+	public final <T extends IDelinesEntityWithIndex> DelinesDocument registerDelinesEntity(Class<T> clazz, Notifier<T>... notifiers) {
 		if (clazz == null) {
 			return this;
 		}
@@ -113,11 +109,11 @@ public class DelinesDocument {
 				break;
 			}
 			String data = next.getValue();
-			for (DelinesBusEntity<? extends IDelinesEntity> bus : busEntities) {
-				IDelinesEntity value = Delines.with(DelinesLine.of(index, data), bus);
+			for (DelinesBusEntity<? extends IDelinesEntityWithIndex> bus : busEntities) {
+				IDelinesEntityWithIndex value = Delines.with(DelinesLine.of(index, data), bus);
 				Optional.ofNullable(value).ifPresent(t -> {
 					boolean addToBus = true;
-					List<? extends Notifier<? extends IDelinesEntity>> clazzNotifiers = bus.getNotifiers();
+					List<? extends Notifier<? extends IDelinesEntityWithIndex>> clazzNotifiers = bus.getNotifiers();
 					if (clazzNotifiers != null) {
 						for (Notifier clazzNotifier : clazzNotifiers) {
 							addToBus = addToBus && clazzNotifier.notify(bus, t);
@@ -140,11 +136,11 @@ public class DelinesDocument {
 	 * @param <T>   具体解析类型
 	 * @return 具体类型的注册类型解析类
 	 */
-	public <T extends IDelinesEntity> DelinesBusEntity<T> getBusEntity(Class<T> clazz) {
+	public <T extends IDelinesEntityWithIndex> DelinesBusEntity<T> getBusEntity(Class<T> clazz) {
 		if (busEntities == null) {
 			return null;
 		}
-		for (DelinesBusEntity<? extends IDelinesEntity> busEntity : busEntities) {
+		for (DelinesBusEntity<? extends IDelinesEntityWithIndex> busEntity : busEntities) {
 			if (busEntity.getClazz().equals(clazz)) {
 				return (DelinesBusEntity<T>) busEntity;
 			}
@@ -159,11 +155,11 @@ public class DelinesDocument {
 	 * @param <T>   具体解析类型
 	 * @return 所有已匹配的实体
 	 */
-	public <T extends IDelinesEntity> List<T> getFoundEntities(Class<T> clazz) {
+	public <T extends IDelinesEntityWithIndex> List<T> getFoundEntities(Class<T> clazz) {
 		if (busEntities == null) {
 			return null;
 		}
-		for (DelinesBusEntity<? extends IDelinesEntity> busEntity : busEntities) {
+		for (DelinesBusEntity<? extends IDelinesEntityWithIndex> busEntity : busEntities) {
 			if (busEntity.getClazz().equals(clazz)) {
 				return (List<T>) busEntity.getEntities();
 			}
@@ -176,7 +172,7 @@ public class DelinesDocument {
 	 *
 	 * @return 所有注册类型解析类
 	 */
-	public List<DelinesBusEntity<? extends IDelinesEntity>> getBusEntities() {
+	public List<DelinesBusEntity<? extends IDelinesEntityWithIndex>> getBusEntities() {
 		return busEntities;
 	}
 }

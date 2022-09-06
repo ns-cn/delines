@@ -18,10 +18,13 @@ public final class Delines {
 	}
 
 	public static <T extends IDelinesEntity> T with(String data, DelinesBusEntity<T> entity) {
-		return with(DelinesLine.of(data), entity);
+		T t = entity.create();
+		List<DelinesBusField> fields = entity.getFields();
+		Optional.ofNullable(fields).ifPresent(fs -> fs.forEach(f -> f.build(t, data)));
+		return t;
 	}
 
-	public static <T extends IDelinesEntity> T with(DelinesLine line, DelinesBusEntity<T> entity) {
+	public static <T extends IDelinesEntityWithIndex> T with(DelinesLine line, DelinesBusEntity<T> entity) {
 		if (line == null) {
 			return null;
 		}
@@ -56,9 +59,7 @@ public final class Delines {
 				|| (entity.getRangeEndLine() != null && entity.getRangeEndLine() < line.getLineIndex())) {
 			return null;
 		}
-		T t = entity.create();
-		List<DelinesBusField> fields = entity.getFields();
-		Optional.ofNullable(fields).ifPresent(fs -> fs.forEach(f -> f.build(t, data)));
+		T t = with(data, entity);
 		t.setLineIndex(line.getLineIndex());
 		return t;
 	}

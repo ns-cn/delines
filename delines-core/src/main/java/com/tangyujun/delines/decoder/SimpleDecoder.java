@@ -1,16 +1,19 @@
 package com.tangyujun.delines.decoder;
 
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.text.CharSequenceUtil;
 import com.tangyujun.delines.DelinesBusField;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalQuery;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -43,10 +46,10 @@ public class SimpleDecoder implements IDelinesDecoder, IDelinesDecoder.Exception
 		functionMap.put(Float.class, Float::parseFloat);
 		functionMap.put(Double.class, Double::parseDouble);
 		functionMap.put(Byte.class, Byte::parseByte);
-		biFunctionMap.put(LocalDateTime.class, SimpleParser::LocalDateTime);
-		biFunctionMap.put(LocalDate.class, SimpleParser::LocalDate);
-		biFunctionMap.put(LocalTime.class, SimpleParser::LocalTime);
-		biFunctionMap.put(Date.class, SimpleParser::Date);
+		biFunctionMap.put(LocalDateTime.class, SimpleDecoder::LocalDateTime);
+		biFunctionMap.put(LocalDate.class, SimpleDecoder::LocalDate);
+		biFunctionMap.put(LocalTime.class, SimpleDecoder::LocalTime);
+		biFunctionMap.put(Date.class, SimpleDecoder::Date);
 	}
 
 	@Override
@@ -113,5 +116,38 @@ public class SimpleDecoder implements IDelinesDecoder, IDelinesDecoder.Exception
 			}
 		}
 		throw new UnsupportedOperationException("unsupported " + targetClazz + " using " + SimpleDecoder.class);
+	}
+
+
+	public static Object LocalDateTime(Object formatter, String data) {
+		return withDateFormatter(formatter, data, LocalDateTime::from, LocalDateTime::parse);
+	}
+
+	public static Object LocalDate(Object formatter, String data) {
+		return withDateFormatter(formatter, data, LocalDate::from, LocalDate::parse);
+	}
+
+	public static Object LocalTime(Object formatter, String data) {
+		return withDateFormatter(formatter, data, LocalTime::from, LocalTime::parse);
+	}
+
+	public static Object Date(Object formatter, String data) {
+		Assert.isInstanceOf(SimpleDateFormat.class, formatter);
+		try {
+			return ((SimpleDateFormat) formatter).parse(data);
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private static <T> Object withDateFormatter(Object formatter, String data, TemporalQuery<T> query,
+	                                            Function<String, Object> defaultParser) {
+		if (formatter != null) {
+			Assert.isInstanceOf(DateTimeFormatter.class, formatter);
+		}
+		return Optional.ofNullable(formatter)
+				.map(t -> (DateTimeFormatter) t)
+				.map(t -> (Object) t.parse(data, query))
+				.orElse(defaultParser.apply(data));
 	}
 }

@@ -60,9 +60,9 @@ public class SimpleDecoder implements IDelinesDecoder, IDelinesDecoder.Exception
 		if (LocalDateTime.class.equals(clazz)
 				|| LocalTime.class.equals(clazz)
 				|| LocalDate.class.equals(clazz)) {
-			return CharSequenceUtil.isEmpty(format) ? DateTimeFormatter.ofPattern(format) : null;
+			return !CharSequenceUtil.isEmpty(format) ? DateTimeFormatter.ofPattern(format) : null;
 		} else if (Date.class.equals(clazz)) {
-			return CharSequenceUtil.isEmpty(format) ? new SimpleDateFormat(format) : FORMAT;
+			return !CharSequenceUtil.isEmpty(format) ? new SimpleDateFormat(format) : FORMAT;
 		}
 		return null;
 	}
@@ -145,9 +145,9 @@ public class SimpleDecoder implements IDelinesDecoder, IDelinesDecoder.Exception
 		if (formatter != null) {
 			Assert.isInstanceOf(DateTimeFormatter.class, formatter);
 		}
-		return Optional.ofNullable(formatter)
-				.map(t -> (DateTimeFormatter) t)
-				.map(t -> (Object) t.parse(data, query))
-				.orElse(defaultParser.apply(data));
+		if (formatter != null) {
+			return ((DateTimeFormatter) formatter).parse(data, query);
+		}
+		return defaultParser.apply(data);
 	}
 }

@@ -149,6 +149,7 @@ public class DelinesBusField {
 			fieldValue = IEntityFactory.build(resultType);
 			String subMatchData = Optional.ofNullable(pattern)
 					.map(t -> t.matcher(data))
+					.map(t -> t.find() ? t : null)
 					.map(Matcher::group)
 					.orElse(data);
 			Optional.ofNullable(subFields)

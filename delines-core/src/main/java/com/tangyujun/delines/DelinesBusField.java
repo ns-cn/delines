@@ -2,11 +2,13 @@ package com.tangyujun.delines;
 
 import com.tangyujun.delines.decoder.IDelinesDecoder;
 import com.tangyujun.delines.decoder.IEntityFactory;
+import com.tangyujun.delines.parser.CollectionUtils;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,7 +59,12 @@ public class DelinesBusField {
 	/**
 	 * 如果是嵌套子类型，记录子所有子字段
 	 */
-	private List<DelinesBusField> subFields;
+	private DelinesBusEntity<?> nestedBusEntity;
+
+	/**
+	 * 泛型子类型
+	 */
+	private Class<?> nestedSubType;
 
 	public DelinesBusField(Field field) {
 		this.field = field;
@@ -126,15 +133,20 @@ public class DelinesBusField {
 		this.dateFormat = dateFormat;
 	}
 
-	public void addSubFields(DelinesBusField field) {
-		if (subFields == null) {
-			subFields = new ArrayList<>();
-		}
-		subFields.add(field);
+	public DelinesBusEntity<?> getNestedBusEntity() {
+		return nestedBusEntity;
 	}
 
-	public List<DelinesBusField> getSubFields() {
-		return subFields;
+	public void setNestedBusEntity(DelinesBusEntity<?> nestedBusEntity) {
+		this.nestedBusEntity = nestedBusEntity;
+	}
+
+	public Class<?> getNestedSubType() {
+		return nestedSubType;
+	}
+
+	public void setNestedSubType(Class<?> nestedSubType) {
+		this.nestedSubType = nestedSubType;
 	}
 
 	/**
@@ -144,20 +156,57 @@ public class DelinesBusField {
 	 * @param data   给定字符串数据
 	 */
 	public void build(Object object, String data) {
-		Object fieldValue;
+		Object fieldValue = null;
 		if (nestedField) {
-			fieldValue = IEntityFactory.build(resultType);
-			String subMatchData = Optional.ofNullable(pattern)
-					.map(t -> t.matcher(data))
-					.map(t -> t.find() ? t : null)
-					.map(Matcher::group)
-					.orElse(data);
-			Optional.ofNullable(subFields)
-					.ifPresent(t -> t.forEach(subField -> subField.build(fieldValue, subMatchData)));
-			try {
-				field.set(object, fieldValue);
-			} catch (IllegalAccessException e) {
-				throw new RuntimeException(e);
+			if (nestedBusEntity != null) {
+				if (List.class.equals(resultType) || Set.class.equals(resultType)) {
+					Collection<Object> tempFieldValue = null;
+					if (List.class.equals(resultType)) {
+						tempFieldValue = CollectionUtils.newList(Object.class);
+					} else {
+						tempFieldValue = CollectionUtils.newSet(Object.class);
+					}
+					if (pattern != null) {
+						Matcher matcher = pattern.matcher(data);
+						while (matcher.find()) {
+							String innerDate = matcher.group();
+							Object tempItem = IEntityFactory.build(nestedSubType);
+							Collection<Object> finalTempFieldValue = tempFieldValue;
+							Optional.ofNullable(nestedBusEntity)
+									.map(DelinesBusEntity::getFields)
+									.ifPresent(fs -> {
+										fs.forEach(f -> f.build(tempItem, innerDate));
+										finalTempFieldValue.add(tempItem);
+									});
+						}
+					} else {
+						Object tempItem = IEntityFactory.build(nestedSubType);
+						Collection<Object> finalTempFieldValue = tempFieldValue;
+						Optional.ofNullable(nestedBusEntity)
+								.map(DelinesBusEntity::getFields)
+								.ifPresent(fs -> {
+									fs.forEach(f -> f.build(tempItem, data));
+									finalTempFieldValue.add(tempItem);
+								});
+					}
+					fieldValue = tempFieldValue;
+				} else {
+					fieldValue = IEntityFactory.build(resultType);
+					String subMatchData = Optional.ofNullable(pattern)
+							.map(t -> t.matcher(data))
+							.map(t -> t.find() ? t : null)
+							.map(Matcher::group)
+							.orElse(data);
+					Object finalFieldValue = fieldValue;
+					Optional.ofNullable(nestedBusEntity)
+							.map(DelinesBusEntity::getFields)
+							.ifPresent(fs -> fs.forEach(f -> f.build(finalFieldValue, subMatchData)));
+				}
+				try {
+					field.set(object, fieldValue);
+				} catch (IllegalAccessException e) {
+					throw new RuntimeException(e);
+				}
 			}
 		} else {
 			Matcher matcher = pattern.matcher(data);

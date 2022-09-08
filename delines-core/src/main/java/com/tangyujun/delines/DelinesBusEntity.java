@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * 目标行类型bus装载类，包含类型的基础数据
  * @param <T>
  */
-public class DelinesBusEntity<T extends IDelinesEntity> {
+public class DelinesBusEntity<T> {
 
 	private Class<T> clazz;
 
@@ -44,7 +44,7 @@ public class DelinesBusEntity<T extends IDelinesEntity> {
 
 	private List<T> entities;
 
-	public static <T extends IDelinesEntity> DelinesBusEntity<T> of(Class<T> clazz, List<DelinesBusField> fields) {
+	public static <T> DelinesBusEntity<T> of(Class<T> clazz, List<DelinesBusField> fields) {
 		DelinesBusEntity<T> entity = new DelinesBusEntity<>();
 		entity.setClazz(clazz);
 		entity.setFields(fields);
@@ -59,7 +59,7 @@ public class DelinesBusEntity<T extends IDelinesEntity> {
 		}
 	}
 
-	public void add(IDelinesEntity t) {
+	public void add(Object t) {
 		if (t == null) {
 			return;
 		}

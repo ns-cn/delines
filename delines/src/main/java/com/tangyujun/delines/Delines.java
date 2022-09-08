@@ -8,23 +8,23 @@ import java.util.Optional;
 
 public final class Delines {
 
-	public static <T extends IDelinesEntity> T with(String data, Class<T> clazz) {
+	public static <T> T with(String data, Class<T> clazz) {
 		return with(data, clazz, null);
 	}
 
-	public static <T extends IDelinesEntity> T with(String data, Class<T> clazz, DelinesEntityParser customParser) {
+	public static <T> T with(String data, Class<T> clazz, DelinesEntityParser customParser) {
 		DelinesEntityParser entityParser = Optional.ofNullable(customParser).orElse(DelinesEntityParser.DEFAULT);
 		return with(data, entityParser.parse(clazz));
 	}
 
-	public static <T extends IDelinesEntity> T with(String data, DelinesBusEntity<T> entity) {
+	public static <T> T with(String data, DelinesBusEntity<T> entity) {
 		T t = entity.create();
 		List<DelinesBusField> fields = entity.getFields();
 		Optional.ofNullable(fields).ifPresent(fs -> fs.forEach(f -> f.build(t, data)));
 		return t;
 	}
 
-	public static <T extends IDelinesEntityWithIndex> T with(DelinesLine line, DelinesBusEntity<T> entity) {
+	public static <T extends IDelinesEntity> T with(DelinesLine line, DelinesBusEntity<T> entity) {
 		if (line == null) {
 			return null;
 		}

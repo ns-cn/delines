@@ -1,20 +1,20 @@
 package com.tangyujun.delines;
 
-public abstract class AbstractDelinesEntity implements IDelinesEntityWithIndex {
+public abstract class AbstractDelinesEntity implements IDelinesEntity {
 	/**
 	 * 行索引
 	 */
 	private long lineIndex;
 
 	/**
-	 * {@link IDelinesEntityWithIndex#getLineIndex()}
+	 * {@link IDelinesEntity#getLineIndex()}
 	 */
 	public long getLineIndex() {
 		return lineIndex;
 	}
 
 	/**
-	 * {@link IDelinesEntityWithIndex#setLineIndex(long)}
+	 * {@link IDelinesEntity#setLineIndex(long)}
 	 * @param lineIndex 行索引
 	 */
 	public void setLineIndex(long lineIndex) {

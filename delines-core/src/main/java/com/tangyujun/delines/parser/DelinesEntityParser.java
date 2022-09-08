@@ -3,7 +3,6 @@ package com.tangyujun.delines.parser;
 import cn.hutool.core.text.CharSequenceUtil;
 import com.tangyujun.delines.DelinesBusEntity;
 import com.tangyujun.delines.DelinesBusField;
-import com.tangyujun.delines.IDelinesEntity;
 import com.tangyujun.delines.annotation.DelinesEntity;
 
 import java.lang.reflect.Field;
@@ -78,7 +77,7 @@ public final class DelinesEntityParser {
 	 * @param <T>   类类型
 	 * @return 映射转换之后的数据
 	 */
-	public <T extends IDelinesEntity> DelinesBusEntity<T> parse(Class<T> clazz) {
+	public <T> DelinesBusEntity<T> parse(Class<T> clazz) {
 		if (clazz == null) {
 			return null;
 		}
@@ -140,7 +139,7 @@ public final class DelinesEntityParser {
 	 * @param <T>   类类型
 	 * @return 映射转换之后的数据
 	 */
-	public static <T extends IDelinesEntity> DelinesBusEntity<T> parseUsingDefault(Class<T> clazz) {
+	public static <T> DelinesBusEntity<T> parseUsingDefault(Class<T> clazz) {
 		return DEFAULT.parse(clazz);
 	}
 }

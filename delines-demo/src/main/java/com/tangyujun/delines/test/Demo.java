@@ -1,7 +1,5 @@
 package com.tangyujun.delines.test;
 
-import com.tangyujun.delines.AbstractDelinesEntity;
-import com.tangyujun.delines.IDelinesEntity;
 import com.tangyujun.delines.annotation.DelinesField;
 import com.tangyujun.delines.validation.annotation.DecimalMax;
 import com.tangyujun.delines.validation.annotation.DecimalMin;
@@ -9,7 +7,7 @@ import com.tangyujun.delines.validation.annotation.DecimalMin;
 import java.util.List;
 import java.util.Set;
 
-public class Demo implements IDelinesEntity {
+public class Demo {
 	@DecimalMin(value = "1",message = "a必须小于1")
 	public Integer a;
 

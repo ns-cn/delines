@@ -13,15 +13,15 @@ public class SpringDelines {
 					.withDecodeExceptionHandlerFactory(new DecodeExceptionHandlerSpringFactory()));
 
 
-	public static <T extends IDelinesEntity> T with(String data, Class<T> clazz) {
+	public static <T> T with(String data, Class<T> clazz) {
 		return Delines.with(data, clazz, DELINES_ENTITY_SPRING_PARSER);
 	}
 
-	public static <T extends IDelinesEntity> T with(String data, DelinesBusEntity<T> entity) {
+	public static <T> T with(String data, DelinesBusEntity<T> entity) {
 		return Delines.with(data, entity);
 	}
 
-	public static <T extends IDelinesEntityWithIndex> T with(DelinesLine line, DelinesBusEntity<T> entity) {
+	public static <T extends IDelinesEntity> T with(DelinesLine line, DelinesBusEntity<T> entity) {
 		return Delines.with(line, entity);
 	}
 }

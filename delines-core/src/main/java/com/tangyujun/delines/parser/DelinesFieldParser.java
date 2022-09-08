@@ -7,8 +7,12 @@ import com.tangyujun.delines.annotation.DelinesNestedField;
 import com.tangyujun.delines.decoder.*;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 public final class DelinesFieldParser {
 
@@ -76,13 +80,23 @@ public final class DelinesFieldParser {
 		});
 		Optional.ofNullable(delinesNestedField).ifPresent(t -> {
 			delinesBusField.setNestedField(true);
-			if(CharSequenceUtil.isNotBlank(t.value())){
+			if (CharSequenceUtil.isNotBlank(t.value())) {
 				delinesBusField.setRegExp(t.value());
 			}
-			Class<?> subType = field.getType();
-			Field[] subTypeDeclaredFields = subType.getDeclaredFields();
-			for (Field subTypeDeclaredField : subTypeDeclaredFields) {
-				Optional.ofNullable(parse(subTypeDeclaredField)).ifPresent(delinesBusField::addSubFields);
+			if (List.class.equals(delinesBusField.getResultType()) || Set.class.equals(delinesBusField.getResultType())) {
+				Type[] actualTypeArguments = ((ParameterizedType) field.getGenericType()).getActualTypeArguments();
+				if (actualTypeArguments.length != 1) {
+					throw new RuntimeException("type assignment required!");
+				}
+				try {
+					Class<?> innerType = Class.forName(actualTypeArguments[0].getTypeName());
+					delinesBusField.setNestedBusEntity(DelinesEntityParser.parseUsingDefault(innerType));
+					delinesBusField.setNestedSubType(innerType);
+				} catch (ClassNotFoundException e) {
+					throw new RuntimeException(e);
+				}
+			} else {
+				delinesBusField.setNestedBusEntity(DelinesEntityParser.parseUsingDefault(delinesBusField.getResultType()));
 			}
 		});
 		return delinesBusField;

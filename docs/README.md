@@ -1,0 +1,11 @@
+## delines使用简介
+### 一、解析
+#### 基础使用
+#### @DelinesField
+#### @DelinesNestedField
+#### @DelinesEntity
+### 二、校验
+#### 数值类校验
+#### Object类校验
+#### 日期类校验
+#### 自定义校验

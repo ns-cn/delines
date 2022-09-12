@@ -1,4 +1,4 @@
-package com.tangyujun.delines.test.fims;
+package com.tangyujun.delines.test.nested;
 
 import com.tangyujun.delines.AbstractDelinesEntity;
 import com.tangyujun.delines.annotation.DelinesField;

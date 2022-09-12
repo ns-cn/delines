@@ -1,6 +1,5 @@
-package com.tangyujun.delines.test;
+package com.tangyujun.delines.test.validation;
 
-import com.tangyujun.delines.Delines;
 import com.tangyujun.delines.validation.Validation;
 import com.tangyujun.delines.validation.ValidationException;
 import com.tangyujun.delines.validation.ValidationResult;
@@ -8,7 +7,7 @@ import com.tangyujun.delines.validation.ValidationResult;
 public class TestValidation {
 	public static void main(String[] args) throws ValidationException {
 		Validation validation = Validation.with();
-		Demo d = new Demo();
+		Data d = new Data();
 		d.a = -2;
 		d.b = 5;
 		ValidationResult firstFailed = validation.checkFirstFailed(d);

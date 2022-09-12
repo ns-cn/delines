@@ -110,7 +110,9 @@ public class DelinesDocument {
 			String data = next.getValue();
 			for (DelinesBusEntity<? extends IDelinesEntity> bus : busEntities) {
 				IDelinesEntity value = Delines.with(DelinesLine.of(index, data), bus);
+				int finalIndex = index;
 				Optional.ofNullable(value).ifPresent(t -> {
+					value.setLineIndex(finalIndex);
 					boolean addToBus = true;
 					List<? extends Notifier<? extends IDelinesEntity>> clazzNotifiers = bus.getNotifiers();
 					if (clazzNotifiers != null) {

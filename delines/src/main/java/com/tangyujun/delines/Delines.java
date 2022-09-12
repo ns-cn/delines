@@ -24,7 +24,7 @@ public final class Delines {
 		return t;
 	}
 
-	public static <T extends IDelinesEntity> T with(DelinesLine line, DelinesBusEntity<T> entity) {
+	public static <T> T with(DelinesLine line, DelinesBusEntity<T> entity) {
 		if (line == null) {
 			return null;
 		}
@@ -60,7 +60,6 @@ public final class Delines {
 			return null;
 		}
 		T t = with(data, entity);
-		t.setLineIndex(line.getLineIndex());
 		return t;
 	}
 }

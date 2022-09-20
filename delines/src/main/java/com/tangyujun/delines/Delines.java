@@ -1,5 +1,6 @@
 package com.tangyujun.delines;
 
+import cn.hutool.core.text.CharSequenceUtil;
 import com.tangyujun.delines.annotation.DelinesEntity;
 import com.tangyujun.delines.parser.DelinesEntityParser;
 
@@ -20,7 +21,7 @@ public final class Delines {
 
 	public static <T> T with(String data, DelinesBusEntity<T> entity) {
 		Objects.requireNonNull(entity);
-		if (data == null || data.equals("")) {
+		if (CharSequenceUtil.isEmpty(data)) {
 			return null;
 		}
 		if (entity.getRequired() != null && !entity.getRequired().matcher(data).matches()) {

@@ -4,6 +4,7 @@ import com.tangyujun.delines.annotation.DelinesEntity;
 import com.tangyujun.delines.parser.DelinesEntityParser;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public final class Delines {
@@ -18,6 +19,13 @@ public final class Delines {
 	}
 
 	public static <T> T with(String data, DelinesBusEntity<T> entity) {
+		Objects.requireNonNull(entity);
+		if (data == null || data.equals("") || entity == null) {
+			return null;
+		}
+		if (entity.getRequired() != null && !entity.getRequired().matcher(data).matches()) {
+			return null;
+		}
 		T t = entity.create();
 		List<DelinesBusField> fields = entity.getFields();
 		Optional.ofNullable(fields).ifPresent(fs -> fs.forEach(f -> f.build(t, data)));

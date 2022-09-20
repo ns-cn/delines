@@ -20,7 +20,7 @@ public final class Delines {
 
 	public static <T> T with(String data, DelinesBusEntity<T> entity) {
 		Objects.requireNonNull(entity);
-		if (data == null || data.equals("") || entity == null) {
+		if (data == null || data.equals("")) {
 			return null;
 		}
 		if (entity.getRequired() != null && !entity.getRequired().matcher(data).matches()) {

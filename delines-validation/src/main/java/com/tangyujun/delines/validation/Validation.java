@@ -66,6 +66,7 @@ public final class Validation {
 				.ifPresent(results::add);
 		for (Field field : obj.getClass().getDeclaredFields()) {
 			try {
+				field.setAccessible(true);
 				Object fieldValue = field.get(obj);
 				Arrays.stream(field.getAnnotations())
 						.map(Annotation::annotationType)

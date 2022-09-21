@@ -21,6 +21,12 @@
         <dependency>
             <groupId>com.tangyujun</groupId>
             <artifactId>delines-core</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>cn.hutool</groupId>
+                    <artifactId>hutool-all</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.google.auto.service</groupId>

@@ -3,7 +3,6 @@ package com.tangyujun.delines.validation;
 import com.tangyujun.delines.decoder.IEntityFactory;
 import com.tangyujun.delines.validation.annotation.*;
 import com.tangyujun.delines.validation.factories.DefaultValidatorFactory;
-import com.tangyujun.delines.validation.factories.SpringValidatorFactory;
 import com.tangyujun.delines.validation.validator.*;
 
 import java.lang.annotation.Annotation;
@@ -48,10 +47,6 @@ public final class Validation {
 
 	public static Validation with() {
 		return DEFAULT;
-	}
-
-	public static Validation spring() {
-		return with(new SpringValidatorFactory());
 	}
 
 	public static Validation with(IEntityFactory<IValidator> factory) {

@@ -7,7 +7,10 @@
     <groupId>com.tangyujun</groupId>
     <artifactId>delines</artifactId>
     <packaging>jar</packaging>
-    <version>2.0.0</version>
+    <version>2.1.0</version>
+    <name>delines</name>
+    <description>delines-core</description>
+    <url>https://github.com/ns-cn/delines</url>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -125,8 +128,8 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <build>
-                <!--发布到中央SNAPSHOT仓库插件-->
                 <plugins>
+                    <!--发布到中央SNAPSHOT仓库插件-->
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -136,6 +139,7 @@
                             <serverId>ossrh</serverId>
                             <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                            <stagingProgressTimeoutMinutes>20</stagingProgressTimeoutMinutes>
                         </configuration>
                     </plugin>
 

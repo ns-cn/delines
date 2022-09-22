@@ -50,7 +50,7 @@
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
             <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.7</version>
+            <version>1.6.8</version>
             <extensions>true</extensions>
             <executions>
               <execution>
@@ -175,15 +175,15 @@
     </snapshotRepository>
   </distributionManagement>
   <properties>
-    <maven.compiler.target>8</maven.compiler.target>
-    <version.junit>4.13.2</version.junit>
-    <maven.compiler.source>8</maven.compiler.source>
-    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <spring.context.version>5.3.21</spring.context.version>
     <hutool.version>5.8.1</hutool.version>
     <sonar.organization>ns-cn</sonar.organization>
-    <spring.context.version>5.3.21</spring.context.version>
     <compiler.version>3.10.1</compiler.version>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    <maven.compiler.target>8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <autoservice.version>1.0.1</autoservice.version>
+    <version.junit>4.13.2</version.junit>
+    <maven.compiler.source>8</maven.compiler.source>
   </properties>
 </project>

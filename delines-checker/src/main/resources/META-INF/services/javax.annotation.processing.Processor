@@ -1,9 +1,0 @@
-com.tangyujun.delines.processor.DelinesEntityCreatorProcessor
-com.tangyujun.delines.processor.DelinesEntityPatternProcessor
-com.tangyujun.delines.processor.DelinesFieldPatternProcessor
-com.tangyujun.delines.processor.DelinesNestedFieldProcessor
-com.tangyujun.delines.validation.processor.BooleanValidationProcessor
-com.tangyujun.delines.validation.processor.DateValidationProcessor
-com.tangyujun.delines.validation.processor.DecimalValidationProcessor
-com.tangyujun.delines.validation.processor.ObjectValidationProcessor
-com.tangyujun.delines.validation.processor.StringValidationProcessor

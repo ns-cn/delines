@@ -1,5 +1,9 @@
-package com.tangyujun.delines;
+package com.tangyujun.delines.spring;
 
+import com.tangyujun.delines.Delines;
+import com.tangyujun.delines.DelinesBusEntity;
+import com.tangyujun.delines.DelinesLine;
+import com.tangyujun.delines.IDelinesEntity;
 import com.tangyujun.delines.parser.DelinesEntityParser;
 import com.tangyujun.delines.parser.DelinesFieldParser;
 
@@ -8,8 +12,8 @@ public class SpringDelines {
 	public static final DelinesEntityParser DELINES_ENTITY_SPRING_PARSER = DelinesEntityParser.custom()
 			.withFieldParser(DelinesFieldParser
 					.custom()
-					.withDecoderFactory(new DecoderSpringFactory())
-					.withDecodeExceptionHandlerFactory(new DecodeExceptionHandlerSpringFactory()));
+					.withDecoderFactory(new SpringDecoderFactory())
+					.withDecodeExceptionHandlerFactory(new SpringDecodeExceptionHandlerFactory()));
 
 
 	public static <T> T with(String data, Class<T> clazz) {

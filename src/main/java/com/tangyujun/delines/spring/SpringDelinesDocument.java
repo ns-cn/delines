@@ -1,4 +1,6 @@
-package com.tangyujun.delines;
+package com.tangyujun.delines.spring;
+
+import com.tangyujun.delines.DelinesDocument;
 
 import java.io.BufferedReader;
 

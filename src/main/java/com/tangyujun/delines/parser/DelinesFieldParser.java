@@ -1,8 +1,8 @@
 package com.tangyujun.delines.parser;
 
 import cn.hutool.core.text.CharSequenceUtil;
-import com.tangyujun.delines.DecodeExceptionHandlerSpringFactory;
-import com.tangyujun.delines.DecoderSpringFactory;
+import com.tangyujun.delines.spring.SpringDecodeExceptionHandlerFactory;
+import com.tangyujun.delines.spring.SpringDecoderFactory;
 import com.tangyujun.delines.DelinesBusField;
 import com.tangyujun.delines.annotation.DelinesField;
 import com.tangyujun.delines.annotation.DelinesNestedField;
@@ -104,12 +104,12 @@ public final class DelinesFieldParser {
 		return delinesBusField;
 	}
 
-	public DelinesFieldParser withDecoderFactory(DecoderSpringFactory decoderFactory) {
+	public DelinesFieldParser withDecoderFactory(SpringDecoderFactory decoderFactory) {
 		this.setDecoderFactory(decoderFactory);
 		return this;
 	}
 
-	public DelinesFieldParser withDecodeExceptionHandlerFactory(DecodeExceptionHandlerSpringFactory decodeExceptionHandlerFactory) {
+	public DelinesFieldParser withDecodeExceptionHandlerFactory(SpringDecodeExceptionHandlerFactory decodeExceptionHandlerFactory) {
 		this.setDecodeExceptionHandlerFactory(decodeExceptionHandlerFactory);
 		return this;
 	}

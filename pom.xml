@@ -22,16 +22,28 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub OWNER Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/ns-cn/delines</url>
-        </repository>
-    </distributionManagement>
-    <modules>
-    </modules>
-
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>ns-cn</id>
+            <name>ns-cn</name>
+            <email>ns-cn@qq.com</email>
+            <roles>
+                <role>Project Manager</role>
+                <role>Architect</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+    <scm>
+        <connection>https://github.com/ns-cn/delines.git</connection>
+        <url>https://github.com/ns-cn/delines</url>
+    </scm>
     <dependencies>
         <!--程序包引用-->
         <dependency>
@@ -70,31 +82,6 @@
                 <version>${hutool.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.tangyujun</groupId>
-                <artifactId>delines-core</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.tangyujun</groupId>
-                <artifactId>delines-validation</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.tangyujun</groupId>
-                <artifactId>delines-checker</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.tangyujun</groupId>
-                <artifactId>delines</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.tangyujun</groupId>
-                <artifactId>delines-spring</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.google.auto.service</groupId>
                 <artifactId>auto-service</artifactId>
                 <version>${autoservice.version}</version>
@@ -112,7 +99,108 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <distributionManagement>
+        <!--        <repository>-->
+        <!--            <id>github</id>-->
+        <!--            <name>GitHub OWNER Apache Maven Packages</name>-->
+        <!--            <url>https://maven.pkg.github.com/ns-cn/delines</url>-->
+        <!--        </repository>-->
+        <snapshotRepository>
+            <id>ossrh</id>
+            <name>ossrh snapshot packages</name>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <name>ossrh release packages</name>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
+    <profiles>
+        <profile>
+            <!--注意,此id必须与setting.xml中指定的一致,不要自作聪明改它名字-->
+            <id>ossrh</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <!--发布到中央SNAPSHOT仓库插件-->
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.7</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+
+                    <!--生成源码插件-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!--生成API文档插件-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.9.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!--gpg插件-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                </plugins>
+            </build>
+
+            <distributionManagement>
+                <snapshotRepository>
+                    <!--注意,此id必须与setting.xml中指定的一致-->
+                    <id>ossrh</id>
+                    <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+                </snapshotRepository>
+                <repository>
+                    <id>ossrh</id>
+                    <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
     <build>
         <plugins>
             <plugin>
@@ -129,68 +217,5 @@
                 </executions>
             </plugin>
         </plugins>
-        <!--        <plugins>-->
-        <!--            <plugin>-->
-        <!--                <groupId>org.codehaus.mojo</groupId>-->
-        <!--                <artifactId>build-helper-maven-plugin</artifactId>-->
-        <!--                <version>1.8</version>-->
-        <!--                <executions>-->
-        <!--                    <execution>-->
-        <!--                        <id>timestamp-property</id>-->
-        <!--                        <goals>-->
-        <!--                            <goal>timestamp-property</goal>-->
-        <!--                        </goals>-->
-        <!--                        <configuration>-->
-        <!--                            <name>timestamp</name>-->
-        <!--                            <pattern>${maven.build.timestamp.format}</pattern>-->
-        <!--                            <timeZone>GMT+8</timeZone>-->
-        <!--                        </configuration>-->
-        <!--                    </execution>-->
-        <!--                </executions>-->
-        <!--            </plugin>-->
-        <!--        </plugins>-->
-        <!--        <pluginManagement>-->
-        <!--            <plugins>-->
-        <!--                <plugin>-->
-        <!--                    <groupId>org.apache.maven.plugins</groupId>-->
-        <!--                    <artifactId>maven-resources-plugin</artifactId>-->
-        <!--                    <configuration>-->
-        <!--                        <delimiters>-->
-        <!--                            <delimiter>${resource.delimiter}</delimiter>-->
-        <!--                        </delimiters>-->
-        <!--                        <useDefaultDelimiters>false</useDefaultDelimiters>-->
-        <!--                    </configuration>-->
-        <!--                </plugin>-->
-        <!--                <plugin>-->
-        <!--                    <groupId>org.apache.maven.plugins</groupId>-->
-        <!--                    <artifactId>maven-dependency-plugin</artifactId>-->
-        <!--                    <executions>-->
-        <!--                        <execution>-->
-        <!--                            &lt;!&ndash; <phase>package</phase> clean dependency:copy-dependencies package &ndash;&gt;-->
-        <!--                            <phase>prepare-package</phase>-->
-        <!--                            <goals>-->
-        <!--                                <goal>copy-dependencies</goal>-->
-        <!--                            </goals>-->
-        <!--                        </execution>-->
-        <!--                    </executions>-->
-        <!--                    <configuration>-->
-        <!--                        <includeScope>system</includeScope>-->
-        <!--                        <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/lib-->
-        <!--                        </outputDirectory>-->
-        <!--                    </configuration>-->
-        <!--                </plugin>-->
-        <!--                <plugin>-->
-        <!--                    <groupId>org.apache.maven.plugins</groupId>-->
-        <!--                    <artifactId>maven-jar-plugin</artifactId>-->
-        <!--                    <configuration>-->
-        <!--                        <archive>-->
-        <!--                            <manifestEntries>-->
-        <!--                                <Build-Time>${timestamp}</Build-Time>-->
-        <!--                            </manifestEntries>-->
-        <!--                        </archive>-->
-        <!--                    </configuration>-->
-        <!--                </plugin>-->
-        <!--            </plugins>-->
-        <!--        </pluginManagement>-->
     </build>
 </project>

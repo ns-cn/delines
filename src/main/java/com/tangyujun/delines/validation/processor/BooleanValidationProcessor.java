@@ -16,6 +16,9 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
+/**
+ * 布尔类型的processor
+ */
 @SupportedAnnotationTypes({
 		"com.tangyujun.delines.validation.annotation.AssertFalse",
 		"com.tangyujun.delines.validation.annotation.AssertTrue",
@@ -24,6 +27,9 @@ import java.util.function.Consumer;
 @AutoService(Processor.class)
 public class BooleanValidationProcessor extends AbstractProcessor {
 
+	/**
+	 * 布尔类型的processor
+	 */
 	public BooleanValidationProcessor() {
 	}
 

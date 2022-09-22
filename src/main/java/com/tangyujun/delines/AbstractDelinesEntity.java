@@ -1,5 +1,8 @@
 package com.tangyujun.delines;
 
+/**
+ * 抽象的带行的解析实体
+ */
 public abstract class AbstractDelinesEntity implements IDelinesEntity {
 	/**
 	 * 行索引

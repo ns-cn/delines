@@ -6,6 +6,9 @@ import com.tangyujun.delines.validation.ValidationResult;
 
 import java.util.Optional;
 
+/**
+ * 布尔true类型的校验器
+ */
 public class BooleanAssertTrueValidator implements IInnerValidator<AssertTrue> {
 
 	@Override

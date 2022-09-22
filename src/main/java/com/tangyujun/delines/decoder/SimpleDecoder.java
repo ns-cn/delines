@@ -24,18 +24,37 @@ import java.util.regex.Matcher;
  */
 public class SimpleDecoder implements IDelinesDecoder, IDelinesDecoder.ExceptionHandler {
 
-
+	/**
+	 * 默认解析器
+	 */
 	private static final SimpleDecoder INSTANCE = new SimpleDecoder();
 
+	/**
+	 * 默认时间格式
+	 */
 	private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+	/**
+	 * 获取单例实体
+	 *
+	 * @return 实体
+	 */
 	public static SimpleDecoder getInstance() {
 		return INSTANCE;
 	}
 
+	/**
+	 * 单个类型对应的字符串转实体的function
+	 */
 	private static final Map<Class<?>, Function<String, Object>> functionMap = new HashMap<>();
+	/**
+	 * 类型对应的字符串转实体的function,带格式参数
+	 */
 	private static final Map<Class<?>, BiFunction<Object, String, Object>> biFunctionMap = new HashMap<>();
 
+	/**
+	 * 注册默认的function
+	 */
 	static {
 		functionMap.put(String.class, data -> data);
 		functionMap.put(Integer.class, Integer::parseInt);
@@ -55,6 +74,13 @@ public class SimpleDecoder implements IDelinesDecoder, IDelinesDecoder.Exception
 	public void handle(Matcher matcher, Object entity, Field field, Throwable exception) {
 	}
 
+	/**
+	 * 获取对应时间类型的formatter
+	 *
+	 * @param clazz  时间类 型
+	 * @param format 格式化字符串
+	 * @return 对应的formatter
+	 */
 	private Object formatter(Class<?> clazz, String format) {
 		if (LocalDateTime.class.equals(clazz)
 				|| LocalTime.class.equals(clazz)
@@ -93,7 +119,7 @@ public class SimpleDecoder implements IDelinesDecoder, IDelinesDecoder.Exception
 				Class<?> innerType = Class.forName(actualTypeArguments[0].getTypeName());
 				Object innerFormatter = formatter(innerType, format);
 				Collection<Object> results = new ArrayList<>();
-				if(Set.class.equals(targetClazz)){
+				if (Set.class.equals(targetClazz)) {
 					results = new HashSet<>();
 				}
 				do {
@@ -118,19 +144,46 @@ public class SimpleDecoder implements IDelinesDecoder, IDelinesDecoder.Exception
 		throw new UnsupportedOperationException("unsupported " + targetClazz + " using " + SimpleDecoder.class);
 	}
 
-
+	/**
+	 * localdatetime类型的转换方法
+	 *
+	 * @param formatter localdatetime的转换formatter
+	 * @param data      字符串
+	 * @return 转换后的localDateTime
+	 */
 	public static Object LocalDateTime(Object formatter, String data) {
 		return withDateFormatter(formatter, data, LocalDateTime::from, LocalDateTime::parse);
 	}
 
+	/**
+	 * localdate类型的转换方法
+	 *
+	 * @param formatter localdate的转换formatter
+	 * @param data      字符串
+	 * @return 转换后的localdate
+	 */
 	public static Object LocalDate(Object formatter, String data) {
 		return withDateFormatter(formatter, data, LocalDate::from, LocalDate::parse);
 	}
 
+	/**
+	 * localtime类型的转换方法
+	 *
+	 * @param formatter localtime的转换formatter
+	 * @param data      字符串
+	 * @return 转换后的localtime
+	 */
 	public static Object LocalTime(Object formatter, String data) {
 		return withDateFormatter(formatter, data, LocalTime::from, LocalTime::parse);
 	}
 
+	/**
+	 * date类型的转换方法
+	 *
+	 * @param formatter date的转换formatter
+	 * @param data      字符串
+	 * @return 转换后的date
+	 */
 	public static Object Date(Object formatter, String data) {
 		Assert.isInstanceOf(SimpleDateFormat.class, formatter);
 		try {
@@ -140,6 +193,16 @@ public class SimpleDecoder implements IDelinesDecoder, IDelinesDecoder.Exception
 		}
 	}
 
+	/**
+	 * 使用formatter转换成对应的时间类型
+	 *
+	 * @param formatter     formatter
+	 * @param data          字符串
+	 * @param query         TemporalQuery
+	 * @param defaultParser 默认的转换方式
+	 * @param <T>           时间类型
+	 * @return 转换后的时间类型
+	 */
 	private static <T> Object withDateFormatter(Object formatter, String data, TemporalQuery<T> query,
 	                                            Function<String, Object> defaultParser) {
 		if (formatter != null) {

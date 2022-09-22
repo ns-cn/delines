@@ -16,34 +16,76 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * 字段解析器
+ */
 public final class DelinesFieldParser {
 
+	/**
+	 * 默认字段解析器
+	 */
 	public static final DelinesFieldParser DEFAULT = new DelinesFieldParser();
+	/**
+	 * 默认解析器工厂
+	 */
 	private IDecoderFactory decoderFactory = new DefaultDecoderFactory();
+	/**
+	 * 解析异常处理器工厂
+	 */
 	private IDecoderExceptionHandlerFactory decodeExceptionHandlerFactory = new DefaultDecodeExceptionHandlerFactory();
 
+	/**
+	 * DelinesFieldParser
+	 *
+	 * @param decoderFactory                解析器工厂
+	 * @param decodeExceptionHandlerFactory 解析异常处理器工厂
+	 */
 	private DelinesFieldParser(IDecoderFactory decoderFactory,
 	                           IDecoderExceptionHandlerFactory decodeExceptionHandlerFactory) {
 		setDecoderFactory(decoderFactory);
 		setDecodeExceptionHandlerFactory(decodeExceptionHandlerFactory);
 	}
 
+	/**
+	 * DelinesFieldParser
+	 */
 	private DelinesFieldParser() {
 	}
 
+	/**
+	 * 用默认的解析器解析
+	 *
+	 * @param field 字段
+	 * @return 解析后的bus对象
+	 */
 	public static DelinesBusField parseUsingDefault(Field field) {
 		return DEFAULT.parse(field);
 	}
 
+	/**
+	 * 定制化的解析器
+	 *
+	 * @return 解析器
+	 */
 	public static DelinesFieldParser custom() {
 		return new DelinesFieldParser();
 	}
 
+	/**
+	 * 设置解析器工厂
+	 *
+	 * @param decoderFactory 解析器工厂
+	 */
 	public void setDecoderFactory(IDecoderFactory decoderFactory) {
 		Objects.requireNonNull(decoderFactory, "errors: could not build a parser without decoder factory!");
 		this.decoderFactory = decoderFactory;
 	}
 
+	/**
+	 * 设置解析异常处理器工厂
+	 *
+	 * @param decodeExceptionHandlerFactory 解析异常处理器工厂
+	 */
 	public void setDecodeExceptionHandlerFactory(IDecoderExceptionHandlerFactory decodeExceptionHandlerFactory) {
 		Objects.requireNonNull(decodeExceptionHandlerFactory, "errors: could not build a parser without decoder " +
 				"exception handler factory!");
@@ -104,11 +146,23 @@ public final class DelinesFieldParser {
 		return delinesBusField;
 	}
 
+	/**
+	 * 设置解析器工厂
+	 *
+	 * @param decoderFactory 解析器工厂
+	 * @return DelinesFieldParser
+	 */
 	public DelinesFieldParser withDecoderFactory(SpringDecoderFactory decoderFactory) {
 		this.setDecoderFactory(decoderFactory);
 		return this;
 	}
 
+	/**
+	 * 设置解析异常处理器工厂
+	 *
+	 * @param decodeExceptionHandlerFactory 解析异常处理器工厂
+	 * @return DelinesFieldParser
+	 */
 	public DelinesFieldParser withDecodeExceptionHandlerFactory(SpringDecodeExceptionHandlerFactory decodeExceptionHandlerFactory) {
 		this.setDecodeExceptionHandlerFactory(decodeExceptionHandlerFactory);
 		return this;

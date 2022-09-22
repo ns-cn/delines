@@ -12,6 +12,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 解析后的字段
+ */
 public class DelinesBusField {
 
 	/**
@@ -66,85 +69,185 @@ public class DelinesBusField {
 	 */
 	private Class<?> nestedSubType;
 
+	/**
+	 * 解析后的字段
+	 *
+	 * @param field 原始字段
+	 */
 	public DelinesBusField(Field field) {
 		this.field = field;
 		this.field.setAccessible(true);
 		this.resultType = field.getType();
 	}
 
+	/**
+	 * 是否是嵌套字段
+	 *
+	 * @return 是否是嵌套字段
+	 */
 	public boolean isNestedField() {
 		return nestedField;
 	}
 
+	/**
+	 * 设置本字段是否是嵌套字段
+	 *
+	 * @param nestedField 是否是嵌套字段
+	 */
 	public void setNestedField(boolean nestedField) {
 		this.nestedField = nestedField;
 	}
 
+	/**
+	 * 获取原始子弹
+	 *
+	 * @return 原始字段
+	 */
 	public Field getField() {
 		return field;
 	}
 
+	/**
+	 * 设置原始字段
+	 *
+	 * @param field 原始字段
+	 */
 	public void setField(Field field) {
 		this.field = field;
 	}
 
+	/**
+	 * 获取字段的类型
+	 *
+	 * @return 字段类型
+	 */
 	public Class<?> getResultType() {
 		return resultType;
 	}
 
+	/**
+	 * 设置字段的类型
+	 *
+	 * @param resultType 字段类型
+	 */
 	public void setResultType(Class<?> resultType) {
 		this.resultType = resultType;
 	}
 
+	/**
+	 * 获取字段的解析器
+	 *
+	 * @return 字段的解析器
+	 */
 	public IDelinesDecoder getDecoder() {
 		return decoder;
 	}
 
+	/**
+	 * 设置字段的解析器
+	 *
+	 * @param decoder 字段的解析器
+	 */
 	public void setDecoder(IDelinesDecoder decoder) {
 		this.decoder = decoder;
 	}
 
+	/**
+	 * 字段的解析异常处理器
+	 *
+	 * @return 字段的解析异常处理器
+	 */
 	public IDelinesDecoder.ExceptionHandler getDecodeExceptionHandler() {
 		return decodeExceptionHandler;
 	}
 
+	/**
+	 * 字段的解析异常处理器
+	 *
+	 * @param decodeExceptionHandler 字段的解析异常处理器
+	 */
 	public void setDecodeExceptionHandler(IDelinesDecoder.ExceptionHandler decodeExceptionHandler) {
 		this.decodeExceptionHandler = decodeExceptionHandler;
 	}
 
+	/**
+	 * 获取字段的原始匹配正则
+	 *
+	 * @return 字段的原始匹配正则
+	 */
 	public String getRegExp() {
 		return regExp;
 	}
 
+	/**
+	 * 设置字段的原始匹配正则
+	 *
+	 * @param regExp 字段的原始匹配正则
+	 */
 	public void setRegExp(String regExp) {
 		this.regExp = regExp;
 		pattern = Pattern.compile(regExp);
 	}
 
+	/**
+	 * 获取字段编译后的pattern
+	 *
+	 * @return 字段编译后的pattern
+	 */
 	public Pattern getPattern() {
 		return pattern;
 	}
 
+	/**
+	 * 设置字段编译后的pattern
+	 *
+	 * @return 字段编译后的pattern
+	 */
 	public String getDateFormat() {
 		return dateFormat;
 	}
 
+	/**
+	 * 设置时间类型的时间格式
+	 *
+	 * @param dateFormat 时间格式
+	 */
 	public void setDateFormat(String dateFormat) {
 		this.dateFormat = dateFormat;
 	}
 
+	/**
+	 * 获取嵌套类型的解析后的实体
+	 *
+	 * @return 嵌套类型解析后的实体
+	 */
 	public DelinesBusEntity<?> getNestedBusEntity() {
 		return nestedBusEntity;
 	}
 
+	/**
+	 * 设置嵌套类型的解析后的实体
+	 *
+	 * @param nestedBusEntity 嵌套类型解析后的实体
+	 */
 	public void setNestedBusEntity(DelinesBusEntity<?> nestedBusEntity) {
 		this.nestedBusEntity = nestedBusEntity;
 	}
 
+	/**
+	 * 嵌套类型的具体类型
+	 *
+	 * @return 嵌套类型的具体类型
+	 */
 	public Class<?> getNestedSubType() {
 		return nestedSubType;
 	}
 
+	/**
+	 * 设置嵌套类型的具体类型
+	 *
+	 * @param nestedSubType 设置嵌套类型的具体类型
+	 */
 	public void setNestedSubType(Class<?> nestedSubType) {
 		this.nestedSubType = nestedSubType;
 	}

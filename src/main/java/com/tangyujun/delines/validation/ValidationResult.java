@@ -6,58 +6,131 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/**
+ * 校验结果
+ */
 public class ValidationResult {
 
-	private ValidationType status;
+	/**
+	 * 校验结果的类型
+	 */
+	private final ValidationType status;
 
+	/**
+	 * 提示信息
+	 */
 	private String message;
 
+	/**
+	 * 构造器
+	 *
+	 * @param status 校验结果类型
+	 */
 	private ValidationResult(ValidationType status) {
 		this.status = status;
 	}
 
+	/**
+	 * 构造器
+	 *
+	 * @param status  校验结果类型
+	 * @param message 提示信息
+	 */
 	public ValidationResult(ValidationType status, String message) {
 		Objects.requireNonNull(status);
 		this.status = status;
 		this.message = message;
 	}
 
+	/**
+	 * 校验正常
+	 *
+	 * @return 校验结果
+	 */
 	public static ValidationResult ok() {
 		return ok(null);
 	}
 
+	/**
+	 * 校验正常
+	 *
+	 * @param message 提示信息
+	 * @return 校验结果
+	 */
 	public static ValidationResult ok(String message) {
 		return new ValidationResult(ValidationType.OK, message);
 	}
 
+	/**
+	 * 存在警告信息
+	 *
+	 * @return 校验结果
+	 */
 	public static ValidationResult warn() {
 		return warn(null);
 	}
 
+	/**
+	 * 存在警告信息
+	 *
+	 * @param message 提示信息
+	 * @return 校验结果
+	 */
 	public static ValidationResult warn(String message) {
 		return new ValidationResult(ValidationType.WARN, message);
 	}
 
+	/**
+	 * 校验失败
+	 *
+	 * @return 校验结果
+	 */
 	public static ValidationResult fail() {
 		return fail(null);
 	}
 
+	/**
+	 * 校验失败
+	 *
+	 * @param message 提示信息
+	 * @return 校验结果
+	 */
 	public static ValidationResult fail(String message) {
 		return new ValidationResult(ValidationType.FAIL, message);
 	}
 
+	/**
+	 * 获取校验结果类型
+	 *
+	 * @return 校验结果类型
+	 */
 	public ValidationType getStatus() {
 		return Optional.ofNullable(status).orElse(ValidationType.OK);
 	}
 
+	/**
+	 * 如果是警告类型,则返回提示信息
+	 *
+	 * @return 警告提示信息
+	 */
 	public String getWarnMessage() {
 		return ValidationType.WARN.equals(status) ? message : null;
 	}
 
+	/**
+	 * 如果是失败类型,则返回提示信息
+	 *
+	 * @return 失败提示信息
+	 */
 	public String getFailMessage() {
 		return ValidationType.FAIL.equals(status) ? message : null;
 	}
 
+	/**
+	 * 校验,如果失败则抛出校验异常
+	 *
+	 * @throws ValidationException 校验异常
+	 */
 	public void check() throws ValidationException {
 		ValidationException exception = Optional.ofNullable(getFailMessage())
 				.map(ValidationException::new)
@@ -67,19 +140,34 @@ public class ValidationResult {
 		}
 	}
 
+	/**
+	 * 获取提示信息
+	 * @return 提示信息
+	 */
 	public String getMessage() {
 		return message;
 	}
 
-
+	/**
+	 * 是否校验正常
+	 * @return 是否正常
+	 */
 	public boolean isOk() {
 		return ValidationType.OK.equals(status);
 	}
 
+	/**
+	 * 是否是警告
+	 * @return 是否警告
+	 */
 	public boolean isWarn() {
 		return ValidationType.WARN.equals(status);
 	}
 
+	/**
+	 * 是否失败
+	 * @return 是否失败
+	 */
 	public boolean isFail() {
 		return ValidationType.FAIL.equals(status);
 	}

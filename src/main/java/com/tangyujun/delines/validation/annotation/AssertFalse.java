@@ -12,6 +12,7 @@ import java.lang.annotation.*;
 public @interface AssertFalse {
 	/**
 	 * 提示信息
+	 * @return 提示信息
 	 */
 	String message() default "assert false";
 }

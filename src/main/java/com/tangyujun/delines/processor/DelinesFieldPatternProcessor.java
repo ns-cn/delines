@@ -13,11 +13,17 @@ import javax.lang.model.element.VariableElement;
 import javax.tools.Diagnostic;
 import java.util.Set;
 
+/**
+ * DelinesField注解processor
+ */
 @SupportedAnnotationTypes({"com.tangyujun.delines.annotation.DelinesField"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(Processor.class)
 public class DelinesFieldPatternProcessor extends AbstractProcessor {
 
+	/**
+	 * DelinesFieldPatternProcessor
+	 */
 	public DelinesFieldPatternProcessor() {
 	}
 

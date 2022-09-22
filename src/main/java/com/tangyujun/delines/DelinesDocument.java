@@ -10,14 +10,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * 多行的实体转换类
+ */
 public class DelinesDocument {
 	/**
 	 * 数据源,可包装各种字符流（网络IO，文件IO，或则内存的字符串）
 	 */
 	private BufferedReader reader;
 
+	/**
+	 * 所有注册的待解析的实体类型
+	 */
 	private List<DelinesBusEntity<? extends IDelinesEntity>> busEntities;
 
+	/**
+	 * 类型转换器
+	 */
 	private DelinesEntityParser entityParser;
 
 	/**
@@ -49,6 +58,11 @@ public class DelinesDocument {
 		return new DelinesDocument(reader);
 	}
 
+	/**
+	 * 使用定制化的实体解析器
+	 * @param customEntityParser 实体解析器
+	 * @return DelinesDocument
+	 */
 	public DelinesDocument withCustomEntityParser(DelinesEntityParser customEntityParser) {
 		this.entityParser = customEntityParser;
 		return this;
@@ -83,6 +97,8 @@ public class DelinesDocument {
 
 	/**
 	 * 实际消费执行内容，使用默认的读取行的方式
+	 *
+	 * @return DelinesDocument
 	 */
 	public DelinesDocument consume() {
 		return consume(NextStringGetter.defaultReader());
@@ -92,6 +108,7 @@ public class DelinesDocument {
 	 * 实际消费执行内容
 	 *
 	 * @param getter 自定义文本获取方式
+	 * @return DelinesDocument
 	 */
 	public DelinesDocument consume(NextStringGetter getter) {
 		if (getter == null) {

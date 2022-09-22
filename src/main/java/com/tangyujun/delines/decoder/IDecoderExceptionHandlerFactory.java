@@ -1,4 +1,7 @@
 package com.tangyujun.delines.decoder;
 
-public interface IDecoderExceptionHandlerFactory extends IEntityFactory<IDelinesDecoder.ExceptionHandler>{
+/**
+ * 解析异常处理器工厂接口
+ */
+public interface IDecoderExceptionHandlerFactory extends IEntityFactory<IDelinesDecoder.ExceptionHandler> {
 }

@@ -8,6 +8,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Objects;
 
+/**
+ * 数值范围校验器
+ */
 public class DecimalRangeValidator extends DecimalValidator<DecimalRange> {
 
 	@Override

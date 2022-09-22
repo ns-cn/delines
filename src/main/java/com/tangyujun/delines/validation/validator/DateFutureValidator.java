@@ -15,6 +15,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * 时间之后的校验器
+ */
 public class DateFutureValidator implements IInnerValidator<DateFuture> {
 
 	@Override

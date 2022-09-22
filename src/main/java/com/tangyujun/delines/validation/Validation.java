@@ -16,12 +16,24 @@ import java.util.stream.Collectors;
  */
 public final class Validation {
 
+	/**
+	 * 默认的校验器工厂
+	 */
 	private IEntityFactory<IValidator> entityFactories = new DefaultValidatorFactory();
 
+	/**
+	 * 默认的校验实例
+	 */
 	public static final Validation DEFAULT = new Validation();
 
+	/**
+	 * 校验器类型对应的校验器map
+	 */
 	private static final Map<Class<?>, Class<? extends IValidator>> HANDLED = new HashMap<>();
 
+	/**
+	 * 注册默认的校验类型对应的校验器
+	 */
 	static {
 		HANDLED.put(AssertTrue.class, BooleanAssertTrueValidator.class);
 		HANDLED.put(AssertFalse.class, BooleanAssertFalseValidator.class);
@@ -37,18 +49,37 @@ public final class Validation {
 		HANDLED.put(StringPattern.class, StringPatternValidator.class);
 	}
 
+	/**
+	 * Validation
+	 */
 	private Validation() {
 	}
 
+	/**
+	 * Validation
+	 *
+	 * @param entityFactories 校验工厂
+	 */
 	private Validation(IEntityFactory<IValidator> entityFactories) {
 		Objects.requireNonNull(entityFactories);
 		this.entityFactories = entityFactories;
 	}
 
+	/**
+	 * 默认的校验器
+	 *
+	 * @return 校验器
+	 */
 	public static Validation with() {
 		return DEFAULT;
 	}
 
+	/**
+	 * 带自定义校验工厂的校验器
+	 *
+	 * @param factory 校验器工厂
+	 * @return 校验器
+	 */
 	public static Validation with(IEntityFactory<IValidator> factory) {
 		return new Validation(factory);
 	}

@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AssertNull {
 	/**
-	 * 提示信息
+	 * @return 提示信息
 	 */
 	String message() default "required null";
 }

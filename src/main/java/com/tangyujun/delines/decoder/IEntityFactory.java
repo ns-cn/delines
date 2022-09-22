@@ -7,9 +7,20 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+/**
+ * 实体工厂接口
+ *
+ * @param <T> 类型泛型
+ */
 public interface IEntityFactory<T> {
 
-
+	/**
+	 * 构建一个指定类型的实体
+	 *
+	 * @param clazz 类型
+	 * @param <T>   泛型类型
+	 * @return 指定类型的实体
+	 */
 	static <T> T build(Class<T> clazz) {
 		if (clazz == null) {
 			return null;

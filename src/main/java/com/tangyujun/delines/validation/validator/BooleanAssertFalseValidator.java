@@ -6,6 +6,9 @@ import com.tangyujun.delines.validation.annotation.AssertFalse;
 
 import java.util.Optional;
 
+/**
+ * 布尔false类型的校验器
+ */
 public class BooleanAssertFalseValidator implements IInnerValidator<AssertFalse> {
 
 	@Override

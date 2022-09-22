@@ -22,6 +22,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
+/**
+ * date类型校验器processor
+ */
 @SupportedAnnotationTypes({
 		"com.tangyujun.delines.validation.annotation.DateFuture",
 		"com.tangyujun.delines.validation.annotation.DatePast",
@@ -30,6 +33,9 @@ import java.util.function.Consumer;
 @AutoService(Processor.class)
 public class DateValidationProcessor extends AbstractProcessor {
 
+	/**
+	 * 时间类型校验器processor
+	 */
 	public DateValidationProcessor() {
 	}
 

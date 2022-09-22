@@ -6,6 +6,11 @@ import com.tangyujun.delines.validation.ValidationResult;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 
+/**
+ * 数值类型校验器
+ *
+ * @param <T> 具体类型
+ */
 public abstract class DecimalValidator<T> implements IInnerValidator<T> {
 
 	/**

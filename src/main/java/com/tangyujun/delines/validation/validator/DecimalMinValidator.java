@@ -8,6 +8,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Objects;
 
+/**
+ * 数值最小值校验器
+ */
 public class DecimalMinValidator extends DecimalValidator<DecimalMin> {
 
 	@Override

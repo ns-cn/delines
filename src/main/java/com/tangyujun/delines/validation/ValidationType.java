@@ -1,17 +1,29 @@
 package com.tangyujun.delines.validation;
 
-// 校验类型
+/**
+ * 校验类型
+ */
 public enum ValidationType {
-	// 成功
+	/**
+	 * 成功
+	 */
 	OK,
-	// 警告
+	/**
+	 * 警告
+	 */
 	WARN,
-	// 失败
+	/**
+	 * 失败
+	 */
 	FAIL;
 
-	// 校验所有内容
+	/**
+	 * 校验所有内容
+	 */
 	public static final int OPTIONS_ALL = 0b111;
-	// 仅校验失败的内容
+	/**
+	 * 仅校验失败的内容
+	 */
 	public static final int OPTIONS_FINAL = 0b100;
 
 	/**

@@ -8,10 +8,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * 默认的校验器工厂
+ */
 public class DefaultValidatorFactory implements IEntityFactory<IValidator> {
 
+	/**
+	 * 校验器map,类型与具体校验器的映射
+	 */
 	private final Map<Class<?>, IValidator> validators = new HashMap<>();
 
+	/**
+	 * 默认校验器工厂类
+	 */
 	public DefaultValidatorFactory() {
 	}
 

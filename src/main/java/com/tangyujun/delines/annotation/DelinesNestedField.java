@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 public @interface DelinesNestedField {
 
 	/**
-	 * 正则表达式，通过指定正则表达式截取完整字符串的部分，子字段的正则读取字符串则使用截取的部分
+	 * @return 正则表达式，通过指定正则表达式截取完整字符串的部分，子字段的正则读取字符串则使用截取的部分
 	 */
 	String value() default "";
 }

@@ -10,6 +10,9 @@ import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
 import java.util.Set;
 
+/**
+ * 数值类型校验器processor
+ */
 @SupportedAnnotationTypes({
 		"com.tangyujun.delines.validation.annotation.DecimalMax",
 		"com.tangyujun.delines.validation.annotation.DecimalMin",
@@ -19,6 +22,9 @@ import java.util.Set;
 @AutoService(Processor.class)
 public class DecimalValidationProcessor extends AbstractProcessor {
 
+	/**
+	 * 数值类型校验器processor
+	 */
 	public DecimalValidationProcessor() {
 	}
 
@@ -30,7 +36,4 @@ public class DecimalValidationProcessor extends AbstractProcessor {
 
 		return false;
 	}
-
-
-
 }

@@ -11,11 +11,17 @@ import javax.tools.Diagnostic;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * 注解@DelinesEntityCreator的processor
+ */
 @SupportedAnnotationTypes({"com.tangyujun.delines.annotation.EntityCreator"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(Processor.class)
 public class DelinesEntityCreatorProcessor extends AbstractProcessor {
 
+	/**
+	 * DelinesEntityCreatorProcessor
+	 */
 	public DelinesEntityCreatorProcessor() {
 	}
 

@@ -6,6 +6,9 @@ import com.tangyujun.delines.validation.annotation.StringLength;
 
 import java.util.Optional;
 
+/**
+ * 字符串长度校验器
+ */
 public class StringLengthValidator implements IInnerValidator<StringLength> {
 
 	@Override

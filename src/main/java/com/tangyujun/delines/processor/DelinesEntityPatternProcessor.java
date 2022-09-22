@@ -12,11 +12,17 @@ import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
 import java.util.Set;
 
+/**
+ * 注解DelinesEntity的processor
+ */
 @SupportedAnnotationTypes({"com.tangyujun.delines.annotation.DelinesEntity"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(Processor.class)
 public class DelinesEntityPatternProcessor extends AbstractProcessor {
 
+	/**
+	 * DelinesEntityPatternProcessor
+	 */
 	public DelinesEntityPatternProcessor() {
 	}
 

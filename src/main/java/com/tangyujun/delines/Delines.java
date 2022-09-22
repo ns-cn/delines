@@ -7,17 +7,45 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * 单行实体解析器
+ */
 public final class Delines {
 
+	/**
+	 * 转换具体字符串为对应的实体
+	 *
+	 * @param data  字符串数据
+	 * @param clazz 对应的具体数据
+	 * @param <T>   类型泛型
+	 * @return 解析后的数据
+	 */
 	public static <T> T with(String data, Class<T> clazz) {
 		return with(data, clazz, null);
 	}
 
+	/**
+	 * 转换具体字符串为对应的类型(待实体转换器)
+	 *
+	 * @param data         字符串数据
+	 * @param clazz        对应的具体类型
+	 * @param customParser 定制化的转换器
+	 * @param <T>          泛型类型
+	 * @return 解析后的数据
+	 */
 	public static <T> T with(String data, Class<T> clazz, DelinesEntityParser customParser) {
 		DelinesEntityParser entityParser = Optional.ofNullable(customParser).orElse(DelinesEntityParser.DEFAULT);
 		return with(data, entityParser.parse(clazz));
 	}
 
+	/**
+	 * 用转换后的实体和字符串数据转换数据
+	 *
+	 * @param data   字符串数据
+	 * @param entity 转换后的实体
+	 * @param <T>    泛型类型
+	 * @return 解析后的数据
+	 */
 	public static <T> T with(String data, DelinesBusEntity<T> entity) {
 		Objects.requireNonNull(entity);
 		if (data == null || data.isEmpty()) {
@@ -32,6 +60,13 @@ public final class Delines {
 		return t;
 	}
 
+	/**
+	 * 解析带行数的字符串数据
+	 * @param line 字符串数据
+	 * @param entity 转换后的实体
+	 * @return 解析后的数据
+	 * @param <T> 类型泛型
+	 */
 	public static <T> T with(DelinesLine line, DelinesBusEntity<T> entity) {
 		if (line == null) {
 			return null;

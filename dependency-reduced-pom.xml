@@ -4,6 +4,28 @@
   <groupId>com.tangyujun</groupId>
   <artifactId>delines</artifactId>
   <version>2.0.0</version>
+  <developers>
+    <developer>
+      <id>ns-cn</id>
+      <name>ns-cn</name>
+      <email>ns-cn@qq.com</email>
+      <roles>
+        <role>Project Manager</role>
+        <role>Architect</role>
+      </roles>
+      <timezone>+8</timezone>
+    </developer>
+  </developers>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+  <scm>
+    <connection>https://github.com/ns-cn/delines.git</connection>
+    <url>https://github.com/ns-cn/delines</url>
+  </scm>
   <build>
     <plugins>
       <plugin>
@@ -20,6 +42,87 @@
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>ossrh</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.6.7</version>
+            <extensions>true</extensions>
+            <executions>
+              <execution>
+                <id>injected-nexus-deploy</id>
+                <phase>deploy</phase>
+                <goals>
+                  <goal>deploy</goal>
+                </goals>
+                <configuration>
+                  <serverId>ossrh</serverId>
+                  <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                  <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+              </execution>
+            </executions>
+            <configuration>
+              <serverId>ossrh</serverId>
+              <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+            </configuration>
+          </plugin>
+          <plugin>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.2.1</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.9.1</version>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.5</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+      <distributionManagement>
+        <repository>
+          <id>ossrh</id>
+          <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+        <snapshotRepository>
+          <id>ossrh</id>
+          <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+      </distributionManagement>
+    </profile>
+  </profiles>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -42,31 +145,6 @@
         <version>${hutool.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.tangyujun</groupId>
-        <artifactId>delines-core</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.tangyujun</groupId>
-        <artifactId>delines-validation</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.tangyujun</groupId>
-        <artifactId>delines-checker</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.tangyujun</groupId>
-        <artifactId>delines</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.tangyujun</groupId>
-        <artifactId>delines-spring</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
         <groupId>com.google.auto.service</groupId>
         <artifactId>auto-service</artifactId>
         <version>${autoservice.version}</version>
@@ -86,10 +164,15 @@
   </dependencyManagement>
   <distributionManagement>
     <repository>
-      <id>github</id>
-      <name>GitHub OWNER Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/ns-cn/delines</url>
+      <id>ossrh</id>
+      <name>ossrh release packages</name>
+      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <name>ossrh snapshot packages</name>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
   </distributionManagement>
   <properties>
     <maven.compiler.target>8</maven.compiler.target>

@@ -7,6 +7,9 @@ import com.tangyujun.delines.validation.ValidationResult;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+/**
+ * 字符串正则格式校验器
+ */
 public class StringPatternValidator implements IInnerValidator<StringPattern> {
 
 	@Override

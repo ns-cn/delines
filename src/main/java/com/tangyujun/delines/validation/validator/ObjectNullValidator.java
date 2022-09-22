@@ -6,6 +6,9 @@ import com.tangyujun.delines.validation.annotation.AssertNull;
 
 import java.util.Objects;
 
+/**
+ * 对象为空校验器
+ */
 public class ObjectNullValidator implements IInnerValidator<AssertNull> {
 
 	@Override

@@ -13,7 +13,7 @@ import java.lang.annotation.*;
 public @interface CustomValidation {
 
 	/**
-	 * 实际校验方法
+	 * @return 实际校验方法
 	 */
 	Class<? extends IValidator> validator();
 }

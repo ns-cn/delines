@@ -14,6 +14,9 @@ import javax.lang.model.element.VariableElement;
 import javax.tools.Diagnostic;
 import java.util.Set;
 
+/**
+ * DelinesNestedField注解processor
+ */
 @SupportedAnnotationTypes({"com.tangyujun.delines.annotation.DelinesNestedField"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(Processor.class)

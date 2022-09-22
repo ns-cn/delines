@@ -13,6 +13,9 @@ import javax.tools.Diagnostic;
 import java.util.Set;
 import java.util.function.Consumer;
 
+/**
+ * 对象校验器processor
+ */
 @SupportedAnnotationTypes({
 		"com.tangyujun.delines.validation.annotation.AssertNotNull",
 		"com.tangyujun.delines.validation.annotation.AssertNull",
@@ -21,6 +24,9 @@ import java.util.function.Consumer;
 @AutoService(Processor.class)
 public class ObjectValidationProcessor extends AbstractProcessor {
 
+	/**
+	 * ObjectValidationProcessor
+	 */
 	public ObjectValidationProcessor() {
 	}
 

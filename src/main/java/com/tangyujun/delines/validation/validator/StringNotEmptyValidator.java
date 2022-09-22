@@ -7,6 +7,9 @@ import com.tangyujun.delines.validation.ValidationResult;
 
 import java.util.Optional;
 
+/**
+ * 字符串非空校验器
+ */
 public class StringNotEmptyValidator implements IInnerValidator<StringNotEmpty> {
 
 	@Override

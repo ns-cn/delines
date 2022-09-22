@@ -19,6 +19,9 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
+/**
+ * 字符串校验器processor
+ */
 @SupportedAnnotationTypes({
 		"com.tangyujun.delines.validation.annotation.StringLength",
 		"com.tangyujun.delines.validation.annotation.StringNotEmpty",
@@ -28,6 +31,9 @@ import java.util.function.Consumer;
 @AutoService(Processor.class)
 public class StringValidationProcessor extends AbstractProcessor {
 
+	/**
+	 * StringValidationProcessor
+	 */
 	public StringValidationProcessor() {
 	}
 

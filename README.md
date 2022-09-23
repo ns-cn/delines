@@ -28,6 +28,16 @@
 [INFO] -------------------------------------------------------------
 ```
 
+### 使用
+> 本项目自```2.0.0```版本后不再在github仓库发布，且只在maven中央仓库发布
+```xml
+<dependency>
+    <groupId>com.tangyujun</groupId>
+    <artifactId>delines</artifactId>
+    <version>${delines.version}</version>
+</dependency>
+```
+
 ### 单行文本转换示例
 ```java
 // 单行文本转换样例
@@ -145,5 +155,5 @@ Person{id=1, name='小明', age=14, sex='M', isMan=true, birthday=1999-09-03, bi
 Person{id=2, name='小霞', age=15, sex='F', isMan=false, birthday=1998-07-06, birth=null-null-null}[Score{course='语文', score=64}, Score{course='数学', score=94}]
 Person{id=3, name='小文', age=15, sex='M', isMan=true, birthday=1998-12-12, birth=null-null-null}[Score{course='语文', score=90}, Score{course='数学', score=73}]
 ```
-## [计划支持](./PLAN_VERSION.md)
+## [版本历史及支持计划](./PLAN_VERSION.md)
 详情参见[版本历史](./PLAN_VERSION.md)

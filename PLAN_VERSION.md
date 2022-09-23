@@ -7,13 +7,11 @@
 - [x] 整合所有模块，并暂停github仓库的发布，调整为发布到maven中央仓库
 
 ## V1.3.1
-
 - [x] 实现嵌套的List和Set集合类型自适应和嵌套自定义类型
 - [x] 移除空接口IDelinesEntity
 - [x] 改IDelinesEntityWithIndex为IDelinesEntity
 
 ## V1.3.0
-
 - [x] 基础数据类型的list和set类型支持
 - [x] 自定义解析器的list和set抽象支持
 

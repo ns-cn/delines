@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 解析后的字段
+ * 对应字段解析后得到的装载类
  */
 public class DelinesBusField {
 
@@ -254,7 +254,7 @@ public class DelinesBusField {
 
 	/**
 	 * 通过给定字符串数据构建指定对象的本字段数据
-	 *
+	 * <p>通过本装载类解析的字段数据解析指定字符串得到结果<br>给制定的对象的字段赋值</p>
 	 * @param object 指定目标对象
 	 * @param data   给定字符串数据
 	 */

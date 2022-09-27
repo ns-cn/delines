@@ -13,7 +13,10 @@ import java.util.Optional;
 public final class Delines {
 
 	/**
-	 * 转换具体字符串为对应的实体
+	 * 转换具体字符串为对应的实体<br>
+	 * <p>核心流程：</p>
+	 * 1. 使用实体解析器解析对应的类，得到实体装载器<br>
+	 * 2. 使用装载器解析对应的字符串获得实体<br>
 	 *
 	 * @param data  字符串数据
 	 * @param clazz 对应的具体数据
@@ -26,6 +29,9 @@ public final class Delines {
 
 	/**
 	 * 转换具体字符串为对应的类型(待实体转换器)
+	 * <p>核心流程：</p>
+	 * 1. 使用实体解析器解析对应的类，得到实体装载器<br>
+	 * 2. 使用装载器解析对应的字符串获得实体<br>
 	 *
 	 * @param data         字符串数据
 	 * @param clazz        对应的具体类型
@@ -40,6 +46,9 @@ public final class Delines {
 
 	/**
 	 * 用转换后的实体和字符串数据转换数据
+	 * <p>核心流程：</p>
+	 * 1. 使用实体解析器解析对应的类，得到实体装载器<br>
+	 * 2. 使用装载器解析对应的字符串获得实体<br>
 	 *
 	 * @param data   字符串数据
 	 * @param entity 转换后的实体
@@ -62,10 +71,11 @@ public final class Delines {
 
 	/**
 	 * 解析带行数的字符串数据
-	 * @param line 字符串数据
+	 *
+	 * @param line   字符串数据
 	 * @param entity 转换后的实体
+	 * @param <T>    类型泛型
 	 * @return 解析后的数据
-	 * @param <T> 类型泛型
 	 */
 	public static <T> T with(DelinesLine line, DelinesBusEntity<T> entity) {
 		if (line == null) {

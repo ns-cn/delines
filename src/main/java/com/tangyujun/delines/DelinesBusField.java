@@ -2,7 +2,7 @@ package com.tangyujun.delines;
 
 import com.tangyujun.delines.decoder.IDelinesDecoder;
 import com.tangyujun.delines.decoder.IEntityFactory;
-import com.tangyujun.delines.parser.CollectionUtils;
+import com.tangyujun.delines.utils.CollectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.Collection;

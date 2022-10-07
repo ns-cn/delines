@@ -7,7 +7,7 @@
     <groupId>com.tangyujun</groupId>
     <artifactId>delines</artifactId>
     <packaging>jar</packaging>
-    <version>2.1.1</version>
+    <version>2.1.2</version>
     <name>delines</name>
     <description>字符串解析实体工具</description>
     <url>https://github.com/ns-cn/delines</url>

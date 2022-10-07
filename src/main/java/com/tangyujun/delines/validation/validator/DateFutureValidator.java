@@ -18,52 +18,12 @@ import java.util.Objects;
 /**
  * 时间之后的校验器
  */
-public class DateFutureValidator implements IInnerValidator<DateFuture> {
+public class DateFutureValidator extends DateValidator implements IInnerValidator<DateFuture> {
 
 	@Override
 	public ValidationResult validate(Object data, DateFuture required) {
-		if (Objects.isNull(data)) {
-			return ValidationResult.fail(required.message());
-		}
-		if (data instanceof LocalDateTime) {
-			LocalDateTime time = (LocalDateTime) data;
-			LocalDateTime baseLine = CharSequenceUtil.isEmpty(required.value()) ? LocalDateTime.now() :
-					LocalDateTime.parse(required.value(), DateTimeFormatter.ofPattern(required.format()));
-			return (required.contain() ? !baseLine.isAfter(time) : time.isAfter(baseLine)) ?
-					ValidationResult.ok() : ValidationResult.fail(required.message());
-		}
-		if (data instanceof Date) {
-			long time = ((Date) data).getTime();
-			long baseLine;
-			try {
-				baseLine = CharSequenceUtil.isEmpty(required.value()) ? new Date().getTime() :
-						new SimpleDateFormat(required.format()).parse(required.value()).getTime();
-				return (required.contain() ? time >= baseLine : time > baseLine) ?
-						ValidationResult.ok() : ValidationResult.fail(required.message());
-			} catch (ParseException e) {
-				// 请引用delines-checker在编译期进行注解检查
-				throw new RuntimeException(e);
-			}
-		}
-		if (data instanceof LocalDate) {
-			LocalDate time = (LocalDate) data;
-			LocalDate baseLine = CharSequenceUtil.isEmpty(required.value()) ? LocalDate.now() :
-					LocalDate.parse(required.value(), DateTimeFormatter.ofPattern(required.format()));
-			return (required.contain() ? !baseLine.isAfter(time) : time.isAfter(baseLine)) ?
-					ValidationResult.ok() : ValidationResult.fail(required.message());
-		}
-		if (data instanceof LocalTime) {
-			LocalTime time = (LocalTime) data;
-			LocalTime baseLine = CharSequenceUtil.isEmpty(required.value()) ? LocalTime.now() :
-					LocalTime.parse(required.value(), DateTimeFormatter.ofPattern(required.format()));
-			return (required.contain() ? !baseLine.isAfter(time) : time.isAfter(baseLine)) ?
-					ValidationResult.ok() : ValidationResult.fail(required.message());
-		}
-		try {
-			throw new OperationNotSupportedException();
-		} catch (OperationNotSupportedException e) {
-			throw new RuntimeException(e);
-		}
+		return validate(data, required.value(), required.format(),
+				required.contain(), required.message(), false);
 	}
 
 	@Override

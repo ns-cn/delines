@@ -69,7 +69,8 @@ public interface IEntityFactory<T> {
 				}
 			}
 		}
-		throw new RuntimeException("now constructor or @EntityCreator zero-args public static method declared");
+		throw new RuntimeException("now constructor or @EntityCreator zero-args public static method declared\n" +
+				"class:" + clazz);
 	}
 
 	/**

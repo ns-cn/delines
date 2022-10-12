@@ -118,7 +118,7 @@ public class DelinesDocument {
 			return this;
 		}
 		NextStringGetter.NextString next;
-		int index = 0;  // 行索引
+		int index = 1;  // 行索引
 		for (; ; ) {
 			next = getter.nextString(reader);
 			if (next == null || next.getValue() == null || next.getThrowable() != null) {

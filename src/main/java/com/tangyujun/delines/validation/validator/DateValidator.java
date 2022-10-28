@@ -46,7 +46,7 @@ public abstract class DateValidator {
 			long time = ((Date) data).getTime();
 			long baseLine;
 			try {
-				baseLine = CharSequenceUtil.isEmpty(value) ? new Date().getTime() :
+				baseLine = CharSequenceUtil.isEmpty(value) ? System.currentTimeMillis() :
 						new SimpleDateFormat(format).parse(value).getTime();
 				boolean success = (datePast ? time < baseLine : time > baseLine)
 						|| (contain && time == baseLine);

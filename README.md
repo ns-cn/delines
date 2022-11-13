@@ -2,7 +2,6 @@
 [![CodeQL](https://github.com/ns-cn/delines/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/ns-cn/delines/actions/workflows/codeql-analysis.yml)
 [![LICENSE](https://img.shields.io/github/license/ns-cn/delines.svg?style=flat-square)](https://github.com/ns-cn/delines/blob/main/LICENSE)
 [![Releases](https://img.shields.io/github/release/ns-cn/delines/all.svg?style=flat-square)](https://github.com/ns-cn/delines/releases)
-[![JetBrains Support]()](https://jb.gg/OpenSourceSupport)
 
 
 基于正则匹配和反射实现解析各种文本（单行或多行）文件转Java实体
@@ -159,3 +158,8 @@ Person{id=3, name='小文', age=15, sex='M', isMan=true, birthday=1998-12-12, bi
 ```
 ## [版本历史及支持计划](./PLAN_VERSION.md)
 详情参见[版本历史](./PLAN_VERSION.md)
+
+## 鸣谢
+感谢Jetbrains提供IDE支持
+
+[![IntelliJ IDEA logo](https://resources.jetbrains.com/storage/products/company/brand/logos/IntelliJ_IDEA.svg)](https://jb.gg/OpenSourceSupport)
